@@ -1,4 +1,4 @@
-package com.pragma.powerup;
+package com.pragma.powerup.HU2Tests;
 
 import com.pragma.powerup.domain.model.Restaurant;
 import com.pragma.powerup.infrastructure.exception.NoDataFoundException;

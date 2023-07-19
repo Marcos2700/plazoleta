@@ -5,6 +5,8 @@ import com.pragma.powerup.domain.exception.NitNoNumericException;
 import com.pragma.powerup.domain.exception.NumericRestaurantNameException;
 import com.pragma.powerup.domain.exception.PhoneNumberNoNumericException;
 import com.pragma.powerup.infrastructure.exception.NoDataFoundException;
+import com.pragma.powerup.infrastructure.exception.NoPlateToRestaurantAssociationException;
+import com.pragma.powerup.infrastructure.exception.PlateAlreadyExistException;
 import com.pragma.powerup.infrastructure.exception.RestaurantAlreadyExistException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -52,6 +54,20 @@ public class ControllerAdvisor {
             IsNotAOwnerException ignoredIsNotAOwnerException){
         return ResponseEntity.status(HttpStatus.FORBIDDEN)
                 .body(Collections.singletonMap(MESSAGE, ExceptionResponse.IS_NOT_A_OWNER.getMessage()));
+    }
+
+    @ExceptionHandler(PlateAlreadyExistException.class)
+    public ResponseEntity<Map<String, String>> handlePlateAlreadyExistExceptio(
+            PlateAlreadyExistException ignoredPLateAlreadyExistException){
+        return ResponseEntity.status(HttpStatus.CONFLICT)
+                .body(Collections.singletonMap(MESSAGE, ExceptionResponse.PLATE_ALREADY_EXIST.getMessage()));
+    }
+
+    @ExceptionHandler(NoPlateToRestaurantAssociationException.class)
+    public ResponseEntity<Map<String, String>> handleNoPlateToRestaurantAssociationException(
+            NoPlateToRestaurantAssociationException ignoresNoPlateToRestaurantAssociationException){
+        return ResponseEntity.status(HttpStatus.CONFLICT)
+                .body(Collections.singletonMap(MESSAGE, ExceptionResponse.NO_PLATE_TO_RESTAURANT_ASSOCIATION.getMessage()));
     }
 
 }

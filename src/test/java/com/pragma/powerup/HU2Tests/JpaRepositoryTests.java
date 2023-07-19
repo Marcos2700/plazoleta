@@ -1,4 +1,4 @@
-package com.pragma.powerup;
+package com.pragma.powerup.HU2Tests;
 
 import com.pragma.powerup.infrastructure.out.jpa.entity.RestaurantEntity;
 import com.pragma.powerup.infrastructure.out.jpa.repository.IRestaurantRepository;

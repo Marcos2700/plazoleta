@@ -18,7 +18,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/plazoleta")
+@RequestMapping("/plazoleta/restaurant")
 public class RestaurantRestController {
 
     private final IRestaurantHandler restaurantHandler;

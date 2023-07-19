@@ -9,7 +9,13 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class ObjectModel {
+public class Plate {
     private Long id;
     private String name;
+    private Long idCategory;
+    private String description;
+    private Integer price;
+    private Long idRestaurant;
+    private String urlImage;
+    private Boolean active;
 }
