@@ -6,6 +6,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class PlateRequestDto {
+    private Long id;
     private String name;
     private Long idCategory;
     private String description;

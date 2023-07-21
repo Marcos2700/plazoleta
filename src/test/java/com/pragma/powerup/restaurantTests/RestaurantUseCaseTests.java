@@ -1,4 +1,4 @@
-package com.pragma.powerup.HU2Tests;
+package com.pragma.powerup.restaurantTests;
 
 import com.pragma.powerup.domain.exception.NitNoNumericException;
 import com.pragma.powerup.domain.exception.NumericRestaurantNameException;

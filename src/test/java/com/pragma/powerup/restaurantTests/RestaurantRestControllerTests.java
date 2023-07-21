@@ -1,4 +1,4 @@
-package com.pragma.powerup.HU2Tests;
+package com.pragma.powerup.restaurantTests;
 
 import com.pragma.powerup.application.dto.request.RestaurantRequestDto;
 import com.pragma.powerup.application.dto.response.RestaurantResponseDto;

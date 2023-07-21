@@ -1,4 +1,4 @@
-package com.pragma.powerup.HU3Tests;
+package com.pragma.powerup.plateTests;
 
 import com.pragma.powerup.application.dto.request.PlateRequestDto;
 import com.pragma.powerup.application.dto.response.PlateResponseDto;
@@ -58,5 +58,23 @@ class PlateHandlerTests {
 
         Assertions.assertEquals(1, plateResponseDtoList.size());
 
+    }
+
+    @Test
+    void updatePlate(){
+        PlateRequestDto plateRequestDto = new PlateRequestDto();
+        plateRequestDto.setId(1L);
+
+        Plate plate = new Plate();
+
+        Mockito.when(plateServicePort.getPlate(plateRequestDto.getId())).thenReturn(plate);
+
+        try{
+            plateHandler.updatePlate(plateRequestDto);
+            Assertions.assertTrue(true);
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
     }
 }

@@ -10,4 +10,8 @@ public interface IPlateHandler {
     void savePlate(PlateRequestDto plateRequestDto);
 
     List<PlateResponseDto> getAllPlates();
+
+    void updatePlate(PlateRequestDto plateResponseDto);
+
+    PlateResponseDto getPlate(Long id);
 }

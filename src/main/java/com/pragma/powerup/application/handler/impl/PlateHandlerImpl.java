@@ -38,4 +38,20 @@ public class PlateHandlerImpl implements IPlateHandler {
     public List<PlateResponseDto> getAllPlates() {
         return plateResponseMapper.toResponseList(plateServicePort.getAllPlates(), categoryServicePort.getAllCategory());
     }
+
+    @Override
+    public void updatePlate(PlateRequestDto plateRequestDto) {
+        Plate plate = plateServicePort.getPlate(plateRequestDto.getId());
+
+        plate.setDescription(plateRequestDto.getDescription());
+        plate.setPrice(plateRequestDto.getPrice());
+
+        plateServicePort.updatePlate(plate);
+    }
+
+    @Override
+    public PlateResponseDto getPlate(Long id) {
+        Plate plate = plateServicePort.getPlate(id);
+        return plateResponseMapper.toResponse(plate, categoryDtoMapper.toCategoryDto(categoryServicePort.getCategory(plate.getId())));
+    }
 }

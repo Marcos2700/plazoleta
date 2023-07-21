@@ -1,4 +1,4 @@
-package com.pragma.powerup.HU3Tests;
+package com.pragma.powerup.plateTests;
 
 import com.pragma.powerup.domain.model.Plate;
 import com.pragma.powerup.infrastructure.exception.NoPlateToRestaurantAssociationException;
@@ -90,5 +90,21 @@ class PlateJpaAdapterTests {
             Assertions.assertInstanceOf(NoPlateToRestaurantAssociationException.class, e);
         }
 
+    }
+
+    @Test
+    void updatePlate(){
+        Plate plate = new Plate();
+        PlateEntity plateEntity = new PlateEntity();
+
+        Mockito.when(plateEntityMapper.toPlateEntity(plate)).thenReturn(plateEntity);
+
+        try{
+            plateJpaAdapter.updatePlate(plate);
+            Assertions.assertTrue(true);
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
     }
 }

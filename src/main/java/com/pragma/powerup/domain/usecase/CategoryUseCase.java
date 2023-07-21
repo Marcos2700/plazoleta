@@ -22,4 +22,11 @@ public class CategoryUseCase implements ICategoryServicePort {
     public List<Category> getAllCategory() {
         return categoryPersistencePort.getAllCategory();
     }
+
+    @Override
+    public Category getCategory(Long id) {
+        return categoryPersistencePort.getCategory(id);
+    }
+
+
 }

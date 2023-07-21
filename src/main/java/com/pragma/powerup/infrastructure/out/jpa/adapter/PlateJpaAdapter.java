@@ -12,6 +12,7 @@ import com.pragma.powerup.infrastructure.out.jpa.repository.IRestaurantRepositor
 import lombok.RequiredArgsConstructor;
 
 import java.util.List;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 public class PlateJpaAdapter implements IPlatePersistencePort {
@@ -38,5 +39,19 @@ public class PlateJpaAdapter implements IPlatePersistencePort {
             throw new NoDataFoundException();
         }
         return plateEntityMapper.toPlateList(plateEntityList);
+    }
+
+    @Override
+    public void updatePlate(Plate plate) {
+        plateRepository.save(plateEntityMapper.toPlateEntity(plate));
+    }
+
+    @Override
+    public Plate getPlate(Long id) {
+        Optional<PlateEntity> plateEntity = plateRepository.findById(id);
+        if (plateEntity.isEmpty()){
+            throw new NoDataFoundException();
+        }
+        return plateEntityMapper.toPlate(plateEntity.get());
     }
 }

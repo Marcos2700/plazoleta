@@ -9,4 +9,8 @@ public interface IPlatePersistencePort {
     void savePlate(Plate plate);
 
     List<Plate> getAllPlate();
+
+    void updatePlate(Plate plate);
+
+    Plate getPlate(Long id);
 }

@@ -9,4 +9,6 @@ public interface ICategoryPersistencePort {
     void saveCategory(Category category);
 
     List<Category> getAllCategory();
+
+    Category getCategory(Long id);
 }

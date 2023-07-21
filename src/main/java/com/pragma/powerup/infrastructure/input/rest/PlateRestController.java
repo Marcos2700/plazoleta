@@ -47,4 +47,15 @@ public class PlateRestController {
         return ResponseEntity.ok(plateHandler.getAllPlates());
     }
 
+    @Operation(summary = "Update plate")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Plate updated", content = @Content),
+            @ApiResponse(responseCode = "404", description = "No data found", content = @Content)
+    })
+    @PutMapping("/owner")
+    public ResponseEntity<Void> updatePlate(@RequestBody PlateRequestDto plateRequestDto){
+        plateHandler.updatePlate(plateRequestDto);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
 }

@@ -9,6 +9,7 @@ import com.pragma.powerup.infrastructure.out.jpa.repository.ICategoryRepository;
 import lombok.RequiredArgsConstructor;
 
 import java.util.List;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 public class CategoryJpaAdapter implements ICategoryPersistencePort {
@@ -28,5 +29,14 @@ public class CategoryJpaAdapter implements ICategoryPersistencePort {
             throw new NoDataFoundException();
         }
         return categoryEntityMapper.toCategoryList(categoryEntityList);
+    }
+
+    @Override
+    public Category getCategory(Long id) {
+        Optional<CategoryEntity> categoryEntity = categoryRepository.findById(id);
+        if (categoryEntity.isEmpty()){
+            throw new NoDataFoundException();
+        }
+        return categoryEntityMapper.toCategory(categoryEntity.get());
     }
 }

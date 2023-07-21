@@ -9,4 +9,8 @@ public interface IPlateServicePort {
     void savePlate(Plate plate);
 
     List<Plate> getAllPlates();
+
+    void updatePlate(Plate plate);
+
+    Plate getPlate(Long id);
 }

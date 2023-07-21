@@ -42,6 +42,13 @@ public class ControllerAdvisor {
                 .body(Collections.singletonMap(MESSAGE, ExceptionResponse.NIT_NO_NUMERIC.getMessage()));
     }
 
+    @ExceptionHandler(PhoneNumberNoNumericException.class)
+    public ResponseEntity<Map<String, String>> handlePhoneNumberNoNumericException(
+            PhoneNumberNoNumericException ignoredPhoneNumberNoNumericException){
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(Collections.singletonMap(MESSAGE, ExceptionResponse.PHONE_NUMBER_NO_NUMERIC.getMessage()));
+    }
+
     @ExceptionHandler(NumericRestaurantNameException.class)
     public ResponseEntity<Map<String, String>> handleNumericRestaurantNameException(
             NumericRestaurantNameException ignoredNumericRestaurantNameException){
@@ -57,7 +64,7 @@ public class ControllerAdvisor {
     }
 
     @ExceptionHandler(PlateAlreadyExistException.class)
-    public ResponseEntity<Map<String, String>> handlePlateAlreadyExistExceptio(
+    public ResponseEntity<Map<String, String>> handlePlateAlreadyExistException(
             PlateAlreadyExistException ignoredPLateAlreadyExistException){
         return ResponseEntity.status(HttpStatus.CONFLICT)
                 .body(Collections.singletonMap(MESSAGE, ExceptionResponse.PLATE_ALREADY_EXIST.getMessage()));

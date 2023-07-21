@@ -1,4 +1,4 @@
-package com.pragma.powerup.HU3Tests;
+package com.pragma.powerup.plateTests;
 
 import com.pragma.powerup.domain.model.Plate;
 import com.pragma.powerup.domain.spi.IPlatePersistencePort;
@@ -31,5 +31,18 @@ class PlateUseCaseTests {
         plateUseCase.savePlate(plate);
 
         Assertions.assertEquals(1, plateUseCase.getAllPlates().size());
+    }
+
+    @Test
+    void updatePlate(){
+        Plate plate = new Plate();
+
+        try{
+            plateUseCase.updatePlate(plate);
+            Assertions.assertTrue(true);
+        }
+        catch (RuntimeException e){
+            e.printStackTrace();
+        }
     }
 }

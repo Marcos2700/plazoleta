@@ -1,4 +1,4 @@
-package com.pragma.powerup.HU3Tests;
+package com.pragma.powerup.plateTests;
 
 import com.pragma.powerup.application.dto.request.PlateRequestDto;
 import com.pragma.powerup.application.dto.response.PlateResponseDto;
@@ -17,7 +17,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import java.util.List;
 
 @ExtendWith(SpringExtension.class)
-public class PlateRestControllerTests {
+class PlateRestControllerTests {
 
     @InjectMocks
     PlateRestController plateRestController;
@@ -44,5 +44,14 @@ public class PlateRestControllerTests {
 
         Assertions.assertEquals(HttpStatus.OK, response.getStatusCode());
         Assertions.assertNotNull(response.getBody());
+    }
+
+    @Test
+    void updatePlate(){
+        PlateRequestDto plateRequestDto = new PlateRequestDto();
+
+        ResponseEntity<Void> response = plateRestController.updatePlate(plateRequestDto);
+
+        Assertions.assertEquals(HttpStatus.OK, response.getStatusCode());
     }
 }
