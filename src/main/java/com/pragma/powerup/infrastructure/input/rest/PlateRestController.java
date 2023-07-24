@@ -14,11 +14,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/plazoleta/plate")
+@RequestMapping("/plate")
 public class PlateRestController {
 
     private final IPlateHandler plateHandler;
@@ -53,8 +54,8 @@ public class PlateRestController {
             @ApiResponse(responseCode = "404", description = "No data found", content = @Content)
     })
     @PutMapping("/owner")
-    public ResponseEntity<Void> updatePlate(@RequestBody PlateRequestDto plateRequestDto){
-        plateHandler.updatePlate(plateRequestDto);
+    public ResponseEntity<Void> updatePlate(@RequestBody PlateRequestDto plateRequestDto, HttpServletRequest request){
+        plateHandler.updatePlate(plateRequestDto, request);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 

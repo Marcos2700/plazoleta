@@ -18,7 +18,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/plazoleta/restaurant")
+@RequestMapping("/restaurant")
 public class RestaurantRestController {
 
     private final IRestaurantHandler restaurantHandler;
@@ -41,7 +41,7 @@ public class RestaurantRestController {
                 array = @ArraySchema(schema = @Schema(implementation = RestaurantResponseDto.class)))),
             @ApiResponse(responseCode = "404", description = "No data found", content = @Content)
     })
-    @GetMapping
+    @GetMapping("/admin")
     public ResponseEntity<List<RestaurantResponseDto>> getAllRestaurant(){
         return ResponseEntity.ok(restaurantHandler.getAllRestaurant());
     }

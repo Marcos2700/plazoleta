@@ -10,6 +10,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 @FeignClient(name = "Users-microservice", url = "http://localhost:8081", configuration = BeanConfiguration.class)
 public interface UserFeignClient {
 
-    @GetMapping(value = "/user/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/user/feign/id/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
     UserDto getUser(@PathVariable(name = "id") Long id);
+
+    @GetMapping(value = "/user/feign/email/{email}")
+    UserDto getUserByEmail(@PathVariable(name = "email") String email);
 }

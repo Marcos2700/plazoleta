@@ -8,7 +8,8 @@ public enum ExceptionResponse {
     NUMERIC_RESTAURANT_NAME("Restaurant name can`t be only numeric"),
     IS_NOT_A_OWNER("Restaurant owner must have owner role"),
     PLATE_ALREADY_EXIST("There is a plate with that name"),
-    NO_PLATE_TO_RESTAURANT_ASSOCIATION("There is not a restaurant associated with that plate");
+    NO_PLATE_TO_RESTAURANT_ASSOCIATION("There is not a restaurant associated with that plate"),
+    NO_OWNER_PLATE_ASSOCIATION("Restaurant's plate is not associated with owner");
 
     private final String message;
 

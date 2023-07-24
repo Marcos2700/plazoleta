@@ -4,10 +4,7 @@ import com.pragma.powerup.domain.exception.IsNotAOwnerException;
 import com.pragma.powerup.domain.exception.NitNoNumericException;
 import com.pragma.powerup.domain.exception.NumericRestaurantNameException;
 import com.pragma.powerup.domain.exception.PhoneNumberNoNumericException;
-import com.pragma.powerup.infrastructure.exception.NoDataFoundException;
-import com.pragma.powerup.infrastructure.exception.NoPlateToRestaurantAssociationException;
-import com.pragma.powerup.infrastructure.exception.PlateAlreadyExistException;
-import com.pragma.powerup.infrastructure.exception.RestaurantAlreadyExistException;
+import com.pragma.powerup.infrastructure.exception.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -75,6 +72,13 @@ public class ControllerAdvisor {
             NoPlateToRestaurantAssociationException ignoresNoPlateToRestaurantAssociationException){
         return ResponseEntity.status(HttpStatus.CONFLICT)
                 .body(Collections.singletonMap(MESSAGE, ExceptionResponse.NO_PLATE_TO_RESTAURANT_ASSOCIATION.getMessage()));
+    }
+
+    @ExceptionHandler(NoOwnerPlateAssociationException.class)
+    public ResponseEntity<Map<String, String>> handleNoOwnerPlateAssociationException(
+            NoOwnerPlateAssociationException ignoredNoOwnerPlateAssociationException){
+        return ResponseEntity.status(HttpStatus.FORBIDDEN)
+                .body(Collections.singletonMap(MESSAGE, ExceptionResponse.NO_OWNER_PLATE_ASSOCIATION.getMessage()));
     }
 
 }

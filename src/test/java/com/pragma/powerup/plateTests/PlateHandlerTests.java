@@ -18,6 +18,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @ExtendWith(SpringExtension.class)
@@ -34,6 +35,8 @@ class PlateHandlerTests {
     IPlateRequestMapper plateRequestMapper;
     @Mock
     IPlateResponseMapper plateResponseMapper;
+    @Mock
+    HttpServletRequest request;
 
     @BeforeEach
     void Before(){
@@ -70,7 +73,7 @@ class PlateHandlerTests {
         Mockito.when(plateServicePort.getPlate(plateRequestDto.getId())).thenReturn(plate);
 
         try{
-            plateHandler.updatePlate(plateRequestDto);
+            plateHandler.updatePlate(plateRequestDto, request);
             Assertions.assertTrue(true);
         }
         catch (Exception e){

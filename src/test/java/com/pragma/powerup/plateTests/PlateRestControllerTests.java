@@ -14,6 +14,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @ExtendWith(SpringExtension.class)
@@ -24,6 +25,8 @@ class PlateRestControllerTests {
 
     @Mock
     IPlateHandler plateHandler;
+    @Mock
+    HttpServletRequest request;
 
     @Test
     void savePlate(){
@@ -50,7 +53,7 @@ class PlateRestControllerTests {
     void updatePlate(){
         PlateRequestDto plateRequestDto = new PlateRequestDto();
 
-        ResponseEntity<Void> response = plateRestController.updatePlate(plateRequestDto);
+        ResponseEntity<Void> response = plateRestController.updatePlate(plateRequestDto, request);
 
         Assertions.assertEquals(HttpStatus.OK, response.getStatusCode());
     }

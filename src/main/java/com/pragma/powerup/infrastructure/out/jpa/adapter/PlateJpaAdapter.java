@@ -5,6 +5,7 @@ import com.pragma.powerup.domain.spi.IPlatePersistencePort;
 import com.pragma.powerup.infrastructure.exception.NoDataFoundException;
 import com.pragma.powerup.infrastructure.exception.NoPlateToRestaurantAssociationException;
 import com.pragma.powerup.infrastructure.exception.PlateAlreadyExistException;
+import com.pragma.powerup.infrastructure.input.feign.UserFeignClient;
 import com.pragma.powerup.infrastructure.out.jpa.entity.PlateEntity;
 import com.pragma.powerup.infrastructure.out.jpa.mapper.IPlateEntityMapper;
 import com.pragma.powerup.infrastructure.out.jpa.repository.IPlateRepository;

@@ -9,6 +9,7 @@ import com.pragma.powerup.domain.spi.IRestaurantPersistencePort;
 import com.pragma.powerup.domain.usecase.CategoryUseCase;
 import com.pragma.powerup.domain.usecase.PlateUseCase;
 import com.pragma.powerup.domain.usecase.RestaurantUseCase;
+import com.pragma.powerup.infrastructure.input.feign.UserFeignClient;
 import com.pragma.powerup.infrastructure.out.jpa.adapter.CategoryJpaAdapter;
 import com.pragma.powerup.infrastructure.out.jpa.adapter.PlateJpaAdapter;
 import com.pragma.powerup.infrastructure.out.jpa.adapter.RestaurantJpaAdapter;
@@ -22,6 +23,7 @@ import feign.Logger;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+
 
 @Configuration
 @RequiredArgsConstructor
@@ -46,7 +48,7 @@ public class BeanConfiguration {
 
     @Bean
     public IPlatePersistencePort platePersistencePort(){
-        return new PlateJpaAdapter(plateRepository, plateEntityMapper, restaurantRepository);
+        return new PlateJpaAdapter(plateRepository, plateEntityMapper,  restaurantRepository);
     }
 
     @Bean
