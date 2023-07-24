@@ -75,4 +75,12 @@ public class PlateHandlerImpl implements IPlateHandler {
         return plateResponseMapper.toResponse(plate, categoryDtoMapper.toCategoryDto(categoryServicePort.getCategory(plate.getId())));
     }
 
+    @Override
+    public void turnOffPlate(Long id) {
+        Plate plate = plateServicePort.getPlate(id);
+        plate.setActive(false);
+
+        plateServicePort.updatePlate(plate);
+    }
+
 }

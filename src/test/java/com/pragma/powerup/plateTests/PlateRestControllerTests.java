@@ -57,4 +57,13 @@ class PlateRestControllerTests {
 
         Assertions.assertEquals(HttpStatus.OK, response.getStatusCode());
     }
+
+    @Test
+    void turnOffPlate(){
+        Long id = 1L;
+
+        ResponseEntity<Void> response = plateRestController.turnOffPlate(id);
+
+        Assertions.assertEquals(HttpStatus.OK, response.getStatusCode());
+    }
 }

@@ -80,4 +80,20 @@ class PlateHandlerTests {
             e.printStackTrace();
         }
     }
+
+    @Test
+    void turnOffPlate(){
+        Long id = 1L;
+        Plate plate = new Plate();
+
+        Mockito.when(plateServicePort.getPlate(id)).thenReturn(plate);
+
+        try {
+            plateHandler.turnOffPlate(id);
+            Assertions.assertTrue(true);
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+    }
 }

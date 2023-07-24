@@ -15,4 +15,6 @@ public interface IPlateHandler {
     void updatePlate(PlateRequestDto plateResponseDto, HttpServletRequest request);
 
     PlateResponseDto getPlate(Long id);
+
+    void turnOffPlate(Long id);
 }

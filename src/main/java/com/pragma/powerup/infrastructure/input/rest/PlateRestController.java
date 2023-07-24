@@ -4,6 +4,7 @@ import com.pragma.powerup.application.dto.request.PlateRequestDto;
 import com.pragma.powerup.application.dto.response.PlateResponseDto;
 import com.pragma.powerup.application.handler.IPlateHandler;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -56,6 +57,17 @@ public class PlateRestController {
     @PutMapping("/owner")
     public ResponseEntity<Void> updatePlate(@RequestBody PlateRequestDto plateRequestDto, HttpServletRequest request){
         plateHandler.updatePlate(plateRequestDto, request);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @Operation(summary = "Turn off plate")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Plate updated", content = @Content),
+            @ApiResponse(responseCode = "404", description = "No data found", content = @Content)
+    })
+    @PutMapping("/owner/{id}")
+    public ResponseEntity<Void> turnOffPlate(@Parameter(description = "Id of the plate to be turned off") @PathVariable Long id){
+        plateHandler.turnOffPlate(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
