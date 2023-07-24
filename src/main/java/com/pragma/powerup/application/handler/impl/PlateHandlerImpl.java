@@ -50,18 +50,10 @@ public class PlateHandlerImpl implements IPlateHandler {
     @Override
     public void updatePlate(PlateRequestDto plateRequestDto, HttpServletRequest request) {
         String token = request.getHeader("Authorization").replace("Bearer ","");
-        TokenUtils tokenUtils = new TokenUtils();
-        String email = tokenUtils.getEmail(token);
-
-        Restaurant restaurant = restaurantServicePort.getAllRestaurant().stream().filter(restaurantById -> restaurantById.getId().equals(plateRequestDto.getIdRestaurant())).findFirst().orElse(new Restaurant());
-
-        Long idRestaurantOwner = restaurant.getIdOwner();
-
-        if(!email.equals(userFeignClient.getUser(idRestaurantOwner).getEmail())){
-            throw new NoOwnerPlateAssociationException();
-        }
 
         Plate plate = plateServicePort.getPlate(plateRequestDto.getId());
+
+        thereArePlateOwnerAssociation(token, plate.getIdRestaurant());
 
         plate.setDescription(plateRequestDto.getDescription());
         plate.setPrice(plateRequestDto.getPrice());
@@ -76,11 +68,29 @@ public class PlateHandlerImpl implements IPlateHandler {
     }
 
     @Override
-    public void turnOffPlate(Long id) {
+    public void turnOffOnPlate(Long id, HttpServletRequest request) {
+        String token = request.getHeader("Authorization").replace("Bearer ","");
+
         Plate plate = plateServicePort.getPlate(id);
-        plate.setActive(false);
+
+        thereArePlateOwnerAssociation(token, plate.getIdRestaurant());
+
+        plate.setActive(!Boolean.TRUE.equals(plate.getActive()));
 
         plateServicePort.updatePlate(plate);
+    }
+
+    private void thereArePlateOwnerAssociation(String token, Long id){
+        TokenUtils tokenUtils = new TokenUtils();
+        String email = tokenUtils.getEmail(token);
+
+        Restaurant restaurant = restaurantServicePort.getAllRestaurant().stream().filter(restaurantById -> restaurantById.getId().equals(id)).findFirst().orElse(new Restaurant());
+
+        Long idRestaurantOwner = restaurant.getIdOwner();
+
+        if(!email.equals(userFeignClient.getUser(idRestaurantOwner).getEmail())){
+            throw new NoOwnerPlateAssociationException();
+        }
     }
 
 }

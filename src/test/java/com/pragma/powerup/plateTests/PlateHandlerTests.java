@@ -89,7 +89,7 @@ class PlateHandlerTests {
         Mockito.when(plateServicePort.getPlate(id)).thenReturn(plate);
 
         try {
-            plateHandler.turnOffPlate(id);
+            plateHandler.turnOffOnPlate(id, request);
             Assertions.assertTrue(true);
         }
         catch (Exception e){

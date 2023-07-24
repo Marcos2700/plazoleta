@@ -16,5 +16,5 @@ public interface IPlateHandler {
 
     PlateResponseDto getPlate(Long id);
 
-    void turnOffPlate(Long id);
+    void turnOffOnPlate(Long id, HttpServletRequest request);
 }

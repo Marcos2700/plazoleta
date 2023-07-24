@@ -62,7 +62,7 @@ class PlateRestControllerTests {
     void turnOffPlate(){
         Long id = 1L;
 
-        ResponseEntity<Void> response = plateRestController.turnOffPlate(id);
+        ResponseEntity<Void> response = plateRestController.turnOffOnPlate(id, request);
 
         Assertions.assertEquals(HttpStatus.OK, response.getStatusCode());
     }

@@ -66,8 +66,8 @@ public class PlateRestController {
             @ApiResponse(responseCode = "404", description = "No data found", content = @Content)
     })
     @PutMapping("/owner/{id}")
-    public ResponseEntity<Void> turnOffPlate(@Parameter(description = "Id of the plate to be turned off") @PathVariable Long id){
-        plateHandler.turnOffPlate(id);
+    public ResponseEntity<Void> turnOffOnPlate(@Parameter(description = "Id of the plate to be turned off") @PathVariable Long id, HttpServletRequest request){
+        plateHandler.turnOffOnPlate(id, request);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
