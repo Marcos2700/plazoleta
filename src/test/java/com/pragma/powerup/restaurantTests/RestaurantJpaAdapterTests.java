@@ -13,6 +13,10 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.List;
@@ -77,6 +81,38 @@ class RestaurantJpaAdapterTests {
 
         try {
             restaurantJpaAdapter.getAllRestaurant();
+        }
+        catch (NoDataFoundException e){
+            Assertions.assertInstanceOf(NoDataFoundException.class, e);
+        }
+    }
+
+    @Test
+    void listRestaurants(){
+        Pageable pageable = PageRequest.of(0, 10);
+        RestaurantEntity restaurantEntity = new RestaurantEntity();
+        List<RestaurantEntity> listRestaurants = List.of(restaurantEntity);
+        Page<RestaurantEntity> page = new PageImpl<>(listRestaurants, pageable, 1);
+
+        Mockito.when(restaurantRepository.findAll(pageable)).thenReturn(page);
+
+        Page<RestaurantEntity> restaurantEntityPage = restaurantRepository.findAll(pageable);
+
+        Assertions.assertInstanceOf(Page.class, restaurantEntityPage);
+        Assertions.assertFalse(restaurantEntityPage.isEmpty());
+    }
+
+    @Test
+    void returningEmptyPage(){
+        Pageable pageable = PageRequest.of(0, 10);
+        RestaurantEntity restaurantEntity = new RestaurantEntity();
+        List<RestaurantEntity> listRestaurants = List.of();
+        Page<RestaurantEntity> page = new PageImpl<>(listRestaurants, pageable, 0);
+
+        Mockito.when(restaurantRepository.findAll(pageable)).thenReturn(page);
+
+        try {
+            Page<RestaurantEntity> restaurantEntityPage = restaurantRepository.findAll(pageable);
         }
         catch (NoDataFoundException e){
             Assertions.assertInstanceOf(NoDataFoundException.class, e);

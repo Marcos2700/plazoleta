@@ -1,6 +1,7 @@
 package com.pragma.powerup.infrastructure.input.rest;
 
 import com.pragma.powerup.application.dto.request.RestaurantRequestDto;
+import com.pragma.powerup.application.dto.response.RestaurantInfoResponseDto;
 import com.pragma.powerup.application.dto.response.RestaurantResponseDto;
 import com.pragma.powerup.application.handler.IRestaurantHandler;
 import io.swagger.v3.oas.annotations.Operation;
@@ -10,6 +11,10 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -44,5 +49,18 @@ public class RestaurantRestController {
     @GetMapping("/admin")
     public ResponseEntity<List<RestaurantResponseDto>> getAllRestaurant(){
         return ResponseEntity.ok(restaurantHandler.getAllRestaurant());
+    }
+
+    @Operation(summary = "List restaurants")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "list restaurants in order",
+            content = @Content(mediaType = "application/json",
+            array = @ArraySchema(schema = @Schema(implementation = RestaurantInfoResponseDto.class))))
+    })
+    @GetMapping("/client/list")
+    public ResponseEntity<Page<RestaurantInfoResponseDto>> listRestaurant(@RequestParam(defaultValue = "0") int page,
+                                                                          @RequestParam(defaultValue = "10") int size){
+        Page<RestaurantInfoResponseDto> responseDtoPage = restaurantHandler.listRestaurant(page, size);
+        return ResponseEntity.ok(responseDtoPage);
     }
 }

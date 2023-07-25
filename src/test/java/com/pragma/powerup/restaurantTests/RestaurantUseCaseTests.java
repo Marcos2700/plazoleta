@@ -12,6 +12,10 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.List;
@@ -83,5 +87,20 @@ class RestaurantUseCaseTests {
         catch (NitNoNumericException e){
             Assertions.assertInstanceOf(NitNoNumericException.class, e);
         }
+    }
+
+    @Test
+    void listRestaurants(){
+        Pageable pageable = PageRequest.of(0, 10);
+
+        Restaurant restaurant = new Restaurant();
+        List<Restaurant> restaurantList = List.of(restaurant);
+        Page<Restaurant> pageRestaurants = new PageImpl<>(restaurantList, pageable, 1);
+
+        Mockito.when(restaurantPersistencePort.listRestaurant(pageable)).thenReturn(pageRestaurants);
+
+        Page<Restaurant> restaurantPageReturned = restaurantPersistencePort.listRestaurant(pageable);
+
+        Assertions.assertFalse(restaurantPageReturned.isEmpty());
     }
 }

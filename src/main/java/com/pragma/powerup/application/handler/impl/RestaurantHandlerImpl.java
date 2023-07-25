@@ -1,6 +1,7 @@
 package com.pragma.powerup.application.handler.impl;
 
 import com.pragma.powerup.application.dto.request.RestaurantRequestDto;
+import com.pragma.powerup.application.dto.response.RestaurantInfoResponseDto;
 import com.pragma.powerup.application.dto.response.RestaurantResponseDto;
 import com.pragma.powerup.application.handler.IRestaurantHandler;
 import com.pragma.powerup.application.mapper.IRestaurantRequestMapper;
@@ -11,6 +12,10 @@ import com.pragma.powerup.domain.model.Restaurant;
 import com.pragma.powerup.infrastructure.input.feign.UserFeignClient;
 import com.pragma.powerup.infrastructure.input.feign.dto.UserDto;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -39,5 +44,12 @@ public class RestaurantHandlerImpl implements IRestaurantHandler {
     @Override
     public List<RestaurantResponseDto> getAllRestaurant() {
         return restaurantResponseMapper.toResponseList(restaurantServicePort.getAllRestaurant());
+    }
+
+    @Override
+    public Page<RestaurantInfoResponseDto> listRestaurant(int page, int size) {
+        Sort sort = Sort.by(Sort.Direction.ASC, "name");
+        Pageable pageable = PageRequest.of(page, size, sort);
+        return restaurantResponseMapper.toRestaurantResponsePage(restaurantServicePort.listRestaurant(pageable));
     }
 }

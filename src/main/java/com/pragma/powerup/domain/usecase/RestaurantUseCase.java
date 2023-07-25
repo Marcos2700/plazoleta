@@ -7,6 +7,8 @@ import com.pragma.powerup.domain.exception.PhoneNumberNoNumericException;
 import com.pragma.powerup.domain.model.Restaurant;
 import com.pragma.powerup.domain.spi.IRestaurantPersistencePort;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
@@ -32,6 +34,11 @@ public class RestaurantUseCase implements IRestaurantServicePort {
     @Override
     public List<Restaurant> getAllRestaurant() {
         return restaurantPersistencePort.getAllRestaurant();
+    }
+
+    @Override
+    public Page<Restaurant> listRestaurant(Pageable pageable) {
+        return restaurantPersistencePort.listRestaurant(pageable);
     }
 
     private static boolean isNumeric(String number){

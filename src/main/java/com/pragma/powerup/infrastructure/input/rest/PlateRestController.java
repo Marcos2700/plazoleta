@@ -60,7 +60,7 @@ public class PlateRestController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @Operation(summary = "Turn off plate")
+    @Operation(summary = "Turn off/on plate")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Plate updated", content = @Content),
             @ApiResponse(responseCode = "404", description = "No data found", content = @Content)

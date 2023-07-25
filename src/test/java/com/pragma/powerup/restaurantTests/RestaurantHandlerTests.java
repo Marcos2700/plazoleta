@@ -1,6 +1,7 @@
 package com.pragma.powerup.restaurantTests;
 
 import com.pragma.powerup.application.dto.request.RestaurantRequestDto;
+import com.pragma.powerup.application.dto.response.RestaurantInfoResponseDto;
 import com.pragma.powerup.application.dto.response.RestaurantResponseDto;
 import com.pragma.powerup.application.handler.impl.RestaurantHandlerImpl;
 import com.pragma.powerup.application.mapper.IRestaurantRequestMapper;
@@ -18,6 +19,10 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.List;
@@ -83,5 +88,24 @@ class RestaurantHandlerTests {
         catch (IsNotAOwnerException e){
             Assertions.assertInstanceOf(IsNotAOwnerException.class, e);
         }
+    }
+
+    @Test
+    void listRestaurants(){
+        Pageable pageable = PageRequest.of(0, 10);
+        RestaurantInfoResponseDto responseDto = new RestaurantInfoResponseDto();
+        List<RestaurantInfoResponseDto> dtoList = List.of(responseDto);
+        Page<RestaurantInfoResponseDto> pageRestaurantResponse = new PageImpl<>(dtoList, pageable, 1);
+
+        Restaurant restaurant = new Restaurant();
+        List<Restaurant> restaurantList = List.of(restaurant);
+        Page<Restaurant> pageRestaurants = new PageImpl<>(restaurantList, pageable, 1);
+
+        Mockito.when(restaurantServicePort.listRestaurant(pageable)).thenReturn(pageRestaurants);
+        Mockito.when(restaurantResponseMapper.toRestaurantResponsePage(pageRestaurants)).thenReturn(pageRestaurantResponse);
+
+        Page<RestaurantInfoResponseDto> responseDtoPage = restaurantHandler.listRestaurant(0, 10);
+
+        Assertions.assertFalse(pageRestaurantResponse.isEmpty());
     }
 }

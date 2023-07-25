@@ -32,6 +32,7 @@ public class WebSecurityConfig {
                 .antMatchers("/swagger-ui/**").permitAll()
                 .antMatchers("/restaurant/admin").hasRole("ADMINISTRATOR")
                 .antMatchers("/plate/owner").hasRole("OWNER")
+                .antMatchers("/restaurant/client/list**").permitAll()
                 .anyRequest()
                 .authenticated()
                 .and()
