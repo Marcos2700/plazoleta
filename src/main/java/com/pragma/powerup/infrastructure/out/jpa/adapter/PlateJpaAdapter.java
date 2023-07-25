@@ -5,12 +5,13 @@ import com.pragma.powerup.domain.spi.IPlatePersistencePort;
 import com.pragma.powerup.infrastructure.exception.NoDataFoundException;
 import com.pragma.powerup.infrastructure.exception.NoPlateToRestaurantAssociationException;
 import com.pragma.powerup.infrastructure.exception.PlateAlreadyExistException;
-import com.pragma.powerup.infrastructure.input.feign.UserFeignClient;
 import com.pragma.powerup.infrastructure.out.jpa.entity.PlateEntity;
 import com.pragma.powerup.infrastructure.out.jpa.mapper.IPlateEntityMapper;
 import com.pragma.powerup.infrastructure.out.jpa.repository.IPlateRepository;
 import com.pragma.powerup.infrastructure.out.jpa.repository.IRestaurantRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 import java.util.Optional;
@@ -54,5 +55,22 @@ public class PlateJpaAdapter implements IPlatePersistencePort {
             throw new NoDataFoundException();
         }
         return plateEntityMapper.toPlate(plateEntity.get());
+    }
+
+    @Override
+    public Page<Plate> listPlate(Long idRestaurant, Long idCategory, Pageable pageable) {
+        Page<PlateEntity> plateEntityPage;
+        if(idCategory == 0L){
+            plateEntityPage = plateRepository.findByIdRestaurant(idRestaurant, pageable);
+        }
+        else {
+            plateEntityPage = plateRepository.findByIdRestaurantAndIdCategory(idRestaurant, idCategory, pageable);
+        }
+
+        if(plateEntityPage.isEmpty()){
+            throw new NoDataFoundException();
+        }
+
+        return plateEntityMapper.toPlatepage(plateEntityPage);
     }
 }

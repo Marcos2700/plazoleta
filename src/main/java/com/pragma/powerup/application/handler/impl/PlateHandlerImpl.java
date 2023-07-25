@@ -2,6 +2,7 @@ package com.pragma.powerup.application.handler.impl;
 
 
 import com.pragma.powerup.application.dto.request.PlateRequestDto;
+import com.pragma.powerup.application.dto.response.PlateInfoResponseDto;
 import com.pragma.powerup.application.dto.response.PlateResponseDto;
 import com.pragma.powerup.application.handler.IPlateHandler;
 import com.pragma.powerup.application.mapper.ICategoryDtoMapper;
@@ -16,6 +17,9 @@ import com.pragma.powerup.infrastructure.exception.NoOwnerPlateAssociationExcept
 import com.pragma.powerup.infrastructure.input.feign.UserFeignClient;
 import com.pragma.powerup.infrastructure.security.TokenUtils;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
@@ -79,6 +83,13 @@ public class PlateHandlerImpl implements IPlateHandler {
 
         plateServicePort.updatePlate(plate);
     }
+
+    @Override
+    public Page<PlateInfoResponseDto> listPlate(Long idRestaurant, Long idCategory, int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        return plateResponseMapper.toPlateResponsePage(plateServicePort.listPlate(idRestaurant, idCategory, pageable));
+    }
+
 
     private void thereArePlateOwnerAssociation(String token, Long id){
         TokenUtils tokenUtils = new TokenUtils();

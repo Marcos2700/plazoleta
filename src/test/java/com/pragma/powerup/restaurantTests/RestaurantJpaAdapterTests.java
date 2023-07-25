@@ -91,12 +91,18 @@ class RestaurantJpaAdapterTests {
     void listRestaurants(){
         Pageable pageable = PageRequest.of(0, 10);
         RestaurantEntity restaurantEntity = new RestaurantEntity();
-        List<RestaurantEntity> listRestaurants = List.of(restaurantEntity);
-        Page<RestaurantEntity> page = new PageImpl<>(listRestaurants, pageable, 1);
+        List<RestaurantEntity> listEntityRestaurants = List.of(restaurantEntity);
+        Page<RestaurantEntity> entityPage = new PageImpl<>(listEntityRestaurants, pageable, 1);
 
-        Mockito.when(restaurantRepository.findAll(pageable)).thenReturn(page);
+        Mockito.when(restaurantRepository.findAll(pageable)).thenReturn(entityPage);
 
-        Page<RestaurantEntity> restaurantEntityPage = restaurantRepository.findAll(pageable);
+        Restaurant restaurant = new Restaurant();
+        List<Restaurant> listRestaurants = List.of(restaurant);
+        Page<Restaurant> page = new PageImpl<>(listRestaurants, pageable, 1);
+
+        Mockito.when(restaurantEntityMapper.toRestaurantPage(entityPage)).thenReturn(page);
+
+        Page<Restaurant> restaurantEntityPage = restaurantJpaAdapter.listRestaurant(pageable);
 
         Assertions.assertInstanceOf(Page.class, restaurantEntityPage);
         Assertions.assertFalse(restaurantEntityPage.isEmpty());
@@ -105,17 +111,17 @@ class RestaurantJpaAdapterTests {
     @Test
     void returningEmptyPage(){
         Pageable pageable = PageRequest.of(0, 10);
-        RestaurantEntity restaurantEntity = new RestaurantEntity();
         List<RestaurantEntity> listRestaurants = List.of();
         Page<RestaurantEntity> page = new PageImpl<>(listRestaurants, pageable, 0);
 
         Mockito.when(restaurantRepository.findAll(pageable)).thenReturn(page);
 
         try {
-            Page<RestaurantEntity> restaurantEntityPage = restaurantRepository.findAll(pageable);
+            Page<Restaurant> restaurantPage = restaurantJpaAdapter.listRestaurant(pageable);
         }
         catch (NoDataFoundException e){
             Assertions.assertInstanceOf(NoDataFoundException.class, e);
         }
     }
+
 }

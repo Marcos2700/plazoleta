@@ -1,6 +1,7 @@
 package com.pragma.powerup.application.mapper;
 
 import com.pragma.powerup.application.dto.CategoryDto;
+import com.pragma.powerup.application.dto.response.PlateInfoResponseDto;
 import com.pragma.powerup.application.dto.response.PlateResponseDto;
 import com.pragma.powerup.domain.model.Category;
 import com.pragma.powerup.domain.model.Plate;
@@ -8,6 +9,8 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.ReportingPolicy;
 import org.mapstruct.factory.Mappers;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -37,6 +40,22 @@ public interface IPlateResponseMapper {
                     plateResponse.setCategory(INSTANCE.toCategoryDto(categoryList.stream().filter(category -> category.getId().equals(plate.getIdCategory())).findFirst().orElse(null)));
                     return plateResponse;
                 }).collect(Collectors.toList());
+    }
+
+    default Page<PlateInfoResponseDto> toPlateResponsePage(Page<Plate> platePage){
+        List<PlateInfoResponseDto> plateList = platePage.getContent()
+                .stream()
+                .map(plate -> {
+                    PlateInfoResponseDto plateInfoResponseDto = new PlateInfoResponseDto();
+                    plateInfoResponseDto.setName(plate.getName());
+                    plateInfoResponseDto.setDescription(plate.getDescription());
+                    plateInfoResponseDto.setPrice(plate.getPrice());
+                    plateInfoResponseDto.setUrlImage(plate.getUrlImage());
+                    plateInfoResponseDto.setActivate(plate.getActive());
+                    return plateInfoResponseDto;
+                }).collect(Collectors.toList());
+
+        return new PageImpl<>(plateList, platePage.getPageable(), platePage.getSize());
     }
 
 }

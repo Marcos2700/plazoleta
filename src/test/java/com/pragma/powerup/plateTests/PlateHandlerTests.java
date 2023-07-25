@@ -1,6 +1,7 @@
 package com.pragma.powerup.plateTests;
 
 import com.pragma.powerup.application.dto.request.PlateRequestDto;
+import com.pragma.powerup.application.dto.response.PlateInfoResponseDto;
 import com.pragma.powerup.application.dto.response.PlateResponseDto;
 import com.pragma.powerup.application.handler.impl.PlateHandlerImpl;
 import com.pragma.powerup.application.mapper.IPlateRequestMapper;
@@ -16,6 +17,10 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import javax.servlet.http.HttpServletRequest;
@@ -96,4 +101,31 @@ class PlateHandlerTests {
             e.printStackTrace();
         }
     }
+
+    /*
+
+    @Test
+    void listPlates(){
+        Pageable pageable = PageRequest.of(1, 10);
+        PlateInfoResponseDto plateInfoResponseDto = new PlateInfoResponseDto();
+        List<PlateInfoResponseDto> plateInfoResponseDtoList = List.of(plateInfoResponseDto);
+        Page<PlateInfoResponseDto> responseDtoPage = new PageImpl<>(plateInfoResponseDtoList, pageable, 1);
+
+        Plate plate = new Plate();
+        List<Plate> plateList = List.of(plate);
+        Page<Plate> platePage = new PageImpl<>(plateList, pageable, 1);
+
+        Mockito.when(plateServicePort.listPlate(1L, 1L, pageable)).thenReturn(platePage);
+        Mockito.when(plateResponseMapper.toPlateResponsePage(platePage))
+                .thenReturn(responseDtoPage);
+
+        Page<PlateInfoResponseDto> plateInfoResponseDtoPage = plateHandler.listPlate(1L, 1L, 0, 10);
+
+        Assertions.assertEquals(responseDtoPage, plateInfoResponseDtoPage);
+    }
+     */
+
+
 }
+
+

@@ -12,9 +12,6 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -55,7 +52,8 @@ public class RestaurantRestController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "list restaurants in order",
             content = @Content(mediaType = "application/json",
-            array = @ArraySchema(schema = @Schema(implementation = RestaurantInfoResponseDto.class))))
+            array = @ArraySchema(schema = @Schema(implementation = RestaurantInfoResponseDto.class)))),
+            @ApiResponse(responseCode = "404", description = "No data found", content = @Content)
     })
     @GetMapping("/client/list")
     public ResponseEntity<Page<RestaurantInfoResponseDto>> listRestaurant(@RequestParam(defaultValue = "0") int page,

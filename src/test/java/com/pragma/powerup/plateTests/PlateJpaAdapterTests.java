@@ -1,6 +1,7 @@
 package com.pragma.powerup.plateTests;
 
 import com.pragma.powerup.domain.model.Plate;
+import com.pragma.powerup.infrastructure.exception.NoDataFoundException;
 import com.pragma.powerup.infrastructure.exception.NoPlateToRestaurantAssociationException;
 import com.pragma.powerup.infrastructure.exception.PlateAlreadyExistException;
 import com.pragma.powerup.infrastructure.out.jpa.adapter.PlateJpaAdapter;
@@ -15,6 +16,10 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.List;
@@ -105,6 +110,45 @@ class PlateJpaAdapterTests {
         }
         catch (Exception e){
             e.printStackTrace();
+        }
+    }
+
+    @Test
+    void listPlates(){
+        Pageable pageable = PageRequest.of(0, 10);
+        PlateEntity plateEntity = new PlateEntity();
+        List<PlateEntity> plateEntityList = List.of(plateEntity);
+        Page<PlateEntity> plateEntityPage = new PageImpl<>(plateEntityList, pageable, 1);
+
+        Mockito.when(plateRepository.findByIdRestaurantAndIdCategory(1L, 1L, pageable))
+                .thenReturn(plateEntityPage);
+
+        Plate plate = new Plate();
+        List<Plate> plateList = List.of(plate);
+        Page<Plate> platePage = new PageImpl<>(plateList, pageable, 1);
+
+        Mockito.when(plateEntityMapper.toPlatepage(plateEntityPage)).thenReturn(platePage);
+
+        Page<Plate> returnedPlatePage = plateJpaAdapter.listPlate(1L, 1L, pageable);
+
+        Assertions.assertInstanceOf(Page.class, returnedPlatePage);
+        Assertions.assertFalse(returnedPlatePage.isEmpty());
+    }
+
+    @Test
+    void returningEmptyPage(){
+        Pageable pageable = PageRequest.of(0, 10);
+        List<PlateEntity> plateEntityList = List.of();
+        Page<PlateEntity> plateEntityPage = new PageImpl<>(plateEntityList, pageable, 1);
+
+        Mockito.when(plateRepository.findByIdRestaurantAndIdCategory(1L, 1L, pageable))
+                .thenReturn(plateEntityPage);
+
+        try{
+            Page<Plate> page = plateJpaAdapter.listPlate(1L, 1L, pageable);
+        }
+        catch (NoDataFoundException e){
+            Assertions.assertInstanceOf(NoDataFoundException.class, e);
         }
     }
 }

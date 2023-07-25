@@ -1,6 +1,7 @@
 package com.pragma.powerup.infrastructure.input.rest;
 
 import com.pragma.powerup.application.dto.request.PlateRequestDto;
+import com.pragma.powerup.application.dto.response.PlateInfoResponseDto;
 import com.pragma.powerup.application.dto.response.PlateResponseDto;
 import com.pragma.powerup.application.handler.IPlateHandler;
 import io.swagger.v3.oas.annotations.Operation;
@@ -11,6 +12,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -70,5 +72,23 @@ public class PlateRestController {
         plateHandler.turnOffOnPlate(id, request);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
+    @Operation(summary = "List plates by restaurants")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "List plates",
+                    content = @Content(mediaType = "application/json",
+                    array = @ArraySchema(schema = @Schema(implementation = PlateInfoResponseDto.class)))),
+            @ApiResponse(responseCode = "404", description = "No data found", content = @Content)
+    })
+    @GetMapping("/client/list/{idRestaurant}")
+    public ResponseEntity<Page<PlateInfoResponseDto>> listPlate(@RequestParam(defaultValue = "0") int page,
+                                                          @RequestParam(defaultValue = "10") int size,
+                                                          @RequestParam(defaultValue = "0") String idCategory,
+                                                          @PathVariable Long idRestaurant){
+        Long longIdCategory = Long.parseLong(idCategory);
+        Page<PlateInfoResponseDto> responseDtoPage = plateHandler.listPlate(idRestaurant, longIdCategory, page, size);
+        return ResponseEntity.ok(responseDtoPage);
+    }
+
 
 }

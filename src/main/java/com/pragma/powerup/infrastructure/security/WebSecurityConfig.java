@@ -33,6 +33,7 @@ public class WebSecurityConfig {
                 .antMatchers("/restaurant/admin").hasRole("ADMINISTRATOR")
                 .antMatchers("/plate/owner").hasRole("OWNER")
                 .antMatchers("/restaurant/client/list**").permitAll()
+                .antMatchers("/plate/client/list/**").permitAll()
                 .anyRequest()
                 .authenticated()
                 .and()

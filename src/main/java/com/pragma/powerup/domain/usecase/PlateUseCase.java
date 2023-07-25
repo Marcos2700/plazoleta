@@ -4,6 +4,8 @@ import com.pragma.powerup.domain.api.IPlateServicePort;
 import com.pragma.powerup.domain.model.Plate;
 import com.pragma.powerup.domain.spi.IPlatePersistencePort;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
@@ -29,5 +31,10 @@ public class PlateUseCase implements IPlateServicePort {
     @Override
     public Plate getPlate(Long id) {
         return platePersistencePort.getPlate(id);
+    }
+
+    @Override
+    public Page<Plate> listPlate(Long idRestaurant, Long idCategory, Pageable pageable) {
+        return platePersistencePort.listPlate(idRestaurant, idCategory, pageable);
     }
 }

@@ -63,8 +63,7 @@ public class TokenUtils {
                     .parseClaimsJws(token)
                     .getBody();
 
-            String email = claims.getSubject();
-            return email;
+            return claims.getSubject();
         }
         catch (JwtException e){
             e.printStackTrace();
