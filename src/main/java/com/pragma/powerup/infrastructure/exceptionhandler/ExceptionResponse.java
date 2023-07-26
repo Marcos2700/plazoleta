@@ -9,7 +9,10 @@ public enum ExceptionResponse {
     IS_NOT_A_OWNER("Restaurant owner must have owner role"),
     PLATE_ALREADY_EXIST("There is a plate with that name"),
     NO_PLATE_TO_RESTAURANT_ASSOCIATION("There is not a restaurant associated with that plate"),
-    NO_OWNER_PLATE_ASSOCIATION("Restaurant's plate is not associated with owner");
+    NO_OWNER_PLATE_ASSOCIATION("Restaurant's plate is not associated with owner"),
+    RESTAURANT_NOT_EXIST("Restaurant does not exits"),
+    PLATE_NOT_EXIST("Plate does not exist"),
+    ORDER_IN_PROCESS("There is a order in process for this client");
 
     private final String message;
 

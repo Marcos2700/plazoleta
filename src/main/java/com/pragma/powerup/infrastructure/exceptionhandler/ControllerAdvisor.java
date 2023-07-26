@@ -81,4 +81,25 @@ public class ControllerAdvisor {
                 .body(Collections.singletonMap(MESSAGE, ExceptionResponse.NO_OWNER_PLATE_ASSOCIATION.getMessage()));
     }
 
+    @ExceptionHandler(RestaurantNotExistException.class)
+    public ResponseEntity<Map<String, String>> handleRestaurantNotExistException(
+            RestaurantNotExistException ignoredRestaurantNotExistException){
+        return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                .body(Collections.singletonMap(MESSAGE, ExceptionResponse.RESTAURANT_NOT_EXIST.getMessage()));
+    }
+
+    @ExceptionHandler(PlateNotExistException.class)
+    public ResponseEntity<Map<String, String>> handlePlateNotExistException(
+            PlateNotExistException ignoredPlateNotExistException){
+        return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                .body(Collections.singletonMap(MESSAGE, ExceptionResponse.PLATE_NOT_EXIST.getMessage()));
+    }
+
+    @ExceptionHandler(OrderInProcessException.class)
+    public ResponseEntity<Map<String, String>> handleOrderInProcessException(
+            OrderInProcessException ignoredOrderInProcessException){
+        return ResponseEntity.status(HttpStatus.CONFLICT)
+                .body(Collections.singletonMap(MESSAGE, ExceptionResponse.ORDER_IN_PROCESS.getMessage()));
+    }
+
 }
