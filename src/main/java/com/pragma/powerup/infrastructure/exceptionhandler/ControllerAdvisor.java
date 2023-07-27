@@ -102,4 +102,11 @@ public class ControllerAdvisor {
                 .body(Collections.singletonMap(MESSAGE, ExceptionResponse.ORDER_IN_PROCESS.getMessage()));
     }
 
+    @ExceptionHandler(OrderNotExistException.class)
+    public ResponseEntity<Map<String, String>> handleOrderNotExistException(
+            OrderNotExistException ignoredOrderNotExistException){
+        return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                .body(Collections.singletonMap(MESSAGE, ExceptionResponse.ORDER_NOT_EXIST.getMessage()));
+    }
+
 }

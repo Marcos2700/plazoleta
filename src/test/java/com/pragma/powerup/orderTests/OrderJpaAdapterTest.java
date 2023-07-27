@@ -149,4 +149,21 @@ class OrderJpaAdapterTest {
             Assertions.assertInstanceOf(NoDataFoundException.class, e);
         }
     }
+
+    @Test
+    void updateStatus(){
+        OrderEntity orderEntity = new OrderEntity();
+        Order order = new Order();
+
+        Mockito.when(orderEntityMapper.toOrderEntity(order)).thenReturn(orderEntity);
+
+        try{
+            orderJpaAdapter.updateStatus(order);
+            Assertions.assertTrue(true);
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
 }

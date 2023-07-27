@@ -12,7 +12,8 @@ public enum ExceptionResponse {
     NO_OWNER_PLATE_ASSOCIATION("Restaurant's plate is not associated with owner"),
     RESTAURANT_NOT_EXIST("Restaurant does not exits"),
     PLATE_NOT_EXIST("Plate does not exist"),
-    ORDER_IN_PROCESS("There is a order in process for this client");
+    ORDER_IN_PROCESS("There is a order in process for this client"),
+    ORDER_NOT_EXIST("Order not exist");
 
     private final String message;
 

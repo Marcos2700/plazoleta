@@ -52,4 +52,27 @@ class OrderUseCaseTests {
         Assertions.assertEquals(orderPage, returnedPage);
     }
 
+    @Test
+    void getOrder(){
+        Order order = new Order();
+
+        Mockito.when(orderPersistencePort.getOrder(1L)).thenReturn(order);
+
+        Order returnedOrder = orderUseCase.getOrder(1L);
+
+        Assertions.assertEquals(order, returnedOrder);
+    }
+
+    @Test
+    void updateStatus(){
+        Order order = new Order();
+        try{
+            orderUseCase.updateStatus(order);
+            Assertions.assertTrue(true);
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
 }

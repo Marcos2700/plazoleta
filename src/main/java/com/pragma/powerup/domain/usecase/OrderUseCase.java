@@ -20,4 +20,14 @@ public class OrderUseCase implements IOrderServicePort {
     public Page<Order> listOrder(Long idRestaurant, String status, Pageable pageable) {
         return orderPersistencePort.listOrder(idRestaurant, status, pageable);
     }
+
+    @Override
+    public Order getOrder(Long id) {
+        return orderPersistencePort.getOrder(id);
+    }
+
+    @Override
+    public void updateStatus(Order order) {
+        orderPersistencePort.updateStatus(order);
+    }
 }

@@ -118,4 +118,48 @@ class OrderHandlerTests {
 
         Assertions.assertFalse(orderInfoResponseDtoPage.isEmpty());
     }
+
+    @Test
+    void updateStatus(){
+        String bearer = "Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJxd2VlcnRlbXBsb3llZXNAZ21haWwuY29tIiwiZXhwIjoyNjkwNDY0MTA0LCJyb2xlcyI6WyJST0xFX0VNUExPWUVFIl0sIm5hbWUiOiJKb3NlIn0.arEUPpxE8t1QnP6FrNUtdYt8TOXTCvPZWMJTt7r-lduBmcz2CYlNgqlYmTeA_Jm9";
+        TokenUtils tokenUtils = Mockito.mock(TokenUtils.class);
+        Mockito.when(request.getHeader("Authorization")).thenReturn(bearer);
+        Mockito.when(tokenUtils.getEmail(bearer.replace("Bearer ", ""))).thenReturn("qweertemployees@gmail.com");
+
+        UserDto employee = new UserDto();
+        employee.setId(1L);
+
+        Mockito.when(feignClient.getUserByEmail("qweertemployees@gmail.com")).thenReturn(employee);
+
+        OwnerEmployeeRelation ownerEmployeeRelation = new OwnerEmployeeRelation();
+        ownerEmployeeRelation.setIdOwner(1L);
+        Mockito.when(feignClient.getOwnerEmployeeRelation(1L)).thenReturn(ownerEmployeeRelation);
+
+        Restaurant restaurant = new Restaurant();
+        restaurant.setId(1L);
+        Mockito.when(restaurantServicePort.getRestaurantByOwnerId(1L)).thenReturn(restaurant);
+
+        Pageable pageable = PageRequest.of(0, 10);
+        Order order = new Order();
+        List<Order> orderList = List.of(order);
+        Page<Order> orderPage = new PageImpl<>(orderList, pageable, 1);
+        Mockito.when(orderServicePort.listOrder(1L, "pending", pageable))
+                .thenReturn(orderPage);
+        Mockito.when(orderServicePort.getOrder(1L)).thenReturn(order);
+
+        OrderPlate orderPlate = new OrderPlate();
+        List<OrderPlate> orderPlateList = List.of(orderPlate);
+
+        OrderInfoResponseDto orderInfoResponseDto = new OrderInfoResponseDto();
+        List<OrderInfoResponseDto> orderInfoResponseDtoList = List.of(orderInfoResponseDto);
+        Page<OrderInfoResponseDto> orderInfoResponseDtoPage = new PageImpl<>(orderInfoResponseDtoList, pageable, 1);
+
+        Mockito.when(responseMapper.toReponsePage(orderPage, orderPlateList))
+                .thenReturn(orderInfoResponseDtoPage);
+
+
+        Page<OrderInfoResponseDto> returnedOrderPage = orderHandler.updateOrderStatus(1L, "pending", 0, 10, request );
+
+        Assertions.assertFalse(orderInfoResponseDtoPage.isEmpty());
+    }
 }

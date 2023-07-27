@@ -10,5 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 public interface IOrderHandler {
     void saveOrder(OrderRequestDto orderRequestDto);
 
+    Page<OrderInfoResponseDto> updateOrderStatus(Long idOrder, String status, int page, int size, HttpServletRequest request);
+
     Page<OrderInfoResponseDto> listOrder(String status, int page, int size, HttpServletRequest request);
 }

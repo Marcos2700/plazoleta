@@ -41,7 +41,8 @@ public class OrderRestController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "List or Orders returned",
             content = @Content(mediaType = "application/json",
-            array = @ArraySchema(schema = @Schema(implementation = OrderInfoResponseDto.class))))
+            array = @ArraySchema(schema = @Schema(implementation = OrderInfoResponseDto.class)))),
+            @ApiResponse(responseCode = "404", description = "No data found", content = @Content)
     })
     @GetMapping("/employee/list")
     public ResponseEntity<Page<OrderInfoResponseDto>> listOrders(@RequestParam(defaultValue = "0") int page,
@@ -49,6 +50,24 @@ public class OrderRestController {
                                                            @RequestParam(defaultValue = "") String status,
                                                            HttpServletRequest request){
         Page<OrderInfoResponseDto> orderInfoResponseDtoPage = orderHandler.listOrder(status, page, size, request);
+        return ResponseEntity.ok(orderInfoResponseDtoPage);
+    }
+
+    @Operation(summary = "Assign order to chef")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "List or Orders returned",
+                    content = @Content(mediaType = "application/json",
+                            array = @ArraySchema(schema = @Schema(implementation = OrderInfoResponseDto.class)))),
+            @ApiResponse(responseCode = "404", description = "No data found", content = @Content),
+            @ApiResponse(responseCode = "404", description = "Order does not exist", content = @Content)
+    })
+    @PutMapping("/employee/assign/order/{id}")
+    public ResponseEntity<Page<OrderInfoResponseDto>> updateOrderStatus(@PathVariable Long id,
+                                                                        @RequestParam(defaultValue = "0") int page,
+                                                                        @RequestParam(defaultValue = "10") int size,
+                                                                        @RequestParam(defaultValue = "") String status,
+                                                                        HttpServletRequest request){
+        Page<OrderInfoResponseDto> orderInfoResponseDtoPage = orderHandler.updateOrderStatus(id, status, page, size, request);
         return ResponseEntity.ok(orderInfoResponseDtoPage);
     }
 }

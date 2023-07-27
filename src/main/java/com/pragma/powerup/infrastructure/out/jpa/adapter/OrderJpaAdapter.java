@@ -5,6 +5,7 @@ import com.pragma.powerup.domain.model.OrderStatus;
 import com.pragma.powerup.domain.spi.IOrderPersistencePort;
 import com.pragma.powerup.infrastructure.exception.NoDataFoundException;
 import com.pragma.powerup.infrastructure.exception.OrderInProcessException;
+import com.pragma.powerup.infrastructure.exception.OrderNotExistException;
 import com.pragma.powerup.infrastructure.exception.RestaurantNotExistException;
 import com.pragma.powerup.infrastructure.out.jpa.entity.OrderEntity;
 import com.pragma.powerup.infrastructure.out.jpa.entity.RestaurantEntity;
@@ -57,5 +58,19 @@ public class OrderJpaAdapter implements IOrderPersistencePort {
             throw new NoDataFoundException();
         }
         return orderEntityMapper.toOrderPage(orderEntityPage);
+    }
+
+    @Override
+    public Order getOrder(Long id) {
+        OrderEntity orderEntity = orderRepository.findById(id).orElse(null);
+        if(orderEntity == null){
+            throw new  OrderNotExistException();
+        }
+        return orderEntityMapper.toOrder(orderEntity);
+    }
+
+    @Override
+    public void updateStatus(Order order) {
+        orderRepository.save(orderEntityMapper.toOrderEntity(order));
     }
 }

@@ -57,4 +57,20 @@ class OrderRestControllerTests {
         Assertions.assertEquals(orderInfoResponseDtoPage, response.getBody());
     }
 
+    @Test
+    void updateOrderStatus(){
+        Pageable pageable = PageRequest.of(0, 10);
+        OrderInfoResponseDto orderInfoResponseDto = new OrderInfoResponseDto();
+        List<OrderInfoResponseDto> orderInfoResponseDtoList = List.of(orderInfoResponseDto);
+        Page<OrderInfoResponseDto> orderInfoResponseDtoPage = new PageImpl<>(orderInfoResponseDtoList, pageable, 1);
+
+        Mockito.when(orderHandler.listOrder("pending", 0, 10, request))
+                .thenReturn(orderInfoResponseDtoPage);
+
+        ResponseEntity<Page<OrderInfoResponseDto>> response = orderRestController.updateOrderStatus(1L, 0, 10, "pending", request);
+
+        Assertions.assertEquals(HttpStatus.OK, response.getStatusCode());
+    }
+
+
 }

@@ -14,7 +14,6 @@ import com.pragma.powerup.domain.model.Order;
 import com.pragma.powerup.domain.model.OrderPlate;
 import com.pragma.powerup.domain.model.OrderStatus;
 import com.pragma.powerup.domain.model.Restaurant;
-import com.pragma.powerup.infrastructure.exception.RestaurantNotExistException;
 import com.pragma.powerup.infrastructure.input.feign.UserFeignClient;
 import com.pragma.powerup.infrastructure.input.feign.dto.OwnerEmployeeRelation;
 import com.pragma.powerup.infrastructure.input.feign.dto.UserDto;
@@ -60,7 +59,38 @@ public class OrderHandlerImpl implements IOrderHandler {
     }
 
     @Override
+    public Page<OrderInfoResponseDto> updateOrderStatus(Long idOrder, String status, int page, int size, HttpServletRequest request) {
+        Long idChef = this.getIdChef(request);
+
+        Order order = orderServicePort.getOrder(idOrder);
+        order.setIdChef(idChef);
+        order.setStatus(OrderStatus.IN_PREPARATION.getStatus());
+
+        orderServicePort.updateStatus(order);
+
+        Long idRestaurant = this.getRestaurantId(request);
+        Pageable pageable = PageRequest.of(page, size);
+
+        return this.getOrdersResponsePage(idRestaurant, pageable, status);
+    }
+
+    @Override
     public Page<OrderInfoResponseDto> listOrder(String status, int page, int size, HttpServletRequest request) {
+        Long idRestaurant = this.getRestaurantId(request);
+        Pageable pageable = PageRequest.of(page, size);
+
+        return this.getOrdersResponsePage(idRestaurant, pageable, status);
+    }
+
+    private Page<OrderInfoResponseDto> getOrdersResponsePage(Long idRestaurant, Pageable pageable, String status){
+        Page<Order> orderPage = orderServicePort.listOrder(idRestaurant, status, pageable);
+        List<OrderPlate> orderPlateList = orderPage.getContent().stream()
+                .flatMap(order -> orderPlateServicePort.findAllByOrderId(order.getId()).stream())
+                .collect(Collectors.toList());
+        return orderResponseMapper.toReponsePage(orderServicePort.listOrder(idRestaurant, status, pageable), orderPlateList);
+    }
+
+    private Long getRestaurantId(HttpServletRequest request){
         String token = request.getHeader("Authorization").replace("Bearer ","");
         String email = tokenUtils.getEmail(token);
         UserDto employee = userFeignClient.getUserByEmail(email);
@@ -68,11 +98,14 @@ public class OrderHandlerImpl implements IOrderHandler {
         OwnerEmployeeRelation ownerEmployeeRelation = userFeignClient.getOwnerEmployeeRelation(employee.getId());
         Restaurant restaurant = restaurantServicePort.getRestaurantByOwnerId(ownerEmployeeRelation.getIdOwner());
 
-        Pageable pageable = PageRequest.of(page, size);
-        Page<Order> orderPage = orderServicePort.listOrder(restaurant.getId(), status, pageable);
-        List<OrderPlate> orderPlateList = orderPage.getContent().stream()
-                .flatMap(order -> orderPlateServicePort.findAllByOrderId(order.getId()).stream())
-                .collect(Collectors.toList());
-        return orderResponseMapper.toReponsePage(orderServicePort.listOrder(restaurant.getId(), status, pageable), orderPlateList);
+        return restaurant.getId();
+    }
+
+    private Long getIdChef(HttpServletRequest request){
+        String token = request.getHeader("Authorization").replace("Bearer ","");
+        String email = tokenUtils.getEmail(token);
+        UserDto employee = userFeignClient.getUserByEmail(email);
+
+        return employee.getId();
     }
 }

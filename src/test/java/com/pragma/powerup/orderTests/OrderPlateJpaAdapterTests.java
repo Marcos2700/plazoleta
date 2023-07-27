@@ -5,6 +5,7 @@ import com.pragma.powerup.domain.model.OrderPlate;
 import com.pragma.powerup.infrastructure.exception.NoPlateToRestaurantAssociationException;
 import com.pragma.powerup.infrastructure.exception.PlateNotExistException;
 import com.pragma.powerup.infrastructure.out.jpa.adapter.OrderPlateJpaAdapter;
+import com.pragma.powerup.infrastructure.out.jpa.entity.OrderEntity;
 import com.pragma.powerup.infrastructure.out.jpa.entity.OrderPlateEntity;
 import com.pragma.powerup.infrastructure.out.jpa.entity.PlateEntity;
 import com.pragma.powerup.infrastructure.out.jpa.mapper.IOrderPlateEntityMapper;
@@ -91,5 +92,4 @@ class OrderPlateJpaAdapterTests {
             Assertions.assertInstanceOf(NoPlateToRestaurantAssociationException.class, e);
         }
     }
-
 }

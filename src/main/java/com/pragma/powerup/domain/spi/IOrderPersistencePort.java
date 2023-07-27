@@ -8,4 +8,8 @@ public interface IOrderPersistencePort {
     Order saveOrder(Order order);
 
     Page<Order> listOrder(Long idRestaurant, String status, Pageable pageable);
+
+    Order getOrder(Long id);
+
+    void updateStatus(Order order);
 }
