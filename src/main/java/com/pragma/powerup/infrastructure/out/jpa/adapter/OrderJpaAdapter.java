@@ -3,6 +3,7 @@ package com.pragma.powerup.infrastructure.out.jpa.adapter;
 import com.pragma.powerup.domain.model.Order;
 import com.pragma.powerup.domain.model.OrderStatus;
 import com.pragma.powerup.domain.spi.IOrderPersistencePort;
+import com.pragma.powerup.infrastructure.exception.NoDataFoundException;
 import com.pragma.powerup.infrastructure.exception.OrderInProcessException;
 import com.pragma.powerup.infrastructure.exception.RestaurantNotExistException;
 import com.pragma.powerup.infrastructure.out.jpa.entity.OrderEntity;
@@ -11,6 +12,8 @@ import com.pragma.powerup.infrastructure.out.jpa.mapper.IOrderEntityMapper;
 import com.pragma.powerup.infrastructure.out.jpa.repository.IOrderRepository;
 import com.pragma.powerup.infrastructure.out.jpa.repository.IRestaurantRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 import java.util.Objects;
@@ -39,5 +42,20 @@ public class OrderJpaAdapter implements IOrderPersistencePort {
             throw new OrderInProcessException();
         }
         return orderEntityMapper.toOrder(orderRepository.save(orderEntityMapper.toOrderEntity(order)));
+    }
+
+    @Override
+    public Page<Order> listOrder(Long idRestaurant, String status, Pageable pageable) {
+        Page<OrderEntity> orderEntityPage;
+        if(status.isEmpty()){
+            orderEntityPage = orderRepository.findAllByIdRestaurant(idRestaurant, pageable);
+        }
+        else {
+            orderEntityPage = orderRepository.findByIdRestaurantAndStatus(idRestaurant, status, pageable);
+        }
+        if(orderEntityPage.isEmpty()){
+            throw new NoDataFoundException();
+        }
+        return orderEntityMapper.toOrderPage(orderEntityPage);
     }
 }

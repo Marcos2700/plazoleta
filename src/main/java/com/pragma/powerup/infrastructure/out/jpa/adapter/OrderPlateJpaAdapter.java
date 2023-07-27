@@ -11,6 +11,7 @@ import com.pragma.powerup.infrastructure.out.jpa.repository.IOrderPlateRepositor
 import com.pragma.powerup.infrastructure.out.jpa.repository.IPlateRepository;
 import lombok.RequiredArgsConstructor;
 
+import java.util.List;
 import java.util.Objects;
 
 @RequiredArgsConstructor
@@ -30,5 +31,10 @@ public class OrderPlateJpaAdapter implements IOrderPlatePersistencePort {
             throw new NoPlateToRestaurantAssociationException();
         }
         orderPlateRepository.save(orderPlateEntityMapper.toOrderPlateEntity(orderPlate));
+    }
+
+    @Override
+    public List<OrderPlate> findAllByOrderId(Long idOrder) {
+        return orderPlateEntityMapper.toOrderPlateList(orderPlateRepository.findAllByIdOrder(idOrder));
     }
 }

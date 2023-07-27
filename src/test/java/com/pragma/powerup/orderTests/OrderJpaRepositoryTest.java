@@ -6,6 +6,9 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 
 import java.util.Date;
 
@@ -43,5 +46,13 @@ class OrderJpaRepositoryTest {
         catch (Exception e){
             Assertions.assertInstanceOf(Exception.class, e);
         }
+    }
+
+    @Test
+    void listOrders(){
+        Pageable pageable = PageRequest.of(0, 10);
+        Page<OrderEntity> orderEntityPage = orderRepository.findByIdRestaurantAndStatus(1L, "pending", pageable);
+
+        Assertions.assertNotNull(orderEntityPage);
     }
 }

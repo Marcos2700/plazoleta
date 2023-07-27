@@ -1,6 +1,7 @@
 package com.pragma.powerup.orderTests;
 
 import com.pragma.powerup.domain.model.Order;
+import com.pragma.powerup.infrastructure.exception.NoDataFoundException;
 import com.pragma.powerup.infrastructure.exception.OrderInProcessException;
 import com.pragma.powerup.infrastructure.exception.RestaurantNotExistException;
 import com.pragma.powerup.infrastructure.out.jpa.adapter.OrderJpaAdapter;
@@ -15,6 +16,10 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.ArrayList;
@@ -103,6 +108,45 @@ class OrderJpaAdapterTest {
         }
         catch (OrderInProcessException e){
             Assertions.assertInstanceOf(OrderInProcessException.class, e);
+        }
+    }
+
+    @Test
+    void listOrders(){
+        Pageable pageable = PageRequest.of(0, 10);
+        OrderEntity orderEntity = new OrderEntity();
+        List<OrderEntity> orderEntityList = List.of(orderEntity);
+        Page<OrderEntity> orderEntityPage = new PageImpl<>(orderEntityList, pageable, 1);
+
+        Mockito.when(orderRepository.findByIdRestaurantAndStatus(1L, "pending", pageable))
+                .thenReturn(orderEntityPage);
+
+        Order order = new Order();
+        List<Order> orderList = List.of(order);
+        Page<Order> orderPage = new PageImpl<>(orderList, pageable, 1);
+
+        Mockito.when(orderEntityMapper.toOrderPage(orderEntityPage)).thenReturn(orderPage);
+
+        Page<Order> returnedOrderPage = orderJpaAdapter.listOrder(1L, "pending", pageable);
+
+        Assertions.assertNotNull(returnedOrderPage);
+        Assertions.assertEquals(orderPage, returnedOrderPage);
+    }
+
+    @Test
+    void listingEmptyPage(){
+        Pageable pageable = PageRequest.of(0, 10);
+        List<OrderEntity> orderEntityList = List.of();
+        Page<OrderEntity> orderEntityPage = new PageImpl<>(orderEntityList, pageable, 1);
+
+        Mockito.when(orderRepository.findByIdRestaurantAndStatus(1L, "pending", pageable))
+                .thenReturn(orderEntityPage);
+
+        try{
+            Page<Order> returnedOrderPage = orderJpaAdapter.listOrder(1L, "pending", pageable);
+        }
+        catch (NoDataFoundException e){
+            Assertions.assertInstanceOf(NoDataFoundException.class, e);
         }
     }
 }

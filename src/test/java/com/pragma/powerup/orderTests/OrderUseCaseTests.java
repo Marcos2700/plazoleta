@@ -9,7 +9,13 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
+
+import java.util.List;
 
 @ExtendWith(SpringExtension.class)
 class OrderUseCaseTests {
@@ -29,6 +35,21 @@ class OrderUseCaseTests {
         Order returnedOrder = orderUseCase.saveOrder(order);
 
         Assertions.assertEquals(order, returnedOrder);
+    }
+
+    @Test
+    void listOrders(){
+        Pageable pageable = PageRequest.of(0, 10);
+        Order order = new Order();
+        List<Order> orderList = List.of(order);
+        Page<Order> orderPage = new PageImpl<>(orderList, pageable, 1);
+
+        Mockito.when(orderPersistencePort.listOrder(1L, "pending", pageable))
+                .thenReturn(orderPage);
+
+        Page<Order> returnedPage = orderUseCase.listOrder(1L, "pending", pageable);
+
+        Assertions.assertEquals(orderPage, returnedPage);
     }
 
 }
