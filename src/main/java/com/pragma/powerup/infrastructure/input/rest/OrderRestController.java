@@ -95,4 +95,17 @@ public class OrderRestController {
         orderHandler.setDeliveredStatus(idOrder, pin);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
+    @Operation(summary = "Client cancel order")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Status updated to delivered", content = @Content),
+            @ApiResponse(responseCode = "404", description = "Order does not exist", content = @Content),
+            @ApiResponse(responseCode = "409", description = "The order is in progress, so can't be canceled", content = @Content),
+            @ApiResponse(responseCode = "403", description = "No order to client association", content = @Content)
+    })
+    @DeleteMapping("/client/cancel/{idOrder}")
+    public ResponseEntity<Void> cancelOrder(@PathVariable Long idOrder, HttpServletRequest request){
+        orderHandler.cancelOrder(idOrder, request);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 }

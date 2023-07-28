@@ -17,4 +17,7 @@ public interface IOrderHandler {
     void setReadyStatus(Long idOrder);
 
     void setDeliveredStatus(Long idOrder, String pin);
+
+    void cancelOrder(Long idOrder, HttpServletRequest request);
+
 }

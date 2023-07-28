@@ -15,9 +15,7 @@ import com.pragma.powerup.domain.model.Order;
 import com.pragma.powerup.domain.model.OrderPlate;
 import com.pragma.powerup.domain.model.OrderStatus;
 import com.pragma.powerup.domain.model.Restaurant;
-import com.pragma.powerup.infrastructure.exception.NoReadyStatusBeforeException;
-import com.pragma.powerup.infrastructure.exception.OrderStatusException;
-import com.pragma.powerup.infrastructure.exception.WrongPinException;
+import com.pragma.powerup.infrastructure.exception.*;
 import com.pragma.powerup.infrastructure.input.feign.MessageFeignClient;
 import com.pragma.powerup.infrastructure.input.feign.UserFeignClient;
 import com.pragma.powerup.infrastructure.input.feign.dto.ClientMessageDto;
@@ -73,7 +71,7 @@ public class OrderHandlerImpl implements IOrderHandler {
 
     @Override
     public Page<OrderInfoResponseDto> updateOrderStatus(Long idOrder, String status, int page, int size, HttpServletRequest request) {
-        Long idChef = this.getIdChef(request);
+        Long idChef = this.getIdUser(request);
 
         Order order = orderServicePort.getOrder(idOrder);
         if(order.getStatus().equals(OrderStatus.DELIVERED.getStatus())){
@@ -132,6 +130,24 @@ public class OrderHandlerImpl implements IOrderHandler {
         orderServicePort.updateStatus(order);
     }
 
+    @Override
+    public void cancelOrder(Long idOrder, HttpServletRequest request) {
+        Long idClient = this.getIdUser(request);
+        UserDto client = userFeignClient.getUser(idClient);
+        Order order = orderServicePort.getOrder(idOrder);
+        if(!Objects.equals(order.getIdClient(), idClient)){
+            throw new NoOrderClientAssociationException();
+        }
+
+        if(!order.getStatus().equals(OrderStatus.PENDING.getStatus())){
+            messageFeignClient.notifyNotIsPossibleToCancel(client.getPhoneNumber());
+            throw new OrderNotCancelableException();
+        }
+
+        order.setStatus(OrderStatus.CANCELED.getStatus());
+        orderServicePort.updateStatus(order);
+    }
+
     private Page<OrderInfoResponseDto> getOrdersResponsePage(Long idRestaurant, Pageable pageable, String status){
         Page<Order> orderPage = orderServicePort.listOrder(idRestaurant, status, pageable);
         List<OrderPlate> orderPlateList = orderPage.getContent().stream()
@@ -164,12 +180,12 @@ public class OrderHandlerImpl implements IOrderHandler {
         return restaurant.getId();
     }
 
-    private Long getIdChef(HttpServletRequest request){
+    private Long getIdUser(HttpServletRequest request){
         String token = request.getHeader("Authorization").replace("Bearer ","");
         String email = tokenUtils.getEmail(token);
-        UserDto employee = userFeignClient.getUserByEmail(email);
+        UserDto user = userFeignClient.getUserByEmail(email);
 
-        return employee.getId();
+        return user.getId();
     }
 
 

@@ -15,7 +15,9 @@ import com.pragma.powerup.domain.model.Order;
 import com.pragma.powerup.domain.model.OrderPlate;
 import com.pragma.powerup.domain.model.OrderStatus;
 import com.pragma.powerup.domain.model.Restaurant;
+import com.pragma.powerup.infrastructure.exception.NoOrderClientAssociationException;
 import com.pragma.powerup.infrastructure.exception.NoReadyStatusBeforeException;
+import com.pragma.powerup.infrastructure.exception.OrderNotCancelableException;
 import com.pragma.powerup.infrastructure.exception.WrongPinException;
 import com.pragma.powerup.infrastructure.input.feign.MessageFeignClient;
 import com.pragma.powerup.infrastructure.input.feign.UserFeignClient;
@@ -255,6 +257,81 @@ class OrderHandlerTests {
         catch (Exception e){
             e.printStackTrace();
             Assertions.assertInstanceOf(WrongPinException.class, e);
+        }
+    }
+
+    @Test
+    void cancelOrder(){
+        String bearer = "Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJtYXJjb3NhZXIyNzcyQGdtYWlsLmNvbSIsImV4cCI6MjY5MDU1NTk5NCwicm9sZXMiOlsiUk9MRV9DTElFTlQiXSwibmFtZSI6Ik1hcmNvcyJ9.gT1V2wv8YKUSiHNH8-gIdqb-bSysxettzxuzF_34XZ4qZrgjlbHbPOF0zrm_3l0j";
+        TokenUtils tokenUtils = Mockito.mock(TokenUtils.class);
+        Mockito.when(request.getHeader("Authorization")).thenReturn(bearer);
+        Mockito.when(tokenUtils.getEmail(bearer.replace("Bearer ", ""))).thenReturn("marcosaer2772@gmail.com");
+
+        UserDto client = new UserDto();
+        client.setId(1L);
+        Order order = new Order();
+        order.setStatus(OrderStatus.PENDING.getStatus());
+        order.setIdClient(1L);
+
+        Mockito.when(orderServicePort.getOrder(1L)).thenReturn(order);
+        Mockito.when(feignClient.getUserByEmail("marcosaer2772@gmail.com")).thenReturn(client);
+        Mockito.when(feignClient.getUser(1L)).thenReturn(client);
+
+        try {
+            orderHandler.cancelOrder(1L, request);
+            Assertions.assertTrue(true);
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    void cancelWithNoClientOrderAssociation(){
+        String bearer = "Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJtYXJjb3NhZXIyNzcyQGdtYWlsLmNvbSIsImV4cCI6MjY5MDU1NTk5NCwicm9sZXMiOlsiUk9MRV9DTElFTlQiXSwibmFtZSI6Ik1hcmNvcyJ9.gT1V2wv8YKUSiHNH8-gIdqb-bSysxettzxuzF_34XZ4qZrgjlbHbPOF0zrm_3l0j";
+        TokenUtils tokenUtils = Mockito.mock(TokenUtils.class);
+        Mockito.when(request.getHeader("Authorization")).thenReturn(bearer);
+        Mockito.when(tokenUtils.getEmail(bearer.replace("Bearer ", ""))).thenReturn("marcosaer2772@gmail.com");
+
+        UserDto client = new UserDto();
+        client.setId(1L);
+        Order order = new Order();
+        order.setStatus(OrderStatus.PENDING.getStatus());
+
+        Mockito.when(orderServicePort.getOrder(1L)).thenReturn(order);
+        Mockito.when(feignClient.getUserByEmail("marcosaer2772@gmail.com")).thenReturn(client);
+        Mockito.when(feignClient.getUser(1L)).thenReturn(client);
+
+        try {
+            orderHandler.cancelOrder(1L, request);
+        }
+        catch (Exception e){
+            Assertions.assertInstanceOf(NoOrderClientAssociationException.class, e);
+        }
+    }
+
+    @Test
+    void cancelWithNoPendingStatus(){
+        String bearer = "Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJtYXJjb3NhZXIyNzcyQGdtYWlsLmNvbSIsImV4cCI6MjY5MDU1NTk5NCwicm9sZXMiOlsiUk9MRV9DTElFTlQiXSwibmFtZSI6Ik1hcmNvcyJ9.gT1V2wv8YKUSiHNH8-gIdqb-bSysxettzxuzF_34XZ4qZrgjlbHbPOF0zrm_3l0j";
+        TokenUtils tokenUtils = Mockito.mock(TokenUtils.class);
+        Mockito.when(request.getHeader("Authorization")).thenReturn(bearer);
+        Mockito.when(tokenUtils.getEmail(bearer.replace("Bearer ", ""))).thenReturn("marcosaer2772@gmail.com");
+
+        UserDto client = new UserDto();
+        client.setId(1L);
+        Order order = new Order();
+        order.setStatus(OrderStatus.READY.getStatus());
+        order.setIdClient(1L);
+
+        Mockito.when(orderServicePort.getOrder(1L)).thenReturn(order);
+        Mockito.when(feignClient.getUserByEmail("marcosaer2772@gmail.com")).thenReturn(client);
+        Mockito.when(feignClient.getUser(1L)).thenReturn(client);
+
+        try {
+            orderHandler.cancelOrder(1L, request);
+        }
+        catch (Exception e){
+            Assertions.assertInstanceOf(OrderNotCancelableException.class, e);
         }
     }
 }

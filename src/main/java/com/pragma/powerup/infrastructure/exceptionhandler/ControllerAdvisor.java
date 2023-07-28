@@ -129,4 +129,17 @@ public class ControllerAdvisor {
                 .body(Collections.singletonMap(MESSAGE, ExceptionResponse.ORDER_STATUS.getMessage()));
     }
 
+    @ExceptionHandler(NoOrderClientAssociationException.class)
+    public ResponseEntity<Map<String,String>> handleNoOrderClientAssociationException(
+            NoOrderClientAssociationException ignoredNoOrderClientAssociationException){
+        return ResponseEntity.status(HttpStatus.FORBIDDEN)
+                .body(Collections.singletonMap(MESSAGE, ExceptionResponse.NO_ORDER_CLIENT_ASSOCIATION.getMessage()));
+    }
+
+    @ExceptionHandler(OrderNotCancelableException.class)
+    public ResponseEntity<Map<String, String>> handleOrderNotCancelableException(
+            OrderNotCancelableException ignoredOrderNotCancelableException){
+        return ResponseEntity.status(HttpStatus.CONFLICT)
+                .body(Collections.singletonMap(MESSAGE, ExceptionResponse.ORDER_NOT_CANCELABLE.getMessage()));
+    }
 }

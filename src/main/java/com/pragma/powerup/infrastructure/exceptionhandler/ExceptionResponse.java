@@ -16,7 +16,9 @@ public enum ExceptionResponse {
     ORDER_NOT_EXIST("Order not exist"),
     WRONG_PIN("Pin is not associated to a ready order"),
     NO_READY_STATUS_BEFORE("Status must be in ready before setting to delivered"),
-    ORDER_STATUS("Not allowed to update this order to that status");
+    ORDER_STATUS("Not allowed to update this order to that status"),
+    NO_ORDER_CLIENT_ASSOCIATION("The client is not associated to that order"),
+    ORDER_NOT_CANCELABLE("The order is in progress");
 
 
     private final String message;

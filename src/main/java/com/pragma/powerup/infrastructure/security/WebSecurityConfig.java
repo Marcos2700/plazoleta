@@ -37,6 +37,7 @@ public class WebSecurityConfig {
                                         "/order/employee/ready/**",
                                         "/order/employee/delivered/**")
                                                                     .hasRole("EMPLOYEE")
+                .antMatchers("/client/cancel/**").hasRole("CLIENT")
                 .antMatchers("/restaurant/client/list**").permitAll()
                 .antMatchers("/plate/client/list/**").permitAll()
                 .antMatchers("/order/client").permitAll()
