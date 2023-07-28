@@ -72,5 +72,10 @@ class OrderRestControllerTests {
         Assertions.assertEquals(HttpStatus.OK, response.getStatusCode());
     }
 
+    @Test
+    void setReadyStatus(){
+        ResponseEntity<Void> response = orderRestController.updateOrderToReady(1L);
+        Assertions.assertEquals(HttpStatus.OK, response.getStatusCode());
+    }
 
 }

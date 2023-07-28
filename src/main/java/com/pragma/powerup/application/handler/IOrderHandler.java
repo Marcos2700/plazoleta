@@ -13,4 +13,6 @@ public interface IOrderHandler {
     Page<OrderInfoResponseDto> updateOrderStatus(Long idOrder, String status, int page, int size, HttpServletRequest request);
 
     Page<OrderInfoResponseDto> listOrder(String status, int page, int size, HttpServletRequest request);
+
+    void setReadyStatus(Long idOrder);
 }

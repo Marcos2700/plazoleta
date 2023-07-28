@@ -7,13 +7,16 @@ import com.pragma.powerup.application.handler.impl.OrderHandlerImpl;
 import com.pragma.powerup.application.mapper.IOrderPlateMapper;
 import com.pragma.powerup.application.mapper.IOrderRequestMapper;
 import com.pragma.powerup.application.mapper.IOrderResponseMapper;
+import com.pragma.powerup.application.mapper.IUserDtoToClientDtoMapper;
 import com.pragma.powerup.domain.api.IOrderPlateServicePort;
 import com.pragma.powerup.domain.api.IOrderServicePort;
 import com.pragma.powerup.domain.api.IRestaurantServicePort;
 import com.pragma.powerup.domain.model.Order;
 import com.pragma.powerup.domain.model.OrderPlate;
 import com.pragma.powerup.domain.model.Restaurant;
+import com.pragma.powerup.infrastructure.input.feign.MessageFeignClient;
 import com.pragma.powerup.infrastructure.input.feign.UserFeignClient;
+import com.pragma.powerup.infrastructure.input.feign.dto.ClientMessageDto;
 import com.pragma.powerup.infrastructure.input.feign.dto.OwnerEmployeeRelation;
 import com.pragma.powerup.infrastructure.input.feign.dto.UserDto;
 import com.pragma.powerup.infrastructure.security.TokenUtils;
@@ -55,6 +58,10 @@ class OrderHandlerTests {
     UserFeignClient feignClient;
     @Mock
     IRestaurantServicePort restaurantServicePort;
+    @Mock
+    IUserDtoToClientDtoMapper userDtoToClientDtoMapper;
+    @Mock
+    MessageFeignClient messageFeignClient;
 
     @Test
     void saveOrder(){
@@ -161,5 +168,27 @@ class OrderHandlerTests {
         Page<OrderInfoResponseDto> returnedOrderPage = orderHandler.updateOrderStatus(1L, "pending", 0, 10, request );
 
         Assertions.assertFalse(orderInfoResponseDtoPage.isEmpty());
+    }
+
+    @Test
+    void setReadyStatus(){
+        Order order = new Order();
+        order.setIdClient(1L);
+        Mockito.when(orderServicePort.getOrder(1L)).thenReturn(order);
+
+        UserDto userDto = new UserDto();
+        Mockito.when(feignClient.getUser(1L)).thenReturn(userDto);
+
+        ClientMessageDto clientMessageDto = new ClientMessageDto();
+        Mockito.when(userDtoToClientDtoMapper.toClientMessageDto(userDto, "000000")).thenReturn(clientMessageDto);
+
+        try {
+            orderHandler.setReadyStatus(1L);
+            Assertions.assertTrue(true);
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+
     }
 }

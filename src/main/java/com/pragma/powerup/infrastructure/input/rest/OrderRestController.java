@@ -61,7 +61,7 @@ public class OrderRestController {
             @ApiResponse(responseCode = "404", description = "No data found", content = @Content),
             @ApiResponse(responseCode = "404", description = "Order does not exist", content = @Content)
     })
-    @PutMapping("/employee/assign/order/{id}")
+    @PutMapping("/employee/assign/{id}")
     public ResponseEntity<Page<OrderInfoResponseDto>> updateOrderStatus(@PathVariable Long id,
                                                                         @RequestParam(defaultValue = "0") int page,
                                                                         @RequestParam(defaultValue = "10") int size,
@@ -69,5 +69,16 @@ public class OrderRestController {
                                                                         HttpServletRequest request){
         Page<OrderInfoResponseDto> orderInfoResponseDtoPage = orderHandler.updateOrderStatus(id, status, page, size, request);
         return ResponseEntity.ok(orderInfoResponseDtoPage);
+    }
+
+    @Operation
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Status setted to ready", content = @Content),
+            @ApiResponse(responseCode = "404", description = "Order does not exist", content = @Content)
+    })
+    @PutMapping("/employee/ready/{idOrder}")
+    public ResponseEntity<Void> updateOrderToReady(@PathVariable Long idOrder){
+        orderHandler.setReadyStatus(idOrder);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }
