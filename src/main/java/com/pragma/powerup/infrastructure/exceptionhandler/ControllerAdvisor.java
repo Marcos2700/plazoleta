@@ -109,4 +109,24 @@ public class ControllerAdvisor {
                 .body(Collections.singletonMap(MESSAGE, ExceptionResponse.ORDER_NOT_EXIST.getMessage()));
     }
 
+    @ExceptionHandler(WrongPinException.class)
+    public ResponseEntity<Map<String, String>> handleWrongPinException(
+            WrongPinException ignoredWrongPinException){
+        return ResponseEntity.status(HttpStatus.FORBIDDEN)
+                .body(Collections.singletonMap(MESSAGE, ExceptionResponse.WRONG_PIN.getMessage()));
+    }
+
+    @ExceptionHandler(NoReadyStatusBeforeException.class)
+    public ResponseEntity<Map<String, String>> handleNoReadyStatusBeforeException(
+            NoReadyStatusBeforeException ignoredNoReadyStatusBeforeException){
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(Collections.singletonMap(MESSAGE, ExceptionResponse.NO_READY_STATUS_BEFORE.getMessage()));
+    }
+
+    @ExceptionHandler(OrderStatusException.class)
+    public ResponseEntity<Map<String, String>> handleOrderStatusException(){
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(Collections.singletonMap(MESSAGE, ExceptionResponse.ORDER_STATUS.getMessage()));
+    }
+
 }

@@ -13,12 +13,17 @@ import com.pragma.powerup.domain.api.IOrderServicePort;
 import com.pragma.powerup.domain.api.IRestaurantServicePort;
 import com.pragma.powerup.domain.model.Order;
 import com.pragma.powerup.domain.model.OrderPlate;
+import com.pragma.powerup.domain.model.OrderStatus;
 import com.pragma.powerup.domain.model.Restaurant;
+import com.pragma.powerup.infrastructure.exception.NoReadyStatusBeforeException;
+import com.pragma.powerup.infrastructure.exception.WrongPinException;
 import com.pragma.powerup.infrastructure.input.feign.MessageFeignClient;
 import com.pragma.powerup.infrastructure.input.feign.UserFeignClient;
 import com.pragma.powerup.infrastructure.input.feign.dto.ClientMessageDto;
 import com.pragma.powerup.infrastructure.input.feign.dto.OwnerEmployeeRelation;
 import com.pragma.powerup.infrastructure.input.feign.dto.UserDto;
+import com.pragma.powerup.infrastructure.out.jpa.entity.PinOrder;
+import com.pragma.powerup.infrastructure.out.jpa.repository.PinOrderRepository;
 import com.pragma.powerup.infrastructure.security.TokenUtils;
 import org.aspectj.weaver.ast.Or;
 import org.junit.jupiter.api.Assertions;
@@ -62,6 +67,8 @@ class OrderHandlerTests {
     IUserDtoToClientDtoMapper userDtoToClientDtoMapper;
     @Mock
     MessageFeignClient messageFeignClient;
+    @Mock
+    PinOrderRepository pinOrderRepository;
 
     @Test
     void saveOrder(){
@@ -190,5 +197,64 @@ class OrderHandlerTests {
             e.printStackTrace();
         }
 
+    }
+
+    @Test
+    void setDeliveredStatus(){
+        Order order = new Order();
+        order.setIdClient(1L);
+        order.setStatus(OrderStatus.READY.getStatus());
+        Mockito.when(orderServicePort.getOrder(1L)).thenReturn(order);
+
+        PinOrder pinOrder = new PinOrder();
+        pinOrder.setPin("111111");
+        Mockito.when(pinOrderRepository.findByIdOrder(1L)).thenReturn(pinOrder);
+
+        try{
+            orderHandler.setDeliveredStatus(1L, "111111");
+            Assertions.assertTrue(true);
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    void updatingToDeliveredWithWrongPreStatus() {
+        Order order = new Order();
+        order.setIdClient(1L);
+        order.setStatus(OrderStatus.PENDING.getStatus());
+        Mockito.when(orderServicePort.getOrder(1L)).thenReturn(order);
+
+        PinOrder pinOrder = new PinOrder();
+        pinOrder.setPin("111111");
+        Mockito.when(pinOrderRepository.findByIdOrder(1L)).thenReturn(pinOrder);
+
+        try {
+            orderHandler.setDeliveredStatus(1L, "111111");
+        } catch (NoReadyStatusBeforeException e) {
+            e.printStackTrace();
+            Assertions.assertInstanceOf(NoReadyStatusBeforeException.class, e);
+        }
+    }
+
+    @Test
+    void updatingToDeliveredWithWrongPin(){
+        Order order = new Order();
+        order.setIdClient(1L);
+        order.setStatus(OrderStatus.READY.getStatus());
+        Mockito.when(orderServicePort.getOrder(1L)).thenReturn(order);
+
+        PinOrder pinOrder = new PinOrder();
+        pinOrder.setPin("111111");
+        Mockito.when(pinOrderRepository.findByIdOrder(1L)).thenReturn(pinOrder);
+
+        try{
+            orderHandler.setDeliveredStatus(1L, "111222");
+        }
+        catch (Exception e){
+            e.printStackTrace();
+            Assertions.assertInstanceOf(WrongPinException.class, e);
+        }
     }
 }

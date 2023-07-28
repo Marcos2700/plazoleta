@@ -59,7 +59,8 @@ public class OrderRestController {
                     content = @Content(mediaType = "application/json",
                             array = @ArraySchema(schema = @Schema(implementation = OrderInfoResponseDto.class)))),
             @ApiResponse(responseCode = "404", description = "No data found", content = @Content),
-            @ApiResponse(responseCode = "404", description = "Order does not exist", content = @Content)
+            @ApiResponse(responseCode = "404", description = "Order does not exist", content = @Content),
+            @ApiResponse(responseCode = "400", description = "Status cannot be in deliveded", content = @Content)
     })
     @PutMapping("/employee/assign/{id}")
     public ResponseEntity<Page<OrderInfoResponseDto>> updateOrderStatus(@PathVariable Long id,
@@ -71,14 +72,27 @@ public class OrderRestController {
         return ResponseEntity.ok(orderInfoResponseDtoPage);
     }
 
-    @Operation
+    @Operation(summary = "Updating order status to ready")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Status setted to ready", content = @Content),
+            @ApiResponse(responseCode = "200", description = "Status updated to ready", content = @Content),
             @ApiResponse(responseCode = "404", description = "Order does not exist", content = @Content)
     })
     @PutMapping("/employee/ready/{idOrder}")
     public ResponseEntity<Void> updateOrderToReady(@PathVariable Long idOrder){
         orderHandler.setReadyStatus(idOrder);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @Operation(summary = "Updating order status to delivered")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Status updated to delivered", content = @Content),
+            @ApiResponse(responseCode = "404", description = "Order does not exist", content = @Content),
+            @ApiResponse(responseCode = "400", description = "Status must be in ready before", content = @Content),
+            @ApiResponse(responseCode = "403", description = "Pin is wrong", content = @Content)
+    })
+    @PutMapping("/employee/delivered/{idOrder}")
+    public ResponseEntity<Void> updateOrderToDelivered(@PathVariable Long idOrder, @RequestParam String pin){
+        orderHandler.setDeliveredStatus(idOrder, pin);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }

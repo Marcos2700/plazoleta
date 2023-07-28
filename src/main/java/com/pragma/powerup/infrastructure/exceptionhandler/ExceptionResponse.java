@@ -13,7 +13,11 @@ public enum ExceptionResponse {
     RESTAURANT_NOT_EXIST("Restaurant does not exits"),
     PLATE_NOT_EXIST("Plate does not exist"),
     ORDER_IN_PROCESS("There is a order in process for this client"),
-    ORDER_NOT_EXIST("Order not exist");
+    ORDER_NOT_EXIST("Order not exist"),
+    WRONG_PIN("Pin is not associated to a ready order"),
+    NO_READY_STATUS_BEFORE("Status must be in ready before setting to delivered"),
+    ORDER_STATUS("Not allowed to update this order to that status");
+
 
     private final String message;
 

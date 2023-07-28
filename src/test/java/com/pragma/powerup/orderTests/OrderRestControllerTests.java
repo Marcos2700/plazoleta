@@ -78,4 +78,10 @@ class OrderRestControllerTests {
         Assertions.assertEquals(HttpStatus.OK, response.getStatusCode());
     }
 
+    @Test
+    void setDeliveredStatus(){
+        ResponseEntity<Void> response = orderRestController.updateOrderToDelivered(1L, "111111");
+        Assertions.assertEquals(HttpStatus.OK, response.getStatusCode());
+    }
+
 }

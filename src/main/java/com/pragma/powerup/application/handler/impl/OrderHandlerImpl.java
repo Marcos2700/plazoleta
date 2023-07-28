@@ -15,6 +15,9 @@ import com.pragma.powerup.domain.model.Order;
 import com.pragma.powerup.domain.model.OrderPlate;
 import com.pragma.powerup.domain.model.OrderStatus;
 import com.pragma.powerup.domain.model.Restaurant;
+import com.pragma.powerup.infrastructure.exception.NoReadyStatusBeforeException;
+import com.pragma.powerup.infrastructure.exception.OrderStatusException;
+import com.pragma.powerup.infrastructure.exception.WrongPinException;
 import com.pragma.powerup.infrastructure.input.feign.MessageFeignClient;
 import com.pragma.powerup.infrastructure.input.feign.UserFeignClient;
 import com.pragma.powerup.infrastructure.input.feign.dto.ClientMessageDto;
@@ -33,6 +36,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Transactional;
 import java.security.SecureRandom;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Service
@@ -72,6 +76,10 @@ public class OrderHandlerImpl implements IOrderHandler {
         Long idChef = this.getIdChef(request);
 
         Order order = orderServicePort.getOrder(idOrder);
+        if(order.getStatus().equals(OrderStatus.DELIVERED.getStatus())){
+            throw new OrderStatusException();
+        }
+
         order.setIdChef(idChef);
         order.setStatus(OrderStatus.IN_PREPARATION.getStatus());
 
@@ -105,6 +113,23 @@ public class OrderHandlerImpl implements IOrderHandler {
         pinOrder.setPin(clientUser.getPin());
         pinOrderRepository.save(pinOrder);
 
+    }
+
+    @Override
+    public void setDeliveredStatus(Long idOrder, String pin) {
+        Order order = orderServicePort.getOrder(idOrder);
+        if(!order.getStatus().equals(OrderStatus.READY.getStatus())){
+            throw new NoReadyStatusBeforeException();
+        }
+
+        PinOrder pinOrder = pinOrderRepository.findByIdOrder(idOrder);
+        if(!Objects.equals(pinOrder.getPin(), pin)){
+            throw new WrongPinException();
+        }
+        pinOrderRepository.deleteById(pinOrder.getId());
+
+        order.setStatus(OrderStatus.DELIVERED.getStatus());
+        orderServicePort.updateStatus(order);
     }
 
     private Page<OrderInfoResponseDto> getOrdersResponsePage(Long idRestaurant, Pageable pageable, String status){
