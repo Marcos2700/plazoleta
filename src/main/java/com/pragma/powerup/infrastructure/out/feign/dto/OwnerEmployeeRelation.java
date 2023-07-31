@@ -1,4 +1,4 @@
-package com.pragma.powerup.infrastructure.input.feign.dto;
+package com.pragma.powerup.infrastructure.out.feign.dto;
 
 import lombok.Getter;
 import lombok.Setter;

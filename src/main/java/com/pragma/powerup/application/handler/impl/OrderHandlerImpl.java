@@ -10,19 +10,17 @@ import com.pragma.powerup.application.mapper.IOrderResponseMapper;
 import com.pragma.powerup.application.mapper.IUserDtoToClientDtoMapper;
 import com.pragma.powerup.domain.api.IOrderPlateServicePort;
 import com.pragma.powerup.domain.api.IOrderServicePort;
+import com.pragma.powerup.domain.api.IPinOrderServicePort;
 import com.pragma.powerup.domain.api.IRestaurantServicePort;
-import com.pragma.powerup.domain.model.Order;
-import com.pragma.powerup.domain.model.OrderPlate;
-import com.pragma.powerup.domain.model.OrderStatus;
-import com.pragma.powerup.domain.model.Restaurant;
+import com.pragma.powerup.domain.api.feign.IMessageFeignServicePort;
+import com.pragma.powerup.domain.api.feign.ITraceabilityServicePort;
+import com.pragma.powerup.domain.api.feign.IUserFeignServicePort;
+import com.pragma.powerup.domain.model.*;
 import com.pragma.powerup.infrastructure.exception.*;
-import com.pragma.powerup.infrastructure.input.feign.MessageFeignClient;
-import com.pragma.powerup.infrastructure.input.feign.UserFeignClient;
-import com.pragma.powerup.infrastructure.input.feign.dto.ClientMessageDto;
-import com.pragma.powerup.infrastructure.input.feign.dto.OwnerEmployeeRelation;
-import com.pragma.powerup.infrastructure.input.feign.dto.UserDto;
-import com.pragma.powerup.infrastructure.out.jpa.entity.PinOrder;
-import com.pragma.powerup.infrastructure.out.jpa.repository.PinOrderRepository;
+import com.pragma.powerup.infrastructure.out.feign.dto.ClientMessageDto;
+import com.pragma.powerup.infrastructure.out.feign.dto.OwnerEmployeeRelation;
+import com.pragma.powerup.infrastructure.out.feign.dto.TraceabilityDto;
+import com.pragma.powerup.infrastructure.out.feign.dto.UserDto;
 import com.pragma.powerup.infrastructure.security.TokenUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -33,6 +31,7 @@ import org.springframework.stereotype.Service;
 import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Transactional;
 import java.security.SecureRandom;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -47,11 +46,12 @@ public class OrderHandlerImpl implements IOrderHandler {
     private final IOrderRequestMapper orderRequestMapper;
     private final IOrderResponseMapper orderResponseMapper;
     private final IOrderPlateMapper orderPlateMapper;
-    private final UserFeignClient userFeignClient;
-    private final MessageFeignClient messageFeignClient;
+    private final IUserFeignServicePort userFeignClient;
+    private final IMessageFeignServicePort messageFeignClient;
     private final IRestaurantServicePort restaurantServicePort;
     private final IUserDtoToClientDtoMapper userDtoToClientDtoMapper;
-    private final PinOrderRepository pinOrderRepository;
+    private final IPinOrderServicePort pinOrderServicePort;
+    private final ITraceabilityServicePort traceabilityFeign;
     private final TokenUtils tokenUtils = new TokenUtils();
 
     @Override
@@ -67,24 +67,55 @@ public class OrderHandlerImpl implements IOrderHandler {
                     OrderPlate orderPlate = orderPlateMapper.toOrderPlate(orderPlateDto);
                     orderPlateServicePort.saveOrderPlate(orderPlate, order);
                 });
+        UserDto client = userFeignClient.getUser(orderSaved.getIdClient());
+
+        TraceabilityDto traceabilityDto = new TraceabilityDto();
+        traceabilityDto.setIdOrder(orderSaved.getId());
+        traceabilityDto.setDate(new Date());
+        traceabilityDto.setIdClient(client.getId());
+        traceabilityDto.setEmailClient(client.getEmail());
+        traceabilityDto.setIdEmployee(orderSaved.getIdChef());
+        traceabilityDto.setCurrentState(orderSaved.getStatus());
+        traceabilityDto.setPreviousState("None");
+        traceabilityDto.setEmailEmployee("None");
+
+        traceabilityFeign.saveTrace(traceabilityDto);
     }
 
     @Override
-    public Page<OrderInfoResponseDto> updateOrderStatus(Long idOrder, String status, int page, int size, HttpServletRequest request) {
+    public Page<OrderInfoResponseDto> assignOrder(Long idOrder, String status, int page, int size, HttpServletRequest request) {
         Long idChef = this.getIdUser(request);
+
+        UserDto employee = userFeignClient.getUser(idChef);
+
+        TraceabilityDto traceabilityDto = new TraceabilityDto();
+        traceabilityDto.setIdEmployee(employee.getId());
+        traceabilityDto.setEmailEmployee(employee.getEmail());
 
         Order order = orderServicePort.getOrder(idOrder);
         if(order.getStatus().equals(OrderStatus.DELIVERED.getStatus())){
             throw new OrderStatusException();
         }
+        traceabilityDto.setIdOrder(order.getId());
+        traceabilityDto.setPreviousState(order.getStatus());
+
+        UserDto client = userFeignClient.getUser(order.getIdClient());
+
+        traceabilityDto.setIdClient(client.getId());
+        traceabilityDto.setEmailClient(client.getEmail());
 
         order.setIdChef(idChef);
         order.setStatus(OrderStatus.IN_PREPARATION.getStatus());
+
+        traceabilityDto.setCurrentState(order.getStatus());
 
         orderServicePort.updateStatus(order);
 
         Long idRestaurant = this.getRestaurantId(request);
         Pageable pageable = PageRequest.of(page, size);
+
+        traceabilityDto.setDate(new Date());
+        traceabilityFeign.saveTrace(traceabilityDto);
 
         return this.getOrdersResponsePage(idRestaurant, pageable, status);
     }
@@ -99,9 +130,25 @@ public class OrderHandlerImpl implements IOrderHandler {
 
     @Override
     public void setReadyStatus(Long idOrder) {
+        TraceabilityDto traceabilityDto = new TraceabilityDto();
+
         Order order = orderServicePort.getOrder(idOrder);
+        traceabilityDto.setIdOrder(order.getId());
+        traceabilityDto.setPreviousState(order.getStatus());
         order.setStatus(OrderStatus.READY.getStatus());
+        traceabilityDto.setCurrentState(order.getStatus());
         orderServicePort.updateStatus(order);
+
+        UserDto client = userFeignClient.getUser(order.getIdClient());
+        traceabilityDto.setIdClient(client.getId());
+        traceabilityDto.setEmailClient(client.getEmail());
+
+        UserDto employee = userFeignClient.getUser(order.getIdChef());
+        traceabilityDto.setIdEmployee(employee.getId());
+        traceabilityDto.setEmailEmployee(employee.getEmail());
+
+        traceabilityDto.setDate(new Date());
+        traceabilityFeign.saveTrace(traceabilityDto);
 
         ClientMessageDto clientUser = userDtoToClientDtoMapper.toClientMessageDto(userFeignClient.getUser(order.getIdClient()), generatePin());
         messageFeignClient.sendMessage(clientUser);
@@ -109,25 +156,44 @@ public class OrderHandlerImpl implements IOrderHandler {
         PinOrder pinOrder = new PinOrder();
         pinOrder.setIdOrder(idOrder);
         pinOrder.setPin(clientUser.getPin());
-        pinOrderRepository.save(pinOrder);
+        pinOrderServicePort.savePinOrder(pinOrder);
 
     }
 
     @Override
     public void setDeliveredStatus(Long idOrder, String pin) {
+        TraceabilityDto traceabilityDto = new TraceabilityDto();
+
         Order order = orderServicePort.getOrder(idOrder);
         if(!order.getStatus().equals(OrderStatus.READY.getStatus())){
             throw new NoReadyStatusBeforeException();
         }
 
-        PinOrder pinOrder = pinOrderRepository.findByIdOrder(idOrder);
+        traceabilityDto.setIdOrder(order.getId());
+        traceabilityDto.setPreviousState(order.getStatus());
+
+        UserDto client = userFeignClient.getUser(order.getIdClient());
+
+        traceabilityDto.setIdClient(client.getId());
+        traceabilityDto.setEmailClient(client.getEmail());
+
+        UserDto employee = userFeignClient.getUser(order.getIdChef());
+
+        traceabilityDto.setIdEmployee(employee.getId());
+        traceabilityDto.setEmailEmployee(employee.getEmail());
+
+        PinOrder pinOrder = pinOrderServicePort.getByOrder(idOrder);
         if(!Objects.equals(pinOrder.getPin(), pin)){
             throw new WrongPinException();
         }
-        pinOrderRepository.deleteById(pinOrder.getId());
+        pinOrderServicePort.deletePinOrder(pinOrder.getId());
 
         order.setStatus(OrderStatus.DELIVERED.getStatus());
+        traceabilityDto.setCurrentState(order.getStatus());
         orderServicePort.updateStatus(order);
+
+        traceabilityDto.setDate(new Date());
+        traceabilityFeign.saveTrace(traceabilityDto);
     }
 
     @Override

@@ -1,4 +1,4 @@
-package com.pragma.powerup.infrastructure.input.feign.dto;
+package com.pragma.powerup.infrastructure.out.feign.dto;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -7,7 +7,7 @@ import java.util.Date;
 
 @Getter
 @Setter
-public class ClientMessageDto {
+public class UserDto {
     private Long id;
     private String name;
     private String lastname;
@@ -16,5 +16,5 @@ public class ClientMessageDto {
     private Date dateOfBirth;
     private String email;
     private String password;
-    private String pin;
+    private RoleDto role;
 }

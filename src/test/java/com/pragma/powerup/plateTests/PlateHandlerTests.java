@@ -102,29 +102,18 @@ class PlateHandlerTests {
         }
     }
 
-    /*
-
     @Test
-    void listPlates(){
-        Pageable pageable = PageRequest.of(1, 10);
+    void listPlates() {
         PlateInfoResponseDto plateInfoResponseDto = new PlateInfoResponseDto();
-        List<PlateInfoResponseDto> plateInfoResponseDtoList = List.of(plateInfoResponseDto);
-        Page<PlateInfoResponseDto> responseDtoPage = new PageImpl<>(plateInfoResponseDtoList, pageable, 1);
+        Pageable pageable = PageRequest.of(0, 10);
+        Page<PlateInfoResponseDto> plateInfoResponseDtoPage = new PageImpl<>(List.of(plateInfoResponseDto), pageable, 1);
 
-        Plate plate = new Plate();
-        List<Plate> plateList = List.of(plate);
-        Page<Plate> platePage = new PageImpl<>(plateList, pageable, 1);
+        Mockito.when(plateResponseMapper.toPlateResponsePage(Mockito.any())).thenReturn(plateInfoResponseDtoPage);
 
-        Mockito.when(plateServicePort.listPlate(1L, 1L, pageable)).thenReturn(platePage);
-        Mockito.when(plateResponseMapper.toPlateResponsePage(platePage))
-                .thenReturn(responseDtoPage);
+        Page<PlateInfoResponseDto> responseDtoPage = plateHandler.listPlate(1L, 1L, 0, 10);
 
-        Page<PlateInfoResponseDto> plateInfoResponseDtoPage = plateHandler.listPlate(1L, 1L, 0, 10);
-
-        Assertions.assertEquals(responseDtoPage, plateInfoResponseDtoPage);
+        Assertions.assertFalse(responseDtoPage.isEmpty());
     }
-     */
-
 
 }
 

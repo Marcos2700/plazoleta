@@ -11,10 +11,10 @@ import com.pragma.powerup.application.mapper.IPlateResponseMapper;
 import com.pragma.powerup.domain.api.ICategoryServicePort;
 import com.pragma.powerup.domain.api.IPlateServicePort;
 import com.pragma.powerup.domain.api.IRestaurantServicePort;
+import com.pragma.powerup.domain.api.feign.IUserFeignServicePort;
 import com.pragma.powerup.domain.model.Plate;
 import com.pragma.powerup.domain.model.Restaurant;
 import com.pragma.powerup.infrastructure.exception.NoOwnerPlateAssociationException;
-import com.pragma.powerup.infrastructure.input.feign.UserFeignClient;
 import com.pragma.powerup.infrastructure.security.TokenUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -37,7 +37,7 @@ public class PlateHandlerImpl implements IPlateHandler {
     private final IPlateResponseMapper plateResponseMapper;
     private final ICategoryDtoMapper categoryDtoMapper;
     private final IRestaurantServicePort restaurantServicePort;
-    private final UserFeignClient userFeignClient;
+    private final IUserFeignServicePort userFeignClient;
 
     @Override
     public void savePlate(PlateRequestDto plateRequestDto) {

@@ -1,7 +1,7 @@
 package com.pragma.powerup.infrastructure.security;
 
-import com.pragma.powerup.infrastructure.input.feign.UserFeignClient;
-import com.pragma.powerup.infrastructure.input.feign.dto.UserDto;
+import com.pragma.powerup.infrastructure.out.feign.UserFeignClient;
+import com.pragma.powerup.infrastructure.out.feign.dto.UserDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

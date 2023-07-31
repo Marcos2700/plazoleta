@@ -1,8 +1,8 @@
-package com.pragma.powerup.infrastructure.input.feign;
+package com.pragma.powerup.infrastructure.out.feign;
 
 import com.pragma.powerup.infrastructure.configuration.BeanConfiguration;
-import com.pragma.powerup.infrastructure.input.feign.dto.OwnerEmployeeRelation;
-import com.pragma.powerup.infrastructure.input.feign.dto.UserDto;
+import com.pragma.powerup.infrastructure.out.feign.dto.OwnerEmployeeRelation;
+import com.pragma.powerup.infrastructure.out.feign.dto.UserDto;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;

@@ -19,6 +19,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+import java.util.List;
 import java.util.Optional;
 
 @ExtendWith(SpringExtension.class)
@@ -91,5 +92,19 @@ class OrderPlateJpaAdapterTests {
         catch (NoPlateToRestaurantAssociationException e){
             Assertions.assertInstanceOf(NoPlateToRestaurantAssociationException.class, e);
         }
+    }
+
+    @Test
+    void findAllByOrderId(){
+        OrderPlateEntity orderPlateEntity = new OrderPlateEntity();
+        Mockito.when(orderPlateRepository.findAllByIdOrder(1L)).thenReturn(List.of(orderPlateEntity));
+
+        OrderPlate orderPlate = new OrderPlate();
+        Mockito.when(orderPlateEntityMapper.toOrderPlateList(List.of(orderPlateEntity)))
+                .thenReturn(List.of(orderPlate));
+
+        List<OrderPlate> result = orderPlateJpaAdapter.findAllByOrderId(1L);
+
+        Assertions.assertEquals(1, result.size());
     }
 }

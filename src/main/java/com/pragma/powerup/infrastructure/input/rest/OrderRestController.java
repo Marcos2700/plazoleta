@@ -68,7 +68,7 @@ public class OrderRestController {
                                                                         @RequestParam(defaultValue = "10") int size,
                                                                         @RequestParam(defaultValue = "") String status,
                                                                         HttpServletRequest request){
-        Page<OrderInfoResponseDto> orderInfoResponseDtoPage = orderHandler.updateOrderStatus(id, status, page, size, request);
+        Page<OrderInfoResponseDto> orderInfoResponseDtoPage = orderHandler.assignOrder(id, status, page, size, request);
         return ResponseEntity.ok(orderInfoResponseDtoPage);
     }
 

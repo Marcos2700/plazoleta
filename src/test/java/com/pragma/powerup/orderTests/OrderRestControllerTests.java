@@ -84,4 +84,10 @@ class OrderRestControllerTests {
         Assertions.assertEquals(HttpStatus.OK, response.getStatusCode());
     }
 
+    @Test
+    void cancelOrder(){
+        ResponseEntity<Void> response = orderRestController.cancelOrder(1L, request);
+        Assertions.assertEquals(HttpStatus.OK, response.getStatusCode());
+    }
+
 }

@@ -7,11 +7,11 @@ import com.pragma.powerup.application.handler.impl.RestaurantHandlerImpl;
 import com.pragma.powerup.application.mapper.IRestaurantRequestMapper;
 import com.pragma.powerup.application.mapper.IRestaurantResponseMapper;
 import com.pragma.powerup.domain.api.IRestaurantServicePort;
+import com.pragma.powerup.domain.api.feign.IUserFeignServicePort;
 import com.pragma.powerup.domain.exception.IsNotAOwnerException;
 import com.pragma.powerup.domain.model.Restaurant;
-import com.pragma.powerup.infrastructure.input.feign.UserFeignClient;
-import com.pragma.powerup.infrastructure.input.feign.dto.RoleDto;
-import com.pragma.powerup.infrastructure.input.feign.dto.UserDto;
+import com.pragma.powerup.infrastructure.out.feign.dto.RoleDto;
+import com.pragma.powerup.infrastructure.out.feign.dto.UserDto;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -40,7 +40,7 @@ class RestaurantHandlerTests {
     @Mock
     IRestaurantResponseMapper restaurantResponseMapper;
     @Mock
-    UserFeignClient userFeignClient;
+    IUserFeignServicePort userFeignClient;
 
     @BeforeEach
     void before(){
@@ -90,26 +90,21 @@ class RestaurantHandlerTests {
         }
     }
 
-
-    /*
        @Test
     void listRestaurants(){
-        Pageable pageable = PageRequest.of(0, 10);
-        RestaurantInfoResponseDto responseDto = new RestaurantInfoResponseDto();
-        List<RestaurantInfoResponseDto> dtoList = List.of(responseDto);
-        Page<RestaurantInfoResponseDto> pageRestaurantResponse = new PageImpl<>(dtoList, pageable, 1);
+           RestaurantInfoResponseDto responseDto = new RestaurantInfoResponseDto();
 
-        Restaurant restaurant = new Restaurant();
-        List<Restaurant> restaurantList = List.of(restaurant);
-        Page<Restaurant> pageRestaurants = new PageImpl<>(restaurantList, pageable, 1);
+           Pageable pageable = PageRequest.of(0, 10);
+           Page<RestaurantInfoResponseDto> responseDtoPage = new PageImpl<>(List.of(responseDto), pageable, 1);
 
-        Mockito.when(restaurantServicePort.listRestaurant(pageable)).thenReturn(pageRestaurants);
-        Mockito.when(restaurantResponseMapper.toRestaurantResponsePage(pageRestaurants)).thenReturn(pageRestaurantResponse);
+           Mockito.when(restaurantResponseMapper.toRestaurantResponsePage(Mockito.any()))
+                   .thenReturn(responseDtoPage);
 
-        Page<RestaurantInfoResponseDto> responseDtoPage = restaurantHandler.listRestaurant(0, 10);
+           Page<RestaurantInfoResponseDto> restaurantInfoResponseDtoPage = restaurantHandler.listRestaurant(0, 1);
 
-        Assertions.assertFalse(responseDtoPage.isEmpty());
+           Assertions.assertFalse(restaurantInfoResponseDtoPage.isEmpty());
+
     }
-     */
+
 
 }

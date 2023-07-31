@@ -1,7 +1,7 @@
 package com.pragma.powerup.application.mapper;
 
-import com.pragma.powerup.infrastructure.input.feign.dto.ClientMessageDto;
-import com.pragma.powerup.infrastructure.input.feign.dto.UserDto;
+import com.pragma.powerup.infrastructure.out.feign.dto.ClientMessageDto;
+import com.pragma.powerup.infrastructure.out.feign.dto.UserDto;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.ReportingPolicy;

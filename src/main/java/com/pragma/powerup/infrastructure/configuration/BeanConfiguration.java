@@ -3,6 +3,7 @@ package com.pragma.powerup.infrastructure.configuration;
 import com.pragma.powerup.domain.api.*;
 import com.pragma.powerup.domain.spi.*;
 import com.pragma.powerup.domain.usecase.*;
+import com.pragma.powerup.infrastructure.out.feign.TraceabilityFeignClient;
 import com.pragma.powerup.infrastructure.out.jpa.adapter.*;
 import com.pragma.powerup.infrastructure.out.jpa.mapper.*;
 import com.pragma.powerup.infrastructure.out.jpa.repository.*;
@@ -26,6 +27,8 @@ public class BeanConfiguration {
     private final IOrderRepository orderRepository;
     private final IOrderPlateEntityMapper orderPlateEntityMapper;
     private final IOrderPlateRepository orderPlateRepository;
+    private final PinOrderRepository pinOrderRepository;
+    private final IPinOrderEntityMapper pinOrderEntityMapper;
 
     @Bean
     public IRestaurantPersistencePort restaurantPersistencePort(){
@@ -75,6 +78,16 @@ public class BeanConfiguration {
     @Bean
     public IOrderPlateServicePort orderPlateServicePort(){
         return new OrderPlateUseCase(orderPlatePersistencePort());
+    }
+
+    @Bean
+    public IPinOrderPersistencePort pinOrderPersistencePort(){
+        return new PinOrderJpaAdapter(pinOrderRepository, pinOrderEntityMapper);
+    }
+
+    @Bean
+    public IPinOrderServicePort pinOrderServicePort(){
+        return new PinOrderUseCase(pinOrderPersistencePort());
     }
 
     @Bean
