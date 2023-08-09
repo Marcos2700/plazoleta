@@ -24,6 +24,7 @@ sonar {
 	properties {
 		property "sonar.projectKey", "reto_ms_plazoleta"
 		property "sonar.organization", "marcos-escobar"
+		property "sonar.host.url", "https://sonarcloud.io"
 	}
 }
 
