@@ -3,10 +3,9 @@ server:
 
 spring:
   datasource:
-    url: jdbc:mysql://localhost:3306/plazoleta
-    username: root
-    password: marcos27
-
+    url: jdbc:mysql://plazoleta-app-database.c3s6dkgxzorl.us-east-2.rds.amazonaws.com:3306/users
+    username: ms_plazoleta
+    password: msplazoleta
   jpa:
     hibernate:
       ddl-auto: update
