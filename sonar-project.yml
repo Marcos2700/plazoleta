@@ -1,9 +1,8 @@
 sonar:
-  projectKey: Marcos2700_plazoleta
-  organization: marcos2700-1
-  login:
-    SONAR_TOKEN: 1b5847b129aa2c3434602b70ec3b4ff60904564d
+  projectKey: "Marcos2700_plazoleta"
+  organization: "marcos2700-1"
+  SONAR_TOKEN: "1b5847b129aa2c3434602b70ec3b4ff60904564d"
   coverage:
     jacoco:
-      xmlReportPaths: /jacocoTestReport.xml
+      xmlReportPaths: build/reports/jacoco/test/jacocoTestReport.xml
 
