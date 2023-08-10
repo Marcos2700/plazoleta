@@ -1,6 +1,10 @@
 server:
   port: 8082
 
+secrets:
+  SONAR_TOKEN: 1b5847b129aa2c3434602b70ec3b4ff60904564d
+  GITHUB_TOKEN: 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
+
 spring:
   datasource:
     url: jdbc:mysql://plazoleta-app-database.c3s6dkgxzorl.us-east-2.rds.amazonaws.com:3306/users
