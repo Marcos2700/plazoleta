@@ -5,5 +5,5 @@ sonar:
     SONAR_TOKEN: 1b5847b129aa2c3434602b70ec3b4ff60904564d
   coverage:
     jacoco:
-      xmlReportPaths: build/reports/jacoco/test/jacocoTestReport.xml
+      xmlReportPaths: /jacocoTestReport.xml
 
