@@ -1,0 +1,3 @@
+com.pragma.powerup.infrastructure.configuration.BeanConfiguration#categoryPersistencePort()Lcom/pragma/powerup/domain/spi/ICategoryPersistencePort;
+com.pragma.powerup.infrastructure.out.jpa.adapter.CategoryJpaAdapter#instance-init#
+com.pragma.powerup.infrastructure.out.jpa.adapter.CategoryJpaAdapter#<init>(Lcom/pragma/powerup/infrastructure/out/jpa/repository/ICategoryRepository;Lcom/pragma/powerup/infrastructure/out/jpa/mapper/ICategoryEntityMapper;)V

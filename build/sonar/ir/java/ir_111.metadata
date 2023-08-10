@@ -1,0 +1,3 @@
+com.pragma.powerup.infrastructure.configuration.BeanConfiguration#orderPlatePersistencePort()Lcom/pragma/powerup/domain/spi/IOrderPlatePersistencePort;
+com.pragma.powerup.infrastructure.out.jpa.adapter.OrderPlateJpaAdapter#<init>(Lcom/pragma/powerup/infrastructure/out/jpa/repository/IOrderPlateRepository;Lcom/pragma/powerup/infrastructure/out/jpa/mapper/IOrderPlateEntityMapper;Lcom/pragma/powerup/infrastructure/out/jpa/repository/IPlateRepository;)V
+com.pragma.powerup.infrastructure.out.jpa.adapter.OrderPlateJpaAdapter#instance-init#

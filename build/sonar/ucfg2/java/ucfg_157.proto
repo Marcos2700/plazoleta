@@ -1,0 +1,95 @@
+
+¬com.pragma.powerup.domain.usecase.OrderUseCase#listOrder(Ljava/lang/Long;Ljava/lang/String;Lorg/springframework/data/domain/Pageable;)Lorg/springframework/data/domain/Page;x
+nC:/Users/Usuario/Documents/reto/ms_plazoleta/src/main/java/com/pragma/powerup/domain/usecase/OrderUseCase.java ( "startingBlock*ž
+startingBlock  (U‘
+Ž
+ (
+%2"
+__annotate*2
+
+__unknown_file (
+java.lang.Override*<
+
+__unknown_file ( 
+
+idRestaurantjava.lang.Long^
+\
+& (2
+idRestaurantjava.lang.Long"__annotation*"
+
+__unknown_file (
+
+%2
+Š
+ (
+%3"
+__annotate*2
+
+__unknown_file (
+java.lang.Override*8
+
+__unknown_file (
+
+statusjava.lang.StringZ
+X
+; (A
+statusjava.lang.String"__annotation*"
+
+__unknown_file (
+
+%3§
+¤
+ (
+%4"
+__annotate*2
+
+__unknown_file (
+java.lang.Override*R
+
+__unknown_file (6
+4
+pageable(org.springframework.data.domain.Pageablet
+r
+L (T4
+pageable(org.springframework.data.domain.Pageable"__annotation*"
+
+__unknown_file (
+
+%4*
+1*ð
+1 (#¸
+µ
+ (#9
+%03com.pragma.powerup.domain.spi.IOrderPersistencePort"__id*h
+
+__unknown_file (L*J0
+.com.pragma.powerup.domain.usecase.OrderUseCase"
+orderPersistencePortëè
+ (M*
+%1$org.springframework.data.domain.Page"±com.pragma.powerup.domain.spi.IOrderPersistencePort#listOrder(Ljava/lang/Long;Ljava/lang/String;Lorg/springframework/data/domain/Pageable;)Lorg/springframework/data/domain/Page;*W
+
+__unknown_file (;
+9
+%03com.pragma.powerup.domain.spi.IOrderPersistencePort*<
+
+__unknown_file ( 
+
+idRestaurantjava.lang.Long*8
+
+__unknown_file (
+
+statusjava.lang.String*R
+
+__unknown_file (6
+4
+pageable(org.springframework.data.domain.Pageable2WlistOrder(Ljava/lang/Long;Ljava/lang/String;Lorg/springframework/data/domain/Pageable;)"8
+ (N,
+*
+%1$org.springframework.data.domain.Page:*
+! (3
+idRestaurantjava.lang.Long:&
+4 (B
+statusjava.lang.String:@
+C (T4
+pageable(org.springframework.data.domain.PageableB20
+.com.pragma.powerup.domain.usecase.OrderUseCaseH

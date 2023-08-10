@@ -1,0 +1,1 @@
+com.pragma.powerup.domain.usecase.CategoryUseCase#getCategory(Ljava/lang/Long;)Lcom/pragma/powerup/domain/model/Category;

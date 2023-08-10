@@ -1,0 +1,2 @@
+com.pragma.powerup.infrastructure.out.jpa.adapter.RestaurantJpaAdapter#getRestaurantByOwnerId(Ljava/lang/Long;)Lcom/pragma/powerup/domain/model/Restaurant;
+java.util.Optional#orElse(Ljava/lang/Object;)Ljava/lang/Object;

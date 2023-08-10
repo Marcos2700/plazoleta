@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>PlateRestController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Plazoleta-microservice</a> &gt; <a href="index.source.html" class="el_package">com.pragma.powerup.infrastructure.input.rest</a> &gt; <span class="el_source">PlateRestController.java</span></div><h1>PlateRestController.java</h1><pre class="source lang-java linenums">package com.pragma.powerup.infrastructure.input.rest;
+
+import com.pragma.powerup.application.dto.request.PlateRequestDto;
+import com.pragma.powerup.application.dto.response.PlateInfoResponseDto;
+import com.pragma.powerup.application.dto.response.PlateResponseDto;
+import com.pragma.powerup.application.handler.IPlateHandler;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.media.ArraySchema;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletRequest;
+import java.util.List;
+
+@RestController
+@RequiredArgsConstructor
+@RequestMapping(&quot;/plate&quot;)
+public class PlateRestController {
+
+    private final IPlateHandler plateHandler;
+
+    @Operation(summary = &quot;Create new plate&quot;)
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = &quot;201&quot;, description = &quot;New plate created&quot;, content = @Content),
+            @ApiResponse(responseCode = &quot;409&quot;, description = &quot;Plate already exist&quot;, content = @Content),
+            @ApiResponse(responseCode = &quot;409&quot;, description = &quot;Plate is not associated with any restaurant&quot;, content = @Content)
+    })
+    @PostMapping(&quot;/owner&quot;)
+    public ResponseEntity&lt;Void&gt; savePlate(@RequestBody PlateRequestDto plateRequestDto){
+<span class="fc" id="L38">        plateHandler.savePlate(plateRequestDto);</span>
+<span class="fc" id="L39">        return new ResponseEntity&lt;&gt;(HttpStatus.CREATED);</span>
+    }
+
+    @Operation(summary = &quot;Get all plates&quot;)
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = &quot;200&quot;, description = &quot;Get all plates&quot;,
+            content = @Content(mediaType = &quot;application/json&quot;,
+            array = @ArraySchema(schema = @Schema(implementation = PlateResponseDto.class)))),
+            @ApiResponse(responseCode = &quot;404&quot;, description = &quot;No data found.&quot;, content = @Content)
+    })
+    @GetMapping
+    public ResponseEntity&lt;List&lt;PlateResponseDto&gt;&gt; getAllPlates(){
+<span class="fc" id="L51">        return ResponseEntity.ok(plateHandler.getAllPlates());</span>
+    }
+
+    @Operation(summary = &quot;Update plate&quot;)
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = &quot;200&quot;, description = &quot;Plate updated&quot;, content = @Content),
+            @ApiResponse(responseCode = &quot;404&quot;, description = &quot;No data found&quot;, content = @Content)
+    })
+    @PutMapping(&quot;/owner&quot;)
+    public ResponseEntity&lt;Void&gt; updatePlate(@RequestBody PlateRequestDto plateRequestDto, HttpServletRequest request){
+<span class="fc" id="L61">        plateHandler.updatePlate(plateRequestDto, request);</span>
+<span class="fc" id="L62">        return new ResponseEntity&lt;&gt;(HttpStatus.OK);</span>
+    }
+
+    @Operation(summary = &quot;Turn off/on plate&quot;)
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = &quot;200&quot;, description = &quot;Plate updated&quot;, content = @Content),
+            @ApiResponse(responseCode = &quot;404&quot;, description = &quot;No data found&quot;, content = @Content)
+    })
+    @PutMapping(&quot;/owner/{id}&quot;)
+    public ResponseEntity&lt;Void&gt; turnOffOnPlate(@Parameter(description = &quot;Id of the plate to be turned off&quot;) @PathVariable Long id, HttpServletRequest request){
+<span class="fc" id="L72">        plateHandler.turnOffOnPlate(id, request);</span>
+<span class="fc" id="L73">        return new ResponseEntity&lt;&gt;(HttpStatus.OK);</span>
+    }
+
+    @Operation(summary = &quot;List plates by restaurants&quot;)
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = &quot;200&quot;, description = &quot;List plates&quot;,
+                    content = @Content(mediaType = &quot;application/json&quot;,
+                    array = @ArraySchema(schema = @Schema(implementation = PlateInfoResponseDto.class)))),
+            @ApiResponse(responseCode = &quot;404&quot;, description = &quot;No data found&quot;, content = @Content)
+    })
+    @GetMapping(&quot;/client/list/{idRestaurant}&quot;)
+    public ResponseEntity&lt;Page&lt;PlateInfoResponseDto&gt;&gt; listPlate(@RequestParam(defaultValue = &quot;0&quot;) int page,
+                                                          @RequestParam(defaultValue = &quot;10&quot;) int size,
+                                                          @RequestParam(defaultValue = &quot;0&quot;) String idCategory,
+                                                          @PathVariable Long idRestaurant){
+<span class="fc" id="L88">        Long longIdCategory = Long.parseLong(idCategory);</span>
+<span class="fc" id="L89">        Page&lt;PlateInfoResponseDto&gt; responseDtoPage = plateHandler.listPlate(idRestaurant, longIdCategory, page, size);</span>
+<span class="fc" id="L90">        return ResponseEntity.ok(responseDtoPage);</span>
+    }
+
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

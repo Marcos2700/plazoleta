@@ -1,0 +1,87 @@
+
+ùcom.pragma.powerup.infrastructure.out.jpa.mapper.IPlateEntityMapper#toPlatepage(Lorg/springframework/data/domain/Page;)Lorg/springframework/data/domain/Page;é
+ÉC:/Users/Usuario/Documents/reto/ms_plazoleta/src/main/java/com/pragma/powerup/infrastructure/out/jpa/mapper/IPlateEntityMapper.java (#"1*ö
+1  (/Ã…
+  (<
+%0java.util.List"Borg.springframework.data.domain.Slice#getContent()Ljava/util/List;*U
+
+__unknown_file (9
+7
+plateEntityPage$org.springframework.data.domain.Page2getContent()¢ü
+  (E
+%1java.util.stream.Stream"6java.util.Collection#stream()Ljava/util/stream/Stream;*2
+
+__unknown_file (
+
+%0java.util.List2stream()ÜÉ
+  (#
+%2java.util.stream.Stream"Sjava.util.stream.Stream#map(Ljava/util/function/Function;)Ljava/util/stream/Stream;*;
+
+__unknown_file (
+
+%1java.util.stream.Stream*"
+
+__unknown_file (
+""2"map(Ljava/util/function/Function;)Æ
+´
+ (, 
+%3java.util.stream.Collector"@java.util.stream.Collectors#toList()Ljava/util/stream/Collector;*;
+
+__unknown_file ("
+java.util.stream.Collectorsòï
+  (-
+%4java.util.List"Ojava.util.stream.Stream#collect(Ljava/util/stream/Collector;)Ljava/lang/Object;*;
+
+__unknown_file (
+
+%2java.util.stream.Stream*>
+
+__unknown_file ("
+ 
+%3java.util.stream.Collector2%collect(Ljava/util/stream/Collector;)c
+a
+ (.
+	plateListjava.util.List"__id*2
+
+__unknown_file (
+
+%4java.util.ListÇˇ
+) (F.
+%5(org.springframework.data.domain.Pageable"]org.springframework.data.domain.Slice#getPageable()Lorg/springframework/data/domain/Pageable;*U
+
+__unknown_file (9
+7
+plateEntityPage$org.springframework.data.domain.Page2getPageable()¨©
+H (a	
+%6int"0org.springframework.data.domain.Slice#getSize()I*U
+
+__unknown_file (9
+7
+plateEntityPage$org.springframework.data.domain.Page2	getSize()fd
+ (.
+%7(org.springframework.data.domain.PageImpl"(org.springframework.data.domain.PageImplÇ
+ˇ
+ (b
+%8"morg.springframework.data.domain.PageImpl#<init>(Ljava/util/List;Lorg/springframework/data/domain/Pageable;J)V*L
+
+__unknown_file (0
+.
+%7(org.springframework.data.domain.PageImpl*9
+
+__unknown_file (
+
+	plateListjava.util.List*L
+
+__unknown_file (0
+.
+%5(org.springframework.data.domain.Pageable*'
+
+__unknown_file (
+	
+%6int"<
+ (c0
+.
+%7(org.springframework.data.domain.PageImpl:C
+$ (E7
+plateEntityPage$org.springframework.data.domain.PageBGE
+Ccom.pragma.powerup.infrastructure.out.jpa.mapper.IPlateEntityMapperH

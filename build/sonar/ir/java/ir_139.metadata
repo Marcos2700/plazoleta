@@ -1,0 +1,1 @@
+com.pragma.powerup.domain.usecase.feign.UserFeignUseCase#getUser(Ljava/lang/Long;)Lcom/pragma/powerup/infrastructure/out/feign/dto/UserDto;

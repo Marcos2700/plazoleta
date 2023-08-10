@@ -1,0 +1,26 @@
+
+L__sonar_lambda_11$com.pragma.powerup.application.mapper.IPlateResponseMapper…
+zC:/Users/Usuario/Documents/reto/ms_plazoleta/src/main/java/com/pragma/powerup/application/mapper/IPlateResponseMapper.java(b ((œ"startingBlock*Ü
+startingBlock	(b ((œº
+·
+
+__unknown_file (.
+plate%com.pragma.powerup.domain.model.Plate"__id*e
+
+__unknown_file (I*G<
+:com.pragma.powerup.application.mapper.IPlateResponseMapper"
+plate*
+1*ñ
+1(n ((vÌÉ
+
+(† ((›
+%19java.lang.Long"Ecom.pragma.powerup.domain.model.Plate#getIdCategory()Ljava/lang/Long;*L
+
+__unknown_file (0
+.
+plate%com.pragma.powerup.domain.model.Plate2getIdCategory()"
+	(n ((œ
+"":@
+(b ((j4
+category(com.pragma.powerup.domain.model.CategoryB 
+java.util.function.Predicate

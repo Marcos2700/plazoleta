@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>IPlateEntityMapper.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Plazoleta-microservice</a> &gt; <a href="index.source.html" class="el_package">com.pragma.powerup.infrastructure.out.jpa.mapper</a> &gt; <span class="el_source">IPlateEntityMapper.java</span></div><h1>IPlateEntityMapper.java</h1><pre class="source lang-java linenums">package com.pragma.powerup.infrastructure.out.jpa.mapper;
+
+import com.pragma.powerup.domain.model.Plate;
+import com.pragma.powerup.infrastructure.out.jpa.entity.PlateEntity;
+import org.mapstruct.Mapper;
+import org.mapstruct.ReportingPolicy;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+
+import java.util.List;
+import java.util.stream.Collectors;
+
+@Mapper(componentModel = &quot;spring&quot;,
+        unmappedTargetPolicy = ReportingPolicy.IGNORE,
+        unmappedSourcePolicy = ReportingPolicy.IGNORE)
+public interface IPlateEntityMapper {
+
+    PlateEntity toPlateEntity(Plate plate);
+
+    Plate toPlate(PlateEntity plateEntity);
+
+    List&lt;Plate&gt; toPlateList(List&lt;PlateEntity&gt; plateEntityList);
+
+    default Page&lt;Plate&gt; toPlatepage(Page&lt;PlateEntity&gt; plateEntityPage){
+<span class="nc" id="L25">        List&lt;Plate&gt; plateList = plateEntityPage.getContent().stream()</span>
+<span class="nc" id="L26">                .map(this::toPlate)</span>
+<span class="nc" id="L27">                .collect(Collectors.toList());</span>
+<span class="nc" id="L28">        return new PageImpl&lt;&gt;(plateList, plateEntityPage.getPageable(), plateEntityPage.getSize());</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

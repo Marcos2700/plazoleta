@@ -1,0 +1,80 @@
+
+›com.pragma.powerup.infrastructure.out.jpa.adapter.RestaurantJpaAdapter#getRestaurantByOwnerId(Ljava/lang/Long;)Lcom/pragma/powerup/domain/model/Restaurant;‘
+†C:/Users/Usuario/Documents/reto/ms_plazoleta/src/main/java/com/pragma/powerup/infrastructure/out/jpa/adapter/RestaurantJpaAdapter.java (,"startingBlock*þ
+startingBlock, (5‡
+„
+ (
+%5"
+__annotate*2
+
+__unknown_file (
+java.lang.Override*2
+
+__unknown_file (
+
+idjava.lang.LongT
+R
+2 (4
+idjava.lang.Long"__annotation*"
+
+__unknown_file (
+
+%5*
+1*¹
+1 ,  (@è
+å
+ ,  (@P
+%0Jcom.pragma.powerup.infrastructure.out.jpa.repository.IRestaurantRepository"__id*€
+
+__unknown_file (d*bH
+Fcom.pragma.powerup.infrastructure.out.jpa.adapter.RestaurantJpaAdapter"
+restaurantRepositoryìé
+ ,  (R
+%1java.util.Optional"~com.pragma.powerup.infrastructure.out.jpa.repository.IRestaurantRepository#findByIdOwner(Ljava/lang/Long;)Ljava/util/Optional;*n
+
+__unknown_file (R
+P
+%0Jcom.pragma.powerup.infrastructure.out.jpa.repository.IRestaurantRepository*2
+
+__unknown_file (
+
+idjava.lang.Long2findByIdOwner(Ljava/lang/Long;)Œ
+ ,  (_G
+%2Acom.pragma.powerup.infrastructure.out.jpa.entity.RestaurantEntity"?java.util.Optional#orElse(Ljava/lang/Object;)Ljava/lang/Object;*6
+
+__unknown_file (
+
+%1java.util.Optional*"
+
+__unknown_file (
+""2orElse(Ljava/lang/Object;)Ñ
+Î
+   (`U
+restaurantEntityAcom.pragma.powerup.infrastructure.out.jpa.entity.RestaurantEntity"__id*e
+
+__unknown_file (I
+G
+%2Acom.pragma.powerup.infrastructure.out.jpa.entity.RestaurantEntityè
+å
+! !(%N
+%3Hcom.pragma.powerup.infrastructure.out.jpa.mapper.IRestaurantEntityMapper"__id*‚
+
+__unknown_file (f*dH
+Fcom.pragma.powerup.infrastructure.out.jpa.adapter.RestaurantJpaAdapter"
+restaurantEntityMapper¾»
+! !(D0
+%4*com.pragma.powerup.domain.model.Restaurant"Æcom.pragma.powerup.infrastructure.out.jpa.mapper.IRestaurantEntityMapper#toRestaurant(Lcom/pragma/powerup/infrastructure/out/jpa/entity/RestaurantEntity;)Lcom/pragma/powerup/domain/model/Restaurant;*l
+
+__unknown_file (P
+N
+%3Hcom.pragma.powerup.infrastructure.out.jpa.mapper.IRestaurantEntityMapper*s
+
+__unknown_file (W
+U
+restaurantEntityAcom.pragma.powerup.infrastructure.out.jpa.entity.RestaurantEntity2QtoRestaurant(Lcom/pragma/powerup/infrastructure/out/jpa/entity/RestaurantEntity;)">
+! !(E2
+0
+%4*com.pragma.powerup.domain.model.Restaurant: 
+- (4
+idjava.lang.LongBJH
+Fcom.pragma.powerup.infrastructure.out.jpa.adapter.RestaurantJpaAdapterH

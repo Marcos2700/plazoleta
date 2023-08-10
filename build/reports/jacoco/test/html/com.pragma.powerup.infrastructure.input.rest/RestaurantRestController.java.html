@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>RestaurantRestController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Plazoleta-microservice</a> &gt; <a href="index.source.html" class="el_package">com.pragma.powerup.infrastructure.input.rest</a> &gt; <span class="el_source">RestaurantRestController.java</span></div><h1>RestaurantRestController.java</h1><pre class="source lang-java linenums">package com.pragma.powerup.infrastructure.input.rest;
+
+import com.pragma.powerup.application.dto.request.RestaurantRequestDto;
+import com.pragma.powerup.application.dto.response.RestaurantInfoResponseDto;
+import com.pragma.powerup.application.dto.response.RestaurantResponseDto;
+import com.pragma.powerup.application.handler.IRestaurantHandler;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.ArraySchema;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+@RestController
+@RequiredArgsConstructor
+@RequestMapping(&quot;/restaurant&quot;)
+public class RestaurantRestController {
+
+    private final IRestaurantHandler restaurantHandler;
+
+    @Operation(summary = &quot;Create new restaurant&quot;)
+    @ApiResponses( value = {
+            @ApiResponse(responseCode = &quot;201&quot;, description = &quot;New restaurant created.&quot;, content = @Content),
+            @ApiResponse(responseCode = &quot;409&quot;, description = &quot;Restaurant already exist&quot;, content = @Content)
+    })
+    @PostMapping(&quot;/admin&quot;)
+    public ResponseEntity&lt;Void&gt; saveRestaurant(@RequestBody RestaurantRequestDto restaurantRequestDto){
+<span class="fc" id="L35">        restaurantHandler.saveRestaurant(restaurantRequestDto);</span>
+<span class="fc" id="L36">        return new ResponseEntity&lt;&gt;(HttpStatus.CREATED);</span>
+    }
+
+    @Operation(summary = &quot;Get all restaurants&quot;)
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = &quot;200&quot;, description = &quot;Get All restaurants&quot;,
+                content = @Content(mediaType = &quot;application/json&quot;,
+                array = @ArraySchema(schema = @Schema(implementation = RestaurantResponseDto.class)))),
+            @ApiResponse(responseCode = &quot;404&quot;, description = &quot;No data found&quot;, content = @Content)
+    })
+    @GetMapping(&quot;/admin&quot;)
+    public ResponseEntity&lt;List&lt;RestaurantResponseDto&gt;&gt; getAllRestaurant(){
+<span class="fc" id="L48">        return ResponseEntity.ok(restaurantHandler.getAllRestaurant());</span>
+    }
+
+    @Operation(summary = &quot;List restaurants&quot;)
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = &quot;200&quot;, description = &quot;list restaurants in order&quot;,
+            content = @Content(mediaType = &quot;application/json&quot;,
+            array = @ArraySchema(schema = @Schema(implementation = RestaurantInfoResponseDto.class)))),
+            @ApiResponse(responseCode = &quot;404&quot;, description = &quot;No data found&quot;, content = @Content)
+    })
+    @GetMapping(&quot;/client/list&quot;)
+    public ResponseEntity&lt;Page&lt;RestaurantInfoResponseDto&gt;&gt; listRestaurant(@RequestParam(defaultValue = &quot;0&quot;) int page,
+                                                                          @RequestParam(defaultValue = &quot;10&quot;) int size){
+<span class="fc" id="L61">        Page&lt;RestaurantInfoResponseDto&gt; responseDtoPage = restaurantHandler.listRestaurant(page, size);</span>
+<span class="fc" id="L62">        return ResponseEntity.ok(responseDtoPage);</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

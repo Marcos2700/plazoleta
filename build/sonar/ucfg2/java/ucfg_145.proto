@@ -1,0 +1,153 @@
+
+±com.pragma.powerup.infrastructure.input.rest.PlateRestController#turnOffOnPlate(Ljava/lang/Long;Ljavax/servlet/http/HttpServletRequest;)Lorg/springframework/http/ResponseEntity;ã
+ÄC:/Users/Usuario/Documents/reto/ms_plazoleta/src/main/java/com/pragma/powerup/infrastructure/input/rest/PlateRestController.javaG  G(."startingBlock*≥
+startingBlock	G. G(ûú
+ô
+A A(-
+%5"
+__annotate*G
+
+__unknown_file (+)
+'io.swagger.v3.oas.annotations.Operation*2
+
+__unknown_file (
+
+idjava.lang.Long©
+¶
+B E(
+%6"
+__annotate*T
+
+__unknown_file (86
+4io.swagger.v3.oas.annotations.responses.ApiResponses*2
+
+__unknown_file (
+
+idjava.lang.Longú
+ô
+G/ G(k
+%7"
+__annotate*G
+
+__unknown_file (+)
+'io.swagger.v3.oas.annotations.Parameter*2
+
+__unknown_file (
+
+idjava.lang.Longû
+õ
+	G G(Å
+idjava.lang.Long"__annotation*"
+
+__unknown_file (
+
+%5*"
+
+__unknown_file (
+
+%6*"
+
+__unknown_file (
+
+%7∏
+µ
+A A(-
+%8"
+__annotate*G
+
+__unknown_file (+)
+'io.swagger.v3.oas.annotations.Operation*N
+
+__unknown_file (2
+0
+request%javax.servlet.http.HttpServletRequest≈
+¬
+B E(
+%9"
+__annotate*T
+
+__unknown_file (86
+4io.swagger.v3.oas.annotations.responses.ApiResponses*N
+
+__unknown_file (2
+0
+request%javax.servlet.http.HttpServletRequestƒ
+¡
+F F(
+%10"
+__annotate*R
+
+__unknown_file (64
+2org.springframework.web.bind.annotation.PutMapping*N
+
+__unknown_file (2
+0
+request%javax.servlet.http.HttpServletRequestº
+π
+
+Gñ G(ù0
+request%javax.servlet.http.HttpServletRequest"__annotation*"
+
+__unknown_file (
+
+%8*"
+
+__unknown_file (
+
+%9*#
+
+__unknown_file (
+
+%10*
+1*ü	
+1H H(√
+¿
+H H(:
+%04com.pragma.powerup.application.handler.IPlateHandler"__id*r
+
+__unknown_file (V*TB
+@com.pragma.powerup.infrastructure.input.rest.PlateRestController"
+plateHandlerøº
+H H(0
+
+%1void"}com.pragma.powerup.application.handler.IPlateHandler#turnOffOnPlate(Ljava/lang/Long;Ljavax/servlet/http/HttpServletRequest;)V*X
+
+__unknown_file (<
+:
+%04com.pragma.powerup.application.handler.IPlateHandler*2
+
+__unknown_file (
+
+idjava.lang.Long*N
+
+__unknown_file (2
+0
+request%javax.servlet.http.HttpServletRequest2GturnOffOnPlate(Ljava/lang/Long;Ljavax/servlet/http/HttpServletRequest;)a
+_
+I$ I(1)
+%2#org.springframework.http.HttpStatus"__id*"
+
+__unknown_file (
+""db
+I I(#-
+%3'org.springframework.http.ResponseEntity"'org.springframework.http.ResponseEntityÅ
+˛
+I I(2
+%4"Vorg.springframework.http.ResponseEntity#<init>(Lorg/springframework/http/HttpStatus;)V*K
+
+__unknown_file (/
+-
+%3'org.springframework.http.ResponseEntity*G
+
+__unknown_file (+
+)
+%2#org.springframework.http.HttpStatus";
+I I(3/
+-
+%3'org.springframework.http.ResponseEntity:!
+	G/ G(Ç
+idjava.lang.Long:>
+
+GÉ G(ù0
+request%javax.servlet.http.HttpServletRequestBDB
+@com.pragma.powerup.infrastructure.input.rest.PlateRestControllerH

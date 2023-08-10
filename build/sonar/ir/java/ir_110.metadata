@@ -1,0 +1,5 @@
+com.pragma.powerup.infrastructure.configuration.BeanConfiguration#orderServicePort()Lcom/pragma/powerup/domain/api/IOrderServicePort;
+com.pragma.powerup.domain.usecase.OrderUseCase#<init>(Lcom/pragma/powerup/domain/spi/IOrderPersistencePort;)V
+com.pragma.powerup.domain.usecase.OrderUseCase#instance-init#
+==
+orderPersistencePort com.pragma.powerup.infrastructure.configuration.BeanConfiguration#orderPersistencePort()Lcom/pragma/powerup/domain/spi/IOrderPersistencePort;

@@ -1,0 +1,1 @@
+com.pragma.powerup.infrastructure.out.feign.adapter.MessageFeignAdapter#sendMessage(Lcom/pragma/powerup/infrastructure/out/feign/dto/ClientMessageDto;)V

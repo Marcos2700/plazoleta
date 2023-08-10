@@ -1,0 +1,3 @@
+com.pragma.powerup.infrastructure.configuration.BeanConfiguration#pinOrderPersistencePort()Lcom/pragma/powerup/domain/spi/IPinOrderPersistencePort;
+com.pragma.powerup.infrastructure.out.jpa.adapter.PinOrderJpaAdapter#instance-init#
+com.pragma.powerup.infrastructure.out.jpa.adapter.PinOrderJpaAdapter#<init>(Lcom/pragma/powerup/infrastructure/out/jpa/repository/PinOrderRepository;Lcom/pragma/powerup/infrastructure/out/jpa/mapper/IPinOrderEntityMapper;)V

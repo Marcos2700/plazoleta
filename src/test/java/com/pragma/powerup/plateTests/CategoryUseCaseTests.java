@@ -14,7 +14,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import java.util.List;
 
 @ExtendWith(SpringExtension.class)
-public class CategoryUseCaseTests {
+class CategoryUseCaseTests {
     @InjectMocks
     CategoryUseCase categoryUseCase;
 

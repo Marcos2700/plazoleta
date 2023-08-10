@@ -1,0 +1,5 @@
+com.pragma.powerup.infrastructure.configuration.BeanConfiguration#categoryServicePort()Lcom/pragma/powerup/domain/api/ICategoryServicePort;
+com.pragma.powerup.domain.usecase.CategoryUseCase#<init>(Lcom/pragma/powerup/domain/spi/ICategoryPersistencePort;)V
+com.pragma.powerup.domain.usecase.CategoryUseCase#instance-init#
+==
+categoryPersistencePort com.pragma.powerup.infrastructure.configuration.BeanConfiguration#categoryPersistencePort()Lcom/pragma/powerup/domain/spi/ICategoryPersistencePort;

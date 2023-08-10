@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>IRestaurantResponseMapper.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Plazoleta-microservice</a> &gt; <a href="index.source.html" class="el_package">com.pragma.powerup.application.mapper</a> &gt; <span class="el_source">IRestaurantResponseMapper.java</span></div><h1>IRestaurantResponseMapper.java</h1><pre class="source lang-java linenums">package com.pragma.powerup.application.mapper;
+
+import com.pragma.powerup.application.dto.response.RestaurantInfoResponseDto;
+import com.pragma.powerup.application.dto.response.RestaurantResponseDto;
+import com.pragma.powerup.domain.model.Restaurant;
+import org.mapstruct.Mapper;
+import org.mapstruct.ReportingPolicy;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+
+import java.util.List;
+import java.util.stream.Collectors;
+
+@Mapper(componentModel = &quot;spring&quot;,
+        unmappedTargetPolicy = ReportingPolicy.IGNORE,
+        unmappedSourcePolicy = ReportingPolicy.IGNORE)
+public interface IRestaurantResponseMapper {
+
+
+
+    default List&lt;RestaurantResponseDto&gt; toResponseList(List&lt;Restaurant&gt; restaurantList){
+<span class="nc" id="L22">        return restaurantList.stream()</span>
+<span class="nc" id="L23">                .map(restaurant -&gt; {</span>
+<span class="nc" id="L24">                    RestaurantResponseDto restaurantResponse = new RestaurantResponseDto();</span>
+<span class="nc" id="L25">                    restaurantResponse.setName(restaurant.getName());</span>
+<span class="nc" id="L26">                    restaurantResponse.setAddress(restaurant.getAddress());</span>
+<span class="nc" id="L27">                    restaurantResponse.setIdOwner(restaurant.getIdOwner());</span>
+<span class="nc" id="L28">                    restaurantResponse.setPhoneNumber(restaurant.getPhoneNumber());</span>
+<span class="nc" id="L29">                    restaurantResponse.setUrlLogo(restaurant.getUrlLogo());</span>
+<span class="nc" id="L30">                    restaurantResponse.setNit(restaurant.getNit());</span>
+<span class="nc" id="L31">                    return restaurantResponse;</span>
+<span class="nc" id="L32">                }).collect(Collectors.toList());</span>
+    }
+
+    default Page&lt;RestaurantInfoResponseDto&gt; toRestaurantResponsePage(Page&lt;Restaurant&gt; restaurantPage){
+<span class="nc" id="L36">        List&lt;RestaurantInfoResponseDto&gt; restaurantResponseDtoList = restaurantPage.getContent()</span>
+<span class="nc" id="L37">                .stream().map(restaurant -&gt; {</span>
+<span class="nc" id="L38">                    RestaurantInfoResponseDto responseDto = new RestaurantInfoResponseDto();</span>
+<span class="nc" id="L39">                    responseDto.setName(restaurant.getName());</span>
+<span class="nc" id="L40">                    responseDto.setUrlLogo(restaurant.getUrlLogo());</span>
+<span class="nc" id="L41">                    return responseDto;</span>
+<span class="nc" id="L42">                }).collect(Collectors.toList());</span>
+<span class="nc" id="L43">        return new PageImpl&lt;&gt;(restaurantResponseDtoList, restaurantPage.getPageable(), restaurantPage.getSize());</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

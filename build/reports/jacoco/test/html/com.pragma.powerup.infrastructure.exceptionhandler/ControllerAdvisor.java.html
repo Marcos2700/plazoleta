@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ControllerAdvisor.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Plazoleta-microservice</a> &gt; <a href="index.source.html" class="el_package">com.pragma.powerup.infrastructure.exceptionhandler</a> &gt; <span class="el_source">ControllerAdvisor.java</span></div><h1>ControllerAdvisor.java</h1><pre class="source lang-java linenums">package com.pragma.powerup.infrastructure.exceptionhandler;
+
+import com.pragma.powerup.domain.exception.IsNotAOwnerException;
+import com.pragma.powerup.domain.exception.NitNoNumericException;
+import com.pragma.powerup.domain.exception.NumericRestaurantNameException;
+import com.pragma.powerup.domain.exception.PhoneNumberNoNumericException;
+import com.pragma.powerup.infrastructure.exception.*;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+
+import java.util.Collections;
+import java.util.Map;
+
+@ControllerAdvice
+<span class="fc" id="L17">public class ControllerAdvisor {</span>
+
+    private static final String MESSAGE = &quot;message&quot;;
+
+    @ExceptionHandler(NoDataFoundException.class)
+    public ResponseEntity&lt;Map&lt;String, String&gt;&gt; handleNoDataFoundException(
+            NoDataFoundException ignoredNoDataFoundException) {
+<span class="nc" id="L24">        return ResponseEntity.status(HttpStatus.NOT_FOUND)</span>
+<span class="nc" id="L25">                .body(Collections.singletonMap(MESSAGE, ExceptionResponse.NO_DATA_FOUND.getMessage()));</span>
+    }
+
+    @ExceptionHandler(RestaurantAlreadyExistException.class)
+    public ResponseEntity&lt;Map&lt;String, String&gt;&gt; handleRestaurantAlreadyExistException(
+            RestaurantAlreadyExistException ignoredRestaurantAlreadyExistException){
+<span class="nc" id="L31">        return ResponseEntity.status(HttpStatus.CONFLICT)</span>
+<span class="nc" id="L32">                .body(Collections.singletonMap(MESSAGE, ExceptionResponse.RESTAURANT_ALREADY_EXIST.getMessage()));</span>
+    }
+
+    @ExceptionHandler(NitNoNumericException.class)
+    public ResponseEntity&lt;Map&lt;String, String&gt;&gt; handleNitNoNumericException(
+            NitNoNumericException ignoredNitNoNumericException){
+<span class="nc" id="L38">        return ResponseEntity.status(HttpStatus.BAD_REQUEST)</span>
+<span class="nc" id="L39">                .body(Collections.singletonMap(MESSAGE, ExceptionResponse.NIT_NO_NUMERIC.getMessage()));</span>
+    }
+
+    @ExceptionHandler(PhoneNumberNoNumericException.class)
+    public ResponseEntity&lt;Map&lt;String, String&gt;&gt; handlePhoneNumberNoNumericException(
+            PhoneNumberNoNumericException ignoredPhoneNumberNoNumericException){
+<span class="nc" id="L45">        return ResponseEntity.status(HttpStatus.BAD_REQUEST)</span>
+<span class="nc" id="L46">                .body(Collections.singletonMap(MESSAGE, ExceptionResponse.PHONE_NUMBER_NO_NUMERIC.getMessage()));</span>
+    }
+
+    @ExceptionHandler(NumericRestaurantNameException.class)
+    public ResponseEntity&lt;Map&lt;String, String&gt;&gt; handleNumericRestaurantNameException(
+            NumericRestaurantNameException ignoredNumericRestaurantNameException){
+<span class="nc" id="L52">        return ResponseEntity.status(HttpStatus.BAD_REQUEST)</span>
+<span class="nc" id="L53">                .body(Collections.singletonMap(MESSAGE, ExceptionResponse.NUMERIC_RESTAURANT_NAME.getMessage()));</span>
+    }
+
+    @ExceptionHandler(IsNotAOwnerException.class)
+    public ResponseEntity&lt;Map&lt;String, String&gt;&gt; handleIsNotAOwnerException(
+            IsNotAOwnerException ignoredIsNotAOwnerException){
+<span class="nc" id="L59">        return ResponseEntity.status(HttpStatus.FORBIDDEN)</span>
+<span class="nc" id="L60">                .body(Collections.singletonMap(MESSAGE, ExceptionResponse.IS_NOT_A_OWNER.getMessage()));</span>
+    }
+
+    @ExceptionHandler(PlateAlreadyExistException.class)
+    public ResponseEntity&lt;Map&lt;String, String&gt;&gt; handlePlateAlreadyExistException(
+            PlateAlreadyExistException ignoredPLateAlreadyExistException){
+<span class="nc" id="L66">        return ResponseEntity.status(HttpStatus.CONFLICT)</span>
+<span class="nc" id="L67">                .body(Collections.singletonMap(MESSAGE, ExceptionResponse.PLATE_ALREADY_EXIST.getMessage()));</span>
+    }
+
+    @ExceptionHandler(NoPlateToRestaurantAssociationException.class)
+    public ResponseEntity&lt;Map&lt;String, String&gt;&gt; handleNoPlateToRestaurantAssociationException(
+            NoPlateToRestaurantAssociationException ignoresNoPlateToRestaurantAssociationException){
+<span class="nc" id="L73">        return ResponseEntity.status(HttpStatus.CONFLICT)</span>
+<span class="nc" id="L74">                .body(Collections.singletonMap(MESSAGE, ExceptionResponse.NO_PLATE_TO_RESTAURANT_ASSOCIATION.getMessage()));</span>
+    }
+
+    @ExceptionHandler(NoOwnerPlateAssociationException.class)
+    public ResponseEntity&lt;Map&lt;String, String&gt;&gt; handleNoOwnerPlateAssociationException(
+            NoOwnerPlateAssociationException ignoredNoOwnerPlateAssociationException){
+<span class="nc" id="L80">        return ResponseEntity.status(HttpStatus.FORBIDDEN)</span>
+<span class="nc" id="L81">                .body(Collections.singletonMap(MESSAGE, ExceptionResponse.NO_OWNER_PLATE_ASSOCIATION.getMessage()));</span>
+    }
+
+    @ExceptionHandler(RestaurantNotExistException.class)
+    public ResponseEntity&lt;Map&lt;String, String&gt;&gt; handleRestaurantNotExistException(
+            RestaurantNotExistException ignoredRestaurantNotExistException){
+<span class="nc" id="L87">        return ResponseEntity.status(HttpStatus.NOT_FOUND)</span>
+<span class="nc" id="L88">                .body(Collections.singletonMap(MESSAGE, ExceptionResponse.RESTAURANT_NOT_EXIST.getMessage()));</span>
+    }
+
+    @ExceptionHandler(PlateNotExistException.class)
+    public ResponseEntity&lt;Map&lt;String, String&gt;&gt; handlePlateNotExistException(
+            PlateNotExistException ignoredPlateNotExistException){
+<span class="nc" id="L94">        return ResponseEntity.status(HttpStatus.NOT_FOUND)</span>
+<span class="nc" id="L95">                .body(Collections.singletonMap(MESSAGE, ExceptionResponse.PLATE_NOT_EXIST.getMessage()));</span>
+    }
+
+    @ExceptionHandler(OrderInProcessException.class)
+    public ResponseEntity&lt;Map&lt;String, String&gt;&gt; handleOrderInProcessException(
+            OrderInProcessException ignoredOrderInProcessException){
+<span class="nc" id="L101">        return ResponseEntity.status(HttpStatus.CONFLICT)</span>
+<span class="nc" id="L102">                .body(Collections.singletonMap(MESSAGE, ExceptionResponse.ORDER_IN_PROCESS.getMessage()));</span>
+    }
+
+    @ExceptionHandler(OrderNotExistException.class)
+    public ResponseEntity&lt;Map&lt;String, String&gt;&gt; handleOrderNotExistException(
+            OrderNotExistException ignoredOrderNotExistException){
+<span class="nc" id="L108">        return ResponseEntity.status(HttpStatus.NOT_FOUND)</span>
+<span class="nc" id="L109">                .body(Collections.singletonMap(MESSAGE, ExceptionResponse.ORDER_NOT_EXIST.getMessage()));</span>
+    }
+
+    @ExceptionHandler(WrongPinException.class)
+    public ResponseEntity&lt;Map&lt;String, String&gt;&gt; handleWrongPinException(
+            WrongPinException ignoredWrongPinException){
+<span class="nc" id="L115">        return ResponseEntity.status(HttpStatus.FORBIDDEN)</span>
+<span class="nc" id="L116">                .body(Collections.singletonMap(MESSAGE, ExceptionResponse.WRONG_PIN.getMessage()));</span>
+    }
+
+    @ExceptionHandler(NoReadyStatusBeforeException.class)
+    public ResponseEntity&lt;Map&lt;String, String&gt;&gt; handleNoReadyStatusBeforeException(
+            NoReadyStatusBeforeException ignoredNoReadyStatusBeforeException){
+<span class="nc" id="L122">        return ResponseEntity.status(HttpStatus.BAD_REQUEST)</span>
+<span class="nc" id="L123">                .body(Collections.singletonMap(MESSAGE, ExceptionResponse.NO_READY_STATUS_BEFORE.getMessage()));</span>
+    }
+
+    @ExceptionHandler(OrderStatusException.class)
+    public ResponseEntity&lt;Map&lt;String, String&gt;&gt; handleOrderStatusException(){
+<span class="nc" id="L128">        return ResponseEntity.status(HttpStatus.BAD_REQUEST)</span>
+<span class="nc" id="L129">                .body(Collections.singletonMap(MESSAGE, ExceptionResponse.ORDER_STATUS.getMessage()));</span>
+    }
+
+    @ExceptionHandler(NoOrderClientAssociationException.class)
+    public ResponseEntity&lt;Map&lt;String,String&gt;&gt; handleNoOrderClientAssociationException(
+            NoOrderClientAssociationException ignoredNoOrderClientAssociationException){
+<span class="nc" id="L135">        return ResponseEntity.status(HttpStatus.FORBIDDEN)</span>
+<span class="nc" id="L136">                .body(Collections.singletonMap(MESSAGE, ExceptionResponse.NO_ORDER_CLIENT_ASSOCIATION.getMessage()));</span>
+    }
+
+    @ExceptionHandler(OrderNotCancelableException.class)
+    public ResponseEntity&lt;Map&lt;String, String&gt;&gt; handleOrderNotCancelableException(
+            OrderNotCancelableException ignoredOrderNotCancelableException){
+<span class="nc" id="L142">        return ResponseEntity.status(HttpStatus.CONFLICT)</span>
+<span class="nc" id="L143">                .body(Collections.singletonMap(MESSAGE, ExceptionResponse.ORDER_NOT_CANCELABLE.getMessage()));</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

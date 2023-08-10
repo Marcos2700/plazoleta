@@ -1,0 +1,1 @@
+com.pragma.powerup.infrastructure.out.feign.adapter.UserFeignAdapter#getUserByEmail(Ljava/lang/String;)Lcom/pragma/powerup/infrastructure/out/feign/dto/UserDto;

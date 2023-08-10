@@ -1,0 +1,3 @@
+com.pragma.powerup.infrastructure.out.jpa.adapter.RestaurantJpaAdapter#listRestaurant(Lorg/springframework/data/domain/Pageable;)Lorg/springframework/data/domain/Page;
+com.pragma.powerup.infrastructure.exception.NoDataFoundException#<init>()V
+com.pragma.powerup.infrastructure.exception.NoDataFoundException#instance-init#

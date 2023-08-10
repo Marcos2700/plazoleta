@@ -1,0 +1,4 @@
+com.pragma.powerup.infrastructure.out.jpa.adapter.RestaurantJpaAdapter#saveRestaurant(Lcom/pragma/powerup/domain/model/Restaurant;)V
+java.util.Optional#isPresent()Z
+com.pragma.powerup.infrastructure.exception.RestaurantAlreadyExistException#instance-init#
+com.pragma.powerup.infrastructure.exception.RestaurantAlreadyExistException#<init>()V

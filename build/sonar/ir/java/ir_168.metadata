@@ -1,0 +1,1 @@
+com.pragma.powerup.domain.usecase.RestaurantUseCase#getRestaurantByOwnerId(Ljava/lang/Long;)Lcom/pragma/powerup/domain/model/Restaurant;

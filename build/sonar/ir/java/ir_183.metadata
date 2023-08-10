@@ -1,0 +1,1 @@
+com.pragma.powerup.domain.usecase.OrderPlateUseCase#saveOrderPlate(Lcom/pragma/powerup/domain/model/OrderPlate;Lcom/pragma/powerup/domain/model/Order;)V

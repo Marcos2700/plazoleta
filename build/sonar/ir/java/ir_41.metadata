@@ -1,0 +1,7 @@
+com.pragma.powerup.infrastructure.out.jpa.adapter.PlateJpaAdapter#savePlate(Lcom/pragma/powerup/domain/model/Plate;)V
+java.util.Optional#isPresent()Z
+com.pragma.powerup.infrastructure.exception.PlateAlreadyExistException#<init>()V
+com.pragma.powerup.infrastructure.exception.NoPlateToRestaurantAssociationException#<init>()V
+com.pragma.powerup.infrastructure.exception.PlateAlreadyExistException#instance-init#
+java.util.Optional#isEmpty()Z
+com.pragma.powerup.infrastructure.exception.NoPlateToRestaurantAssociationException#instance-init#

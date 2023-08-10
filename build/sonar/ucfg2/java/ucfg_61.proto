@@ -1,0 +1,96 @@
+
+¦com.pragma.powerup.application.mapper.IRestaurantResponseMapper#toRestaurantResponsePage(Lorg/springframework/data/domain/Page;)Lorg/springframework/data/domain/Page;‰
+C:/Users/Usuario/Documents/reto/ms_plazoleta/src/main/java/com/pragma/powerup/application/mapper/IRestaurantResponseMapper.java#, #(D"1*”
+1$D $(RËÈ
+$D $(_
+%0java.util.List"Borg.springframework.data.domain.Slice#getContent()Ljava/util/List;*T
+
+__unknown_file (8
+6
+restaurantPage$org.springframework.data.domain.Page2getContent()¢Ÿ
+$D %(
+%1java.util.stream.Stream"6java.util.Collection#stream()Ljava/util/stream/Stream;*2
+
+__unknown_file (
+
+%0java.util.List2stream()µ
+²
+% *(!
+%2java.util.function.Function"__declareFunction*p
+
+__unknown_file (TR
+P__sonar_lambda_7$com.pragma.powerup.application.mapper.IRestaurantResponseMapper£ 
+$D *(
+%7java.util.stream.Stream"Sjava.util.stream.Stream#map(Ljava/util/function/Function;)Ljava/util/stream/Stream;*;
+
+__unknown_file (
+
+%1java.util.stream.Stream*?
+
+__unknown_file (#
+!
+%2java.util.function.Function2"map(Ljava/util/function/Function;)®
+«
+* *(. 
+%8java.util.stream.Collector"@java.util.stream.Collectors#toList()Ljava/util/stream/Collector;*;
+
+__unknown_file ("
+java.util.stream.Collectors˜•
+$D *(/
+%9java.util.List"Ojava.util.stream.Stream#collect(Ljava/util/stream/Collector;)Ljava/lang/Object;*;
+
+__unknown_file (
+
+%7java.util.stream.Stream*>
+
+__unknown_file ("
+ 
+%8java.util.stream.Collector2%collect(Ljava/util/stream/Collector;)s
+q
+$ *(0+
+restaurantResponseDtoListjava.util.List"__id*2
+
+__unknown_file (
+
+%9java.util.List‚ÿ
++9 +(U/
+%10(org.springframework.data.domain.Pageable"]org.springframework.data.domain.Slice#getPageable()Lorg/springframework/data/domain/Pageable;*T
+
+__unknown_file (8
+6
+restaurantPage$org.springframework.data.domain.Page2getPageable()¬©
++W +(o
+
+%11int"0org.springframework.data.domain.Slice#getSize()I*T
+
+__unknown_file (8
+6
+restaurantPage$org.springframework.data.domain.Page2	getSize()ge
++ +(/
+%12(org.springframework.data.domain.PageImpl"(org.springframework.data.domain.PageImpl–
+“
++ +(p
+%13"morg.springframework.data.domain.PageImpl#<init>(Ljava/util/List;Lorg/springframework/data/domain/Pageable;J)V*M
+
+__unknown_file (1
+/
+%12(org.springframework.data.domain.PageImpl*I
+
+__unknown_file (-
++
+restaurantResponseDtoListjava.util.List*M
+
+__unknown_file (1
+/
+%10(org.springframework.data.domain.Pageable*(
+
+__unknown_file (
+
+
+%11int"=
++ +(q1
+/
+%12(org.springframework.data.domain.PageImpl:B
+#E #(d6
+restaurantPage$org.springframework.data.domain.PageBCA
+?com.pragma.powerup.application.mapper.IRestaurantResponseMapperH

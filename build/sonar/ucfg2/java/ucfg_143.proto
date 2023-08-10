@@ -1,0 +1,31 @@
+
+xcom.pragma.powerup.infrastructure.input.rest.PlateRestController#getAllPlates()Lorg/springframework/http/ResponseEntity;‹
+€C:/Users/Usuario/Documents/reto/ms_plazoleta/src/main/java/com/pragma/powerup/infrastructure/input/rest/PlateRestController.java22 2(>"1*š
+13 3(Ã
+À
+3! 3(-:
+%04com.pragma.powerup.application.handler.IPlateHandler"__id*r
+
+__unknown_file (V*TB
+@com.pragma.powerup.infrastructure.input.rest.PlateRestController"
+plateHandlerâß
+3! 3(<
+%1java.util.List"Scom.pragma.powerup.application.handler.IPlateHandler#getAllPlates()Ljava/util/List;*X
+
+__unknown_file (<
+:
+%04com.pragma.powerup.application.handler.IPlateHandler2getAllPlates()¢
+Ÿ
+3 3(=-
+%2'org.springframework.http.ResponseEntity"gorg.springframework.http.ResponseEntity#ok(Ljava/lang/Object;)Lorg/springframework/http/ResponseEntity;*G
+
+__unknown_file (+")
+'org.springframework.http.ResponseEntity*2
+
+__unknown_file (
+
+%1java.util.List";
+3 3(>/
+-
+%2'org.springframework.http.ResponseEntityBDB
+@com.pragma.powerup.infrastructure.input.rest.PlateRestControllerH

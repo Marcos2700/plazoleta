@@ -1,0 +1,4 @@
+com.pragma.powerup.infrastructure.out.jpa.adapter.OrderJpaAdapter#getOrder(Ljava/lang/Long;)Lcom/pragma/powerup/domain/model/Order;
+com.pragma.powerup.infrastructure.exception.OrderNotExistException#<init>()V
+com.pragma.powerup.infrastructure.exception.OrderNotExistException#instance-init#
+java.util.Optional#orElse(Ljava/lang/Object;)Ljava/lang/Object;

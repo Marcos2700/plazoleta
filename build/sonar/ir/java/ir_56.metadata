@@ -1,0 +1,4 @@
+com.pragma.powerup.application.handler.impl.PlateHandlerImpl#turnOffOnPlate(Ljava/lang/Long;Ljavax/servlet/http/HttpServletRequest;)V
+java.lang.String#replace(Ljava/lang/CharSequence;Ljava/lang/CharSequence;)Ljava/lang/String;
+com.pragma.powerup.application.handler.impl.PlateHandlerImpl#thereArePlateOwnerAssociation(Ljava/lang/String;Ljava/lang/Long;)V
+java.lang.Boolean#equals(Ljava/lang/Object;)Z

@@ -1,0 +1,48 @@
+
+K__sonar_lambda_4$com.pragma.powerup.application.mapper.IOrderResponseMapper„
+zC:/Users/Usuario/Documents/reto/ms_plazoleta/src/main/java/com/pragma/powerup/application/mapper/IOrderResponseMapper.java $  (h"startingBlock*Û
+startingBlock $  (hº
+·
+
+__unknown_file (.
+order%com.pragma.powerup.domain.model.Order"__id*e
+
+__unknown_file (I*G<
+:com.pragma.powerup.application.mapper.IOrderResponseMapper"
+order*
+1*¼
+1 2  (9ÓÐ
+ A  (X
+%19java.lang.Long"Gcom.pragma.powerup.domain.model.OrderPlate#getIdOrder()Ljava/lang/Long;*V
+
+__unknown_file (:
+8
+
+orderPlate*com.pragma.powerup.domain.model.OrderPlate2getIdOrder()º·
+ Z  (g
+%20java.lang.Long"=com.pragma.powerup.domain.model.Order#getId()Ljava/lang/Long;*L
+
+__unknown_file (0
+.
+order%com.pragma.powerup.domain.model.Order2getId()û
+ø
+ 2  (h
+%21boolean"?java.util.Objects#equals(Ljava/lang/Object;Ljava/lang/Object;)Z*1
+
+__unknown_file ("
+java.util.Objects*3
+
+__unknown_file (
+
+%19java.lang.Long*3
+
+__unknown_file (
+
+%20java.lang.Long"
+ 2  (h
+
+%21boolean:D
+ $  (.8
+
+orderPlate*com.pragma.powerup.domain.model.OrderPlateB 
+java.util.function.Predicate

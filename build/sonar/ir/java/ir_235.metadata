@@ -1,0 +1,5 @@
+com.pragma.powerup.infrastructure.security.UserDetailsServiceImpl#loadUserByUsername(Ljava/lang/String;)Lorg/springframework/security/core/userdetails/UserDetails;
+com.pragma.powerup.infrastructure.security.UserDetailsImpl#<init>(Ljava/util/Map;)V
+java.util.HashMap#<init>()V
+com.pragma.powerup.infrastructure.security.UserDetailsImpl#instance-init#
+java.util.HashMap#instance-init#

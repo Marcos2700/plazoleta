@@ -1,0 +1,4 @@
+com.pragma.powerup.infrastructure.exceptionhandler.ControllerAdvisor#handleNoPlateToRestaurantAssociationException(Lcom/pragma/powerup/infrastructure/exception/NoPlateToRestaurantAssociationException;)Lorg/springframework/http/ResponseEntity;
+java.util.Collections#singletonMap(Ljava/lang/Object;Ljava/lang/Object;)Ljava/util/Map;
+com.pragma.powerup.infrastructure.exceptionhandler.ExceptionResponse#getMessage()Ljava/lang/String;
+org.springframework.http.ResponseEntity#status(Lorg/springframework/http/HttpStatus;)Lorg/springframework/http/ResponseEntity$BodyBuilder;

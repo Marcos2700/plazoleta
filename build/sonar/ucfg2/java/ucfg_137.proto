@@ -1,0 +1,51 @@
+
+∂com.pragma.powerup.infrastructure.out.feign.adapter.UserFeignAdapter#getOwnerEmployeeRelation(Ljava/lang/Long;)Lcom/pragma/powerup/infrastructure/out/feign/dto/OwnerEmployeeRelation;è
+ÑC:/Users/Usuario/Documents/reto/ms_plazoleta/src/main/java/com/pragma/powerup/infrastructure/out/feign/adapter/UserFeignAdapter.java! (9"startingBlock*é
+startingBlock9 (Jè
+å
+ (
+%2"
+__annotate*2
+
+__unknown_file (
+java.lang.Override*:
+
+__unknown_file (
+
+
+idEmployeejava.lang.Long\
+Z
+? (I
+
+idEmployeejava.lang.Long"__annotation*"
+
+__unknown_file (
+
+%2*
+1*í
+1 (—
+Œ
+ (A
+%0;com.pragma.powerup.infrastructure.out.feign.UserFeignClient"__id*y
+
+__unknown_file (]*[F
+Dcom.pragma.powerup.infrastructure.out.feign.adapter.UserFeignAdapter"
+userFeignClient”–
+ (CK
+%1Ecom.pragma.powerup.infrastructure.out.feign.dto.OwnerEmployeeRelation"≠com.pragma.powerup.infrastructure.out.feign.UserFeignClient#getOwnerEmployeeRelation(Ljava/lang/Long;)Lcom/pragma/powerup/infrastructure/out/feign/dto/OwnerEmployeeRelation;*_
+
+__unknown_file (C
+A
+%0;com.pragma.powerup.infrastructure.out.feign.UserFeignClient*:
+
+__unknown_file (
+
+
+idEmployeejava.lang.Long2*getOwnerEmployeeRelation(Ljava/lang/Long;)"Y
+ (DM
+K
+%1Ecom.pragma.powerup.infrastructure.out.feign.dto.OwnerEmployeeRelation:(
+: (I
+
+idEmployeejava.lang.LongBHF
+Dcom.pragma.powerup.infrastructure.out.feign.adapter.UserFeignAdapterH

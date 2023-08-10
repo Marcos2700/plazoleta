@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>OrderHandlerImpl.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Plazoleta-microservice</a> &gt; <a href="index.source.html" class="el_package">com.pragma.powerup.application.handler.impl</a> &gt; <span class="el_source">OrderHandlerImpl.java</span></div><h1>OrderHandlerImpl.java</h1><pre class="source lang-java linenums">package com.pragma.powerup.application.handler.impl;
+
+import com.pragma.powerup.application.dto.OrderPlateDto;
+import com.pragma.powerup.application.dto.request.OrderRequestDto;
+import com.pragma.powerup.application.dto.response.OrderInfoResponseDto;
+import com.pragma.powerup.application.handler.IOrderHandler;
+import com.pragma.powerup.application.mapper.IOrderPlateMapper;
+import com.pragma.powerup.application.mapper.IOrderRequestMapper;
+import com.pragma.powerup.application.mapper.IOrderResponseMapper;
+import com.pragma.powerup.application.mapper.IUserDtoToClientDtoMapper;
+import com.pragma.powerup.domain.api.IOrderPlateServicePort;
+import com.pragma.powerup.domain.api.IOrderServicePort;
+import com.pragma.powerup.domain.api.IPinOrderServicePort;
+import com.pragma.powerup.domain.api.IRestaurantServicePort;
+import com.pragma.powerup.domain.api.feign.IMessageFeignServicePort;
+import com.pragma.powerup.domain.api.feign.ITraceabilityServicePort;
+import com.pragma.powerup.domain.api.feign.IUserFeignServicePort;
+import com.pragma.powerup.domain.model.*;
+import com.pragma.powerup.infrastructure.exception.*;
+import com.pragma.powerup.infrastructure.out.feign.dto.ClientMessageDto;
+import com.pragma.powerup.infrastructure.out.feign.dto.OwnerEmployeeRelation;
+import com.pragma.powerup.infrastructure.out.feign.dto.TraceabilityDto;
+import com.pragma.powerup.infrastructure.out.feign.dto.UserDto;
+import com.pragma.powerup.infrastructure.security.TokenUtils;
+import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.transaction.Transactional;
+import java.security.SecureRandom;
+import java.util.Date;
+import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
+
+@Service
+@RequiredArgsConstructor
+@Transactional
+public class OrderHandlerImpl implements IOrderHandler {
+
+    private final IOrderServicePort orderServicePort;
+    private final IOrderPlateServicePort orderPlateServicePort;
+    private final IOrderRequestMapper orderRequestMapper;
+    private final IOrderResponseMapper orderResponseMapper;
+    private final IOrderPlateMapper orderPlateMapper;
+    private final IUserFeignServicePort userFeignClient;
+    private final IMessageFeignServicePort messageFeignClient;
+    private final IRestaurantServicePort restaurantServicePort;
+    private final IUserDtoToClientDtoMapper userDtoToClientDtoMapper;
+    private final IPinOrderServicePort pinOrderServicePort;
+    private final ITraceabilityServicePort traceabilityFeign;
+    private final TokenUtils tokenUtils = new TokenUtils();
+
+    @Override
+    public void saveOrder(OrderRequestDto orderRequestDto) {
+<span class="fc" id="L59">        Order order = orderRequestMapper.toOrder(orderRequestDto);</span>
+<span class="fc" id="L60">        order.setStatus(OrderStatus.PENDING.getStatus());</span>
+<span class="fc" id="L61">        Order orderSaved = orderServicePort.saveOrder(order);</span>
+
+<span class="fc" id="L63">        List&lt;OrderPlateDto&gt; orderPlateDtoList = orderRequestDto.getOrders();</span>
+
+<span class="nc" id="L65">        orderPlateDtoList.forEach(orderPlateDto -&gt; {</span>
+<span class="nc" id="L66">                    orderPlateDto.setIdOrder(orderSaved.getId());</span>
+<span class="nc" id="L67">                    OrderPlate orderPlate = orderPlateMapper.toOrderPlate(orderPlateDto);</span>
+<span class="nc" id="L68">                    orderPlateServicePort.saveOrderPlate(orderPlate, order);</span>
+<span class="nc" id="L69">                });</span>
+<span class="nc" id="L70">        UserDto client = userFeignClient.getUser(orderSaved.getIdClient());</span>
+
+<span class="nc" id="L72">        TraceabilityDto traceabilityDto = new TraceabilityDto();</span>
+<span class="nc" id="L73">        traceabilityDto.setIdOrder(orderSaved.getId());</span>
+<span class="nc" id="L74">        traceabilityDto.setDate(new Date());</span>
+<span class="nc" id="L75">        traceabilityDto.setIdClient(client.getId());</span>
+<span class="nc" id="L76">        traceabilityDto.setEmailClient(client.getEmail());</span>
+<span class="nc" id="L77">        traceabilityDto.setIdEmployee(orderSaved.getIdChef());</span>
+<span class="nc" id="L78">        traceabilityDto.setCurrentState(orderSaved.getStatus());</span>
+<span class="nc" id="L79">        traceabilityDto.setPreviousState(&quot;None&quot;);</span>
+<span class="nc" id="L80">        traceabilityDto.setEmailEmployee(&quot;None&quot;);</span>
+
+<span class="nc" id="L82">        traceabilityFeign.saveTrace(traceabilityDto);</span>
+<span class="nc" id="L83">    }</span>
+
+    @Override
+    public Page&lt;OrderInfoResponseDto&gt; assignOrder(Long idOrder, String status, int page, int size, HttpServletRequest request) {
+<span class="fc" id="L87">        Long idChef = this.getIdUser(request);</span>
+
+<span class="fc" id="L89">        UserDto employee = userFeignClient.getUser(idChef);</span>
+
+<span class="fc" id="L91">        TraceabilityDto traceabilityDto = new TraceabilityDto();</span>
+<span class="fc" id="L92">        traceabilityDto.setIdEmployee(employee.getId());</span>
+<span class="fc" id="L93">        traceabilityDto.setEmailEmployee(employee.getEmail());</span>
+
+<span class="fc" id="L95">        Order order = orderServicePort.getOrder(idOrder);</span>
+<span class="fc bfc" id="L96" title="All 2 branches covered.">        if(order.getStatus().equals(OrderStatus.DELIVERED.getStatus())){</span>
+<span class="fc" id="L97">            throw new OrderStatusException();</span>
+        }
+<span class="fc" id="L99">        traceabilityDto.setIdOrder(order.getId());</span>
+<span class="fc" id="L100">        traceabilityDto.setPreviousState(order.getStatus());</span>
+
+<span class="fc" id="L102">        UserDto client = userFeignClient.getUser(order.getIdClient());</span>
+
+<span class="fc" id="L104">        traceabilityDto.setIdClient(client.getId());</span>
+<span class="fc" id="L105">        traceabilityDto.setEmailClient(client.getEmail());</span>
+
+<span class="fc" id="L107">        order.setIdChef(idChef);</span>
+<span class="fc" id="L108">        order.setStatus(OrderStatus.IN_PREPARATION.getStatus());</span>
+
+<span class="fc" id="L110">        traceabilityDto.setCurrentState(order.getStatus());</span>
+
+<span class="fc" id="L112">        orderServicePort.updateStatus(order);</span>
+
+<span class="fc" id="L114">        Long idRestaurant = this.getRestaurantId(request);</span>
+<span class="fc" id="L115">        Pageable pageable = PageRequest.of(page, size);</span>
+
+<span class="fc" id="L117">        traceabilityDto.setDate(new Date());</span>
+<span class="fc" id="L118">        traceabilityFeign.saveTrace(traceabilityDto);</span>
+
+<span class="fc" id="L120">        return this.getOrdersResponsePage(idRestaurant, pageable, status);</span>
+    }
+
+    @Override
+    public Page&lt;OrderInfoResponseDto&gt; listOrder(String status, int page, int size, HttpServletRequest request) {
+<span class="fc" id="L125">        Long idRestaurant = this.getRestaurantId(request);</span>
+<span class="fc" id="L126">        Pageable pageable = PageRequest.of(page, size);</span>
+
+<span class="fc" id="L128">        return this.getOrdersResponsePage(idRestaurant, pageable, status);</span>
+    }
+
+    @Override
+    public void setReadyStatus(Long idOrder) {
+<span class="fc" id="L133">        TraceabilityDto traceabilityDto = new TraceabilityDto();</span>
+
+<span class="fc" id="L135">        Order order = orderServicePort.getOrder(idOrder);</span>
+<span class="fc" id="L136">        traceabilityDto.setIdOrder(order.getId());</span>
+<span class="fc" id="L137">        traceabilityDto.setPreviousState(order.getStatus());</span>
+<span class="fc" id="L138">        order.setStatus(OrderStatus.READY.getStatus());</span>
+<span class="fc" id="L139">        traceabilityDto.setCurrentState(order.getStatus());</span>
+<span class="fc" id="L140">        orderServicePort.updateStatus(order);</span>
+
+<span class="fc" id="L142">        UserDto client = userFeignClient.getUser(order.getIdClient());</span>
+<span class="fc" id="L143">        traceabilityDto.setIdClient(client.getId());</span>
+<span class="fc" id="L144">        traceabilityDto.setEmailClient(client.getEmail());</span>
+
+<span class="fc" id="L146">        UserDto employee = userFeignClient.getUser(order.getIdChef());</span>
+<span class="nc" id="L147">        traceabilityDto.setIdEmployee(employee.getId());</span>
+<span class="nc" id="L148">        traceabilityDto.setEmailEmployee(employee.getEmail());</span>
+
+<span class="nc" id="L150">        traceabilityDto.setDate(new Date());</span>
+<span class="nc" id="L151">        traceabilityFeign.saveTrace(traceabilityDto);</span>
+
+<span class="nc" id="L153">        ClientMessageDto clientUser = userDtoToClientDtoMapper.toClientMessageDto(userFeignClient.getUser(order.getIdClient()), generatePin());</span>
+<span class="nc" id="L154">        messageFeignClient.sendMessage(clientUser);</span>
+
+<span class="nc" id="L156">        PinOrder pinOrder = new PinOrder();</span>
+<span class="nc" id="L157">        pinOrder.setIdOrder(idOrder);</span>
+<span class="nc" id="L158">        pinOrder.setPin(clientUser.getPin());</span>
+<span class="nc" id="L159">        pinOrderServicePort.savePinOrder(pinOrder);</span>
+
+<span class="nc" id="L161">    }</span>
+
+    @Override
+    public void setDeliveredStatus(Long idOrder, String pin) {
+<span class="fc" id="L165">        TraceabilityDto traceabilityDto = new TraceabilityDto();</span>
+
+<span class="fc" id="L167">        Order order = orderServicePort.getOrder(idOrder);</span>
+<span class="fc bfc" id="L168" title="All 2 branches covered.">        if(!order.getStatus().equals(OrderStatus.READY.getStatus())){</span>
+<span class="fc" id="L169">            throw new NoReadyStatusBeforeException();</span>
+        }
+
+<span class="fc" id="L172">        traceabilityDto.setIdOrder(order.getId());</span>
+<span class="fc" id="L173">        traceabilityDto.setPreviousState(order.getStatus());</span>
+
+<span class="fc" id="L175">        UserDto client = userFeignClient.getUser(order.getIdClient());</span>
+
+<span class="fc" id="L177">        traceabilityDto.setIdClient(client.getId());</span>
+<span class="fc" id="L178">        traceabilityDto.setEmailClient(client.getEmail());</span>
+
+<span class="fc" id="L180">        UserDto employee = userFeignClient.getUser(order.getIdChef());</span>
+
+<span class="fc" id="L182">        traceabilityDto.setIdEmployee(employee.getId());</span>
+<span class="fc" id="L183">        traceabilityDto.setEmailEmployee(employee.getEmail());</span>
+
+<span class="fc" id="L185">        PinOrder pinOrder = pinOrderServicePort.getByOrder(idOrder);</span>
+<span class="pc bpc" id="L186" title="1 of 2 branches missed.">        if(!Objects.equals(pinOrder.getPin(), pin)){</span>
+<span class="fc" id="L187">            throw new WrongPinException();</span>
+        }
+<span class="nc" id="L189">        pinOrderServicePort.deletePinOrder(pinOrder.getId());</span>
+
+<span class="nc" id="L191">        order.setStatus(OrderStatus.DELIVERED.getStatus());</span>
+<span class="nc" id="L192">        traceabilityDto.setCurrentState(order.getStatus());</span>
+<span class="nc" id="L193">        orderServicePort.updateStatus(order);</span>
+
+<span class="nc" id="L195">        traceabilityDto.setDate(new Date());</span>
+<span class="nc" id="L196">        traceabilityFeign.saveTrace(traceabilityDto);</span>
+<span class="nc" id="L197">    }</span>
+
+    @Override
+    public void cancelOrder(Long idOrder, HttpServletRequest request) {
+<span class="fc" id="L201">        Long idClient = this.getIdUser(request);</span>
+<span class="fc" id="L202">        UserDto client = userFeignClient.getUser(idClient);</span>
+<span class="fc" id="L203">        Order order = orderServicePort.getOrder(idOrder);</span>
+<span class="fc bfc" id="L204" title="All 2 branches covered.">        if(!Objects.equals(order.getIdClient(), idClient)){</span>
+<span class="fc" id="L205">            throw new NoOrderClientAssociationException();</span>
+        }
+
+<span class="fc bfc" id="L208" title="All 2 branches covered.">        if(!order.getStatus().equals(OrderStatus.PENDING.getStatus())){</span>
+<span class="fc" id="L209">            messageFeignClient.notifyNotIsPossibleToCancel(client.getPhoneNumber());</span>
+<span class="fc" id="L210">            throw new OrderNotCancelableException();</span>
+        }
+
+<span class="fc" id="L213">        order.setStatus(OrderStatus.CANCELED.getStatus());</span>
+<span class="fc" id="L214">        orderServicePort.updateStatus(order);</span>
+<span class="fc" id="L215">    }</span>
+
+    private Page&lt;OrderInfoResponseDto&gt; getOrdersResponsePage(Long idRestaurant, Pageable pageable, String status){
+<span class="fc" id="L218">        Page&lt;Order&gt; orderPage = orderServicePort.listOrder(idRestaurant, status, pageable);</span>
+<span class="fc" id="L219">        List&lt;OrderPlate&gt; orderPlateList = orderPage.getContent().stream()</span>
+<span class="fc" id="L220">                .flatMap(order -&gt; orderPlateServicePort.findAllByOrderId(order.getId()).stream())</span>
+<span class="fc" id="L221">                .collect(Collectors.toList());</span>
+<span class="fc" id="L222">        return orderResponseMapper.toReponsePage(orderServicePort.listOrder(idRestaurant, status, pageable), orderPlateList);</span>
+    }
+
+    private String generatePin(){
+<span class="nc" id="L226">        SecureRandom secureRandom = new SecureRandom();</span>
+<span class="nc" id="L227">        int pinLength = 6;</span>
+<span class="nc" id="L228">        StringBuilder stringBuilder = new StringBuilder(pinLength);</span>
+<span class="nc bnc" id="L229" title="All 2 branches missed.">        for(int i = 0; i &lt; pinLength; i++){</span>
+<span class="nc" id="L230">            String pinChars = &quot;0123456789&quot;;</span>
+<span class="nc" id="L231">            int randomIndex = secureRandom.nextInt(pinChars.length());</span>
+<span class="nc" id="L232">            char randomChar = pinChars.charAt(randomIndex);</span>
+<span class="nc" id="L233">            stringBuilder.append(randomChar);</span>
+        }
+<span class="nc" id="L235">        return stringBuilder.toString();</span>
+    }
+
+    private Long getRestaurantId(HttpServletRequest request){
+<span class="fc" id="L239">        String token = request.getHeader(&quot;Authorization&quot;).replace(&quot;Bearer &quot;,&quot;&quot;);</span>
+<span class="fc" id="L240">        String email = tokenUtils.getEmail(token);</span>
+<span class="fc" id="L241">        UserDto employee = userFeignClient.getUserByEmail(email);</span>
+
+<span class="fc" id="L243">        OwnerEmployeeRelation ownerEmployeeRelation = userFeignClient.getOwnerEmployeeRelation(employee.getId());</span>
+<span class="fc" id="L244">        Restaurant restaurant = restaurantServicePort.getRestaurantByOwnerId(ownerEmployeeRelation.getIdOwner());</span>
+
+<span class="fc" id="L246">        return restaurant.getId();</span>
+    }
+
+    private Long getIdUser(HttpServletRequest request){
+<span class="fc" id="L250">        String token = request.getHeader(&quot;Authorization&quot;).replace(&quot;Bearer &quot;,&quot;&quot;);</span>
+<span class="fc" id="L251">        String email = tokenUtils.getEmail(token);</span>
+<span class="fc" id="L252">        UserDto user = userFeignClient.getUserByEmail(email);</span>
+
+<span class="fc" id="L254">        return user.getId();</span>
+    }
+
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

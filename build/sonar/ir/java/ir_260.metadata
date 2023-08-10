@@ -1,0 +1,3 @@
+com.pragma.powerup.infrastructure.out.jpa.adapter.RestaurantJpaAdapter#getAllRestaurant()Ljava/util/List;
+com.pragma.powerup.infrastructure.exception.NoDataFoundException#<init>()V
+com.pragma.powerup.infrastructure.exception.NoDataFoundException#instance-init#

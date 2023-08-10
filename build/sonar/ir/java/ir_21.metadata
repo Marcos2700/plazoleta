@@ -1,0 +1,9 @@
+com.pragma.powerup.application.handler.impl.OrderHandlerImpl#cancelOrder(Ljava/lang/Long;Ljavax/servlet/http/HttpServletRequest;)V
+com.pragma.powerup.infrastructure.exception.OrderNotCancelableException#<init>()V
+com.pragma.powerup.infrastructure.exception.NoOrderClientAssociationException#instance-init#
+java.lang.String#equals(Ljava/lang/Object;)Z
+com.pragma.powerup.application.handler.impl.OrderHandlerImpl#getIdUser(Ljavax/servlet/http/HttpServletRequest;)Ljava/lang/Long;
+java.util.Objects#equals(Ljava/lang/Object;Ljava/lang/Object;)Z
+com.pragma.powerup.infrastructure.exception.NoOrderClientAssociationException#<init>()V
+com.pragma.powerup.domain.model.OrderStatus#getStatus()Ljava/lang/String;
+com.pragma.powerup.infrastructure.exception.OrderNotCancelableException#instance-init#

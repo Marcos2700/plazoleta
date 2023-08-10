@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>RestaurantHandlerImpl.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Plazoleta-microservice</a> &gt; <a href="index.source.html" class="el_package">com.pragma.powerup.application.handler.impl</a> &gt; <span class="el_source">RestaurantHandlerImpl.java</span></div><h1>RestaurantHandlerImpl.java</h1><pre class="source lang-java linenums">package com.pragma.powerup.application.handler.impl;
+
+import com.pragma.powerup.application.dto.request.RestaurantRequestDto;
+import com.pragma.powerup.application.dto.response.RestaurantInfoResponseDto;
+import com.pragma.powerup.application.dto.response.RestaurantResponseDto;
+import com.pragma.powerup.application.handler.IRestaurantHandler;
+import com.pragma.powerup.application.mapper.IRestaurantRequestMapper;
+import com.pragma.powerup.application.mapper.IRestaurantResponseMapper;
+import com.pragma.powerup.domain.api.IRestaurantServicePort;
+import com.pragma.powerup.domain.api.feign.IUserFeignServicePort;
+import com.pragma.powerup.domain.exception.IsNotAOwnerException;
+import com.pragma.powerup.domain.model.Restaurant;
+import com.pragma.powerup.infrastructure.out.feign.dto.UserDto;
+import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.stereotype.Service;
+
+import javax.transaction.Transactional;
+import java.util.List;
+
+@Service
+@RequiredArgsConstructor
+@Transactional
+public class RestaurantHandlerImpl implements IRestaurantHandler {
+
+    private final IRestaurantServicePort restaurantServicePort;
+    private final IRestaurantRequestMapper restaurantRequestMapper;
+    private final IRestaurantResponseMapper restaurantResponseMapper;
+    private final IUserFeignServicePort userFeignClient;
+
+    @Override
+    public void saveRestaurant(RestaurantRequestDto restaurantRequestDto) {
+<span class="fc" id="L36">        UserDto user = userFeignClient.getUser(restaurantRequestDto.getIdOwner());</span>
+<span class="fc bfc" id="L37" title="All 2 branches covered.">        if(!user.getRole().getRoleName().equals(&quot;owner&quot;)){</span>
+<span class="fc" id="L38">            throw new IsNotAOwnerException();</span>
+        }
+<span class="fc" id="L40">        Restaurant restaurant = restaurantRequestMapper.toRestaurant(restaurantRequestDto);</span>
+<span class="fc" id="L41">        restaurantServicePort.saveRestaurant(restaurant);</span>
+<span class="fc" id="L42">    }</span>
+
+    @Override
+    public List&lt;RestaurantResponseDto&gt; getAllRestaurant() {
+<span class="fc" id="L46">        return restaurantResponseMapper.toResponseList(restaurantServicePort.getAllRestaurant());</span>
+    }
+
+    @Override
+    public Page&lt;RestaurantInfoResponseDto&gt; listRestaurant(int page, int size) {
+<span class="fc" id="L51">        Sort sort = Sort.by(Sort.Direction.ASC, &quot;name&quot;);</span>
+<span class="fc" id="L52">        Pageable pageable = PageRequest.of(page, size, sort);</span>
+<span class="fc" id="L53">        return restaurantResponseMapper.toRestaurantResponsePage(restaurantServicePort.listRestaurant(pageable));</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>RestaurantUseCase.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Plazoleta-microservice</a> &gt; <a href="index.source.html" class="el_package">com.pragma.powerup.domain.usecase</a> &gt; <span class="el_source">RestaurantUseCase.java</span></div><h1>RestaurantUseCase.java</h1><pre class="source lang-java linenums">package com.pragma.powerup.domain.usecase;
+
+import com.pragma.powerup.domain.api.IRestaurantServicePort;
+import com.pragma.powerup.domain.exception.NitNoNumericException;
+import com.pragma.powerup.domain.exception.NumericRestaurantNameException;
+import com.pragma.powerup.domain.exception.PhoneNumberNoNumericException;
+import com.pragma.powerup.domain.model.Restaurant;
+import com.pragma.powerup.domain.spi.IRestaurantPersistencePort;
+import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
+import java.util.List;
+
+@RequiredArgsConstructor
+public class RestaurantUseCase implements IRestaurantServicePort {
+
+    private final IRestaurantPersistencePort restaurantPersistencePort;
+
+    @Override
+    public void saveRestaurant(Restaurant restaurant) {
+<span class="fc bfc" id="L22" title="All 2 branches covered.">        if(!isNumeric(restaurant.getPhoneNumber().substring(1))){</span>
+<span class="fc" id="L23">            throw new PhoneNumberNoNumericException();</span>
+        }
+<span class="fc bfc" id="L25" title="All 2 branches covered.">        if(!isNumeric(restaurant.getNit())){</span>
+<span class="fc" id="L26">            throw new NitNoNumericException();</span>
+        }
+<span class="fc bfc" id="L28" title="All 2 branches covered.">        if(isNumeric(restaurant.getName())){</span>
+<span class="fc" id="L29">            throw new NumericRestaurantNameException();</span>
+        }
+<span class="fc" id="L31">        restaurantPersistencePort.saveRestaurant(restaurant);</span>
+<span class="fc" id="L32">    }</span>
+
+    @Override
+    public Restaurant getRestaurantByOwnerId(Long id) {
+<span class="nc" id="L36">        return restaurantPersistencePort.getRestaurantByOwnerId(id);</span>
+    }
+
+    @Override
+    public List&lt;Restaurant&gt; getAllRestaurant() {
+<span class="fc" id="L41">        return restaurantPersistencePort.getAllRestaurant();</span>
+    }
+
+    @Override
+    public Page&lt;Restaurant&gt; listRestaurant(Pageable pageable) {
+<span class="nc" id="L46">        return restaurantPersistencePort.listRestaurant(pageable);</span>
+    }
+
+    private static boolean isNumeric(String number){
+        try {
+<span class="fc" id="L51">            Long.parseLong(number);</span>
+<span class="fc" id="L52">            return true;</span>
+        }
+<span class="fc" id="L54">        catch (NumberFormatException e){</span>
+<span class="fc" id="L55">            return false;</span>
+        }
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

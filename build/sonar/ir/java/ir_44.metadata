@@ -1,0 +1,5 @@
+com.pragma.powerup.infrastructure.out.jpa.adapter.PlateJpaAdapter#getPlate(Ljava/lang/Long;)Lcom/pragma/powerup/domain/model/Plate;
+java.util.Optional#isEmpty()Z
+com.pragma.powerup.infrastructure.exception.NoDataFoundException#<init>()V
+com.pragma.powerup.infrastructure.exception.NoDataFoundException#instance-init#
+java.util.Optional#get()Ljava/lang/Object;

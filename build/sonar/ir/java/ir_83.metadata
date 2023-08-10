@@ -1,0 +1,7 @@
+com.pragma.powerup.infrastructure.out.jpa.adapter.OrderPlateJpaAdapter#saveOrderPlate(Lcom/pragma/powerup/domain/model/OrderPlate;Lcom/pragma/powerup/domain/model/Order;)V
+com.pragma.powerup.infrastructure.exception.PlateNotExistException#<init>()V
+com.pragma.powerup.infrastructure.exception.NoPlateToRestaurantAssociationException#<init>()V
+com.pragma.powerup.infrastructure.exception.PlateNotExistException#instance-init#
+com.pragma.powerup.infrastructure.exception.NoPlateToRestaurantAssociationException#instance-init#
+java.util.Optional#orElse(Ljava/lang/Object;)Ljava/lang/Object;
+java.util.Objects#equals(Ljava/lang/Object;Ljava/lang/Object;)Z

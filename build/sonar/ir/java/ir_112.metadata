@@ -1,0 +1,5 @@
+com.pragma.powerup.infrastructure.configuration.BeanConfiguration#orderPlateServicePort()Lcom/pragma/powerup/domain/api/IOrderPlateServicePort;
+com.pragma.powerup.domain.usecase.OrderPlateUseCase#instance-init#
+com.pragma.powerup.domain.usecase.OrderPlateUseCase#<init>(Lcom/pragma/powerup/domain/spi/IOrderPlatePersistencePort;)V
+==
+orderPlatePersistencePort com.pragma.powerup.infrastructure.configuration.BeanConfiguration#orderPlatePersistencePort()Lcom/pragma/powerup/domain/spi/IOrderPlatePersistencePort;

@@ -1,0 +1,47 @@
+
+†com.pragma.powerup.infrastructure.out.feign.adapter.UserFeignAdapter#getUserByEmail(Ljava/lang/String;)Lcom/pragma/powerup/infrastructure/out/feign/dto/UserDto;è
+ÑC:/Users/Usuario/Documents/reto/ms_plazoleta/src/main/java/com/pragma/powerup/infrastructure/out/feign/adapter/UserFeignAdapter.java (!"startingBlock*à
+startingBlock! (/å
+â
+ (
+%2"
+__annotate*2
+
+__unknown_file (
+java.lang.Override*7
+
+__unknown_file (
+
+emailjava.lang.StringY
+W
+) (.
+emailjava.lang.String"__annotation*"
+
+__unknown_file (
+
+%2*
+1*’
+1 (—
+Œ
+ (A
+%0;com.pragma.powerup.infrastructure.out.feign.UserFeignClient"__id*y
+
+__unknown_file (]*[F
+Dcom.pragma.powerup.infrastructure.out.feign.adapter.UserFeignAdapter"
+userFeignClient§°
+ (4=
+%17com.pragma.powerup.infrastructure.out.feign.dto.UserDto"ócom.pragma.powerup.infrastructure.out.feign.UserFeignClient#getUserByEmail(Ljava/lang/String;)Lcom/pragma/powerup/infrastructure/out/feign/dto/UserDto;*_
+
+__unknown_file (C
+A
+%0;com.pragma.powerup.infrastructure.out.feign.UserFeignClient*7
+
+__unknown_file (
+
+emailjava.lang.String2"getUserByEmail(Ljava/lang/String;)"K
+ (5?
+=
+%17com.pragma.powerup.infrastructure.out.feign.dto.UserDto:%
+" (.
+emailjava.lang.StringBHF
+Dcom.pragma.powerup.infrastructure.out.feign.adapter.UserFeignAdapterH

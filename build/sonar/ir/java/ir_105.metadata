@@ -1,0 +1,3 @@
+com.pragma.powerup.infrastructure.configuration.BeanConfiguration#platePersistencePort()Lcom/pragma/powerup/domain/spi/IPlatePersistencePort;
+com.pragma.powerup.infrastructure.out.jpa.adapter.PlateJpaAdapter#instance-init#
+com.pragma.powerup.infrastructure.out.jpa.adapter.PlateJpaAdapter#<init>(Lcom/pragma/powerup/infrastructure/out/jpa/repository/IPlateRepository;Lcom/pragma/powerup/infrastructure/out/jpa/mapper/IPlateEntityMapper;Lcom/pragma/powerup/infrastructure/out/jpa/repository/IRestaurantRepository;)V

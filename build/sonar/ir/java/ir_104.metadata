@@ -1,0 +1,5 @@
+com.pragma.powerup.infrastructure.configuration.BeanConfiguration#restaurantServicePort()Lcom/pragma/powerup/domain/api/IRestaurantServicePort;
+null
+com.pragma.powerup.domain.usecase.RestaurantUseCase#instance-init#
+==
+restaurantPersistencePort com.pragma.powerup.infrastructure.configuration.BeanConfiguration#restaurantPersistencePort()Lcom/pragma/powerup/domain/spi/IRestaurantPersistencePort;

@@ -1,0 +1,108 @@
+
+¦com.pragma.powerup.application.mapper.IOrderResponseMapper#toReponsePage(Lorg/springframework/data/domain/Page;Ljava/util/List;)Lorg/springframework/data/domain/Page;„
+zC:/Users/Usuario/Documents/reto/ms_plazoleta/src/main/java/com/pragma/powerup/application/mapper/IOrderResponseMapper.java' (4"1*¡
+1> (GÆÃ
+> (T
+%0java.util.List"Borg.springframework.data.domain.Slice#getContent()Ljava/util/List;*O
+
+__unknown_file (3
+1
+	orderPage$org.springframework.data.domain.Page2getContent()¢Ÿ
+> (]
+%1java.util.stream.Stream"6java.util.Collection#stream()Ljava/util/stream/Stream;*2
+
+__unknown_file (
+
+%0java.util.List2stream()°
+­
+ )(!
+%2java.util.function.Function"__declareFunction*k
+
+__unknown_file (OM
+K__sonar_lambda_3$com.pragma.powerup.application.mapper.IOrderResponseMapperš
+—
+
+__unknown_file (5
+!
+%2java.util.function.Function"
+orderPlateList"__id*>
+
+__unknown_file ("
+ 
+orderPlateListjava.util.List¤¡
+> )(
+%36java.util.stream.Stream"Sjava.util.stream.Stream#map(Ljava/util/function/Function;)Ljava/util/stream/Stream;*;
+
+__unknown_file (
+
+%1java.util.stream.Stream*?
+
+__unknown_file (#
+!
+%2java.util.function.Function2"map(Ljava/util/function/Function;)¯
+¬
+) )(.!
+%37java.util.stream.Collector"@java.util.stream.Collectors#toList()Ljava/util/stream/Collector;*;
+
+__unknown_file ("
+java.util.stream.Collectors›˜
+> )(/
+%38java.util.List"Ojava.util.stream.Stream#collect(Ljava/util/stream/Collector;)Ljava/lang/Object;*<
+
+__unknown_file ( 
+
+%36java.util.stream.Stream*?
+
+__unknown_file (#
+!
+%37java.util.stream.Collector2%collect(Ljava/util/stream/Collector;)s
+q
+ )(0*
+orderInfoResponseDtoListjava.util.List"__id*3
+
+__unknown_file (
+
+%38java.util.Listýú
++8 +(O/
+%39(org.springframework.data.domain.Pageable"]org.springframework.data.domain.Slice#getPageable()Lorg/springframework/data/domain/Pageable;*O
+
+__unknown_file (3
+1
+	orderPage$org.springframework.data.domain.Page2getPageable()§¤
++Q +(d
+
+%40int"0org.springframework.data.domain.Slice#getSize()I*O
+
+__unknown_file (3
+1
+	orderPage$org.springframework.data.domain.Page2	getSize()ge
++ +(/
+%41(org.springframework.data.domain.PageImpl"(org.springframework.data.domain.PageImpl•
+’
++ +(e
+%42"morg.springframework.data.domain.PageImpl#<init>(Ljava/util/List;Lorg/springframework/data/domain/Pageable;J)V*M
+
+__unknown_file (1
+/
+%41(org.springframework.data.domain.PageImpl*H
+
+__unknown_file (,
+*
+orderInfoResponseDtoListjava.util.List*M
+
+__unknown_file (1
+/
+%39(org.springframework.data.domain.Pageable*(
+
+__unknown_file (
+
+
+%40int"=
++ +(f1
+/
+%41(org.springframework.data.domain.PageImpl:=
+5 (K1
+	orderPage$org.springframework.data.domain.Page:,
+L (k 
+orderPlateListjava.util.ListB><
+:com.pragma.powerup.application.mapper.IOrderResponseMapperH

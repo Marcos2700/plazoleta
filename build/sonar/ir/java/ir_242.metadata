@@ -1,0 +1,7 @@
+com.pragma.powerup.infrastructure.out.jpa.adapter.OrderJpaAdapter#saveOrder(Lcom/pragma/powerup/domain/model/Order;)Lcom/pragma/powerup/domain/model/Order;
+java.util.stream.Collectors#toList()Ljava/util/stream/Collector;
+java.util.Optional#orElse(Ljava/lang/Object;)Ljava/lang/Object;
+com.pragma.powerup.infrastructure.exception.RestaurantNotExistException#instance-init#
+com.pragma.powerup.infrastructure.exception.RestaurantNotExistException#<init>()V
+com.pragma.powerup.infrastructure.exception.OrderInProcessException#instance-init#
+com.pragma.powerup.infrastructure.exception.OrderInProcessException#<init>()V

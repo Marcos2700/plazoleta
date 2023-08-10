@@ -1,0 +1,6 @@
+com.pragma.powerup.infrastructure.security.UserDetailsImpl#getAuthorities()Ljava/util/Collection;
+java.lang.String#toUpperCase()Ljava/lang/String;
+org.springframework.security.core.authority.SimpleGrantedAuthority#<init>(Ljava/lang/String;)V
+java.util.HashSet#<init>()V
+org.springframework.security.core.authority.SimpleGrantedAuthority#instance-init#
+java.util.HashSet#instance-init#

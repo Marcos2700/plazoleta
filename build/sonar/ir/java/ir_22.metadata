@@ -1,0 +1,2 @@
+com.pragma.powerup.application.handler.impl.OrderHandlerImpl#getOrdersResponsePage(Ljava/lang/Long;Lorg/springframework/data/domain/Pageable;Ljava/lang/String;)Lorg/springframework/data/domain/Page;
+java.util.stream.Collectors#toList()Ljava/util/stream/Collector;

@@ -1,0 +1,4 @@
+com.pragma.powerup.application.mapper.IRestaurantResponseMapper#toRestaurantResponsePage(Lorg/springframework/data/domain/Page;)Lorg/springframework/data/domain/Page;
+java.util.stream.Collectors#toList()Ljava/util/stream/Collector;
+org.springframework.data.domain.PageImpl#<init>(Ljava/util/List;Lorg/springframework/data/domain/Pageable;J)V
+org.springframework.data.domain.PageImpl#instance-init#

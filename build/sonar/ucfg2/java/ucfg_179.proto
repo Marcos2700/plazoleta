@@ -1,0 +1,109 @@
+
+L__sonar_lambda_12$com.pragma.powerup.application.mapper.IPlateResponseMapper„
+zC:/Users/Usuario/Documents/reto/ms_plazoleta/src/main/java/com/pragma/powerup/application/mapper/IPlateResponseMapper.java0 8("1*¬
+11@ 1(Z—”
+1D 1(XF
+%3@com.pragma.powerup.application.dto.response.PlateInfoResponseDto"@com.pragma.powerup.application.dto.response.PlateInfoResponseDtoÅ
+Â
+1@ 1(Z
+%4"Jcom.pragma.powerup.application.dto.response.PlateInfoResponseDto#<init>()V*d
+
+__unknown_file (H
+F
+%3@com.pragma.powerup.application.dto.response.PlateInfoResponseDtoÓ
+Ð
+1 1([X
+plateInfoResponseDto@com.pragma.powerup.application.dto.response.PlateInfoResponseDto"__id*d
+
+__unknown_file (H
+F
+%3@com.pragma.powerup.application.dto.response.PlateInfoResponseDtoÁ¾
+21 2(@
+%5java.lang.String"Acom.pragma.powerup.domain.model.Plate#getName()Ljava/lang/String;*L
+
+__unknown_file (0
+.
+plate%com.pragma.powerup.domain.model.Plate2	getName()ÃÀ
+2 2(A
+
+%6void"]com.pragma.powerup.application.dto.response.PlateInfoResponseDto#setName(Ljava/lang/String;)V*v
+
+__unknown_file (Z
+X
+plateInfoResponseDto@com.pragma.powerup.application.dto.response.PlateInfoResponseDto*4
+
+__unknown_file (
+
+%5java.lang.String2setName(Ljava/lang/String;)ÏÌ
+38 3(N
+%7java.lang.String"Hcom.pragma.powerup.domain.model.Plate#getDescription()Ljava/lang/String;*L
+
+__unknown_file (0
+.
+plate%com.pragma.powerup.domain.model.Plate2getDescription()ÑÎ
+3 3(O
+
+%8void"dcom.pragma.powerup.application.dto.response.PlateInfoResponseDto#setDescription(Ljava/lang/String;)V*v
+
+__unknown_file (Z
+X
+plateInfoResponseDto@com.pragma.powerup.application.dto.response.PlateInfoResponseDto*4
+
+__unknown_file (
+
+%7java.lang.String2"setDescription(Ljava/lang/String;)ÅÂ
+42 4(B
+%9java.lang.Integer"Ccom.pragma.powerup.domain.model.Plate#getPrice()Ljava/lang/Integer;*L
+
+__unknown_file (0
+.
+plate%com.pragma.powerup.domain.model.Plate2
+getPrice()ÉÆ
+4 4(C
+%10void"_com.pragma.powerup.application.dto.response.PlateInfoResponseDto#setPrice(Ljava/lang/Integer;)V*v
+
+__unknown_file (Z
+X
+plateInfoResponseDto@com.pragma.powerup.application.dto.response.PlateInfoResponseDto*5
+
+__unknown_file (
+
+%9java.lang.Integer2setPrice(Ljava/lang/Integer;)ÊÇ
+55 5(H
+%11java.lang.String"Ecom.pragma.powerup.domain.model.Plate#getUrlImage()Ljava/lang/String;*L
+
+__unknown_file (0
+.
+plate%com.pragma.powerup.domain.model.Plate2getUrlImage()ÍÊ
+5 5(I
+%12void"acom.pragma.powerup.application.dto.response.PlateInfoResponseDto#setUrlImage(Ljava/lang/String;)V*v
+
+__unknown_file (Z
+X
+plateInfoResponseDto@com.pragma.powerup.application.dto.response.PlateInfoResponseDto*5
+
+__unknown_file (
+
+%11java.lang.String2setUrlImage(Ljava/lang/String;)ÈÅ
+65 6(F
+%13java.lang.Boolean"Dcom.pragma.powerup.domain.model.Plate#getActive()Ljava/lang/Boolean;*L
+
+__unknown_file (0
+.
+plate%com.pragma.powerup.domain.model.Plate2getActive()ÐÍ
+6 6(G
+%14void"bcom.pragma.powerup.application.dto.response.PlateInfoResponseDto#setActivate(Ljava/lang/Boolean;)V*v
+
+__unknown_file (Z
+X
+plateInfoResponseDto@com.pragma.powerup.application.dto.response.PlateInfoResponseDto*6
+
+__unknown_file (
+
+%13java.lang.Boolean2 setActivate(Ljava/lang/Boolean;)"f
+7 7(0Z
+X
+plateInfoResponseDto@com.pragma.powerup.application.dto.response.PlateInfoResponseDto::
+0 0(.
+plate%com.pragma.powerup.domain.model.PlateB
+java.util.function.Function

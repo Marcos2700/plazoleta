@@ -1,0 +1,47 @@
+
+”com.pragma.powerup.domain.usecase.RestaurantUseCase#listRestaurant(Lorg/springframework/data/domain/Pageable;)Lorg/springframework/data/domain/Page;}
+sC:/Users/Usuario/Documents/reto/ms_plazoleta/src/main/java/com/pragma/powerup/domain/usecase/RestaurantUseCase.java- -(*"startingBlock*¾
+startingBlock-* -(=§
+¤
+, ,(
+%2"
+__annotate*2
+
+__unknown_file (
+java.lang.Override*R
+
+__unknown_file (6
+4
+pageable(org.springframework.data.domain.Pageablet
+r
+-4 -(<4
+pageable(org.springframework.data.domain.Pageable"__annotation*"
+
+__unknown_file (
+
+%2*
+1*×
+1. .((Ç
+Ä
+. .((>
+%08com.pragma.powerup.domain.spi.IRestaurantPersistencePort"__id*r
+
+__unknown_file (V*T5
+3com.pragma.powerup.domain.usecase.RestaurantUseCase"
+restaurantPersistencePortÃÀ
+. .(A*
+%1$org.springframework.data.domain.Page"™com.pragma.powerup.domain.spi.IRestaurantPersistencePort#listRestaurant(Lorg/springframework/data/domain/Pageable;)Lorg/springframework/data/domain/Page;*\
+
+__unknown_file (@
+>
+%08com.pragma.powerup.domain.spi.IRestaurantPersistencePort*R
+
+__unknown_file (6
+4
+pageable(org.springframework.data.domain.Pageable2:listRestaurant(Lorg/springframework/data/domain/Pageable;)"8
+. .(B,
+*
+%1$org.springframework.data.domain.Page:@
+-+ -(<4
+pageable(org.springframework.data.domain.PageableB75
+3com.pragma.powerup.domain.usecase.RestaurantUseCaseH

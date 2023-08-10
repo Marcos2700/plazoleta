@@ -1,0 +1,15 @@
+
+Icom.pragma.powerup.domain.model.OrderStatus#getStatus()Ljava/lang/String;u
+kC:/Users/Usuario/Documents/reto/ms_plazoleta/src/main/java/com/pragma/powerup/domain/model/OrderStatus.java ("1*∫
+1 (Ñ
+Å
+ (
+%0java.lang.String"__id*W
+
+__unknown_file (;*9-
++com.pragma.powerup.domain.model.OrderStatus"
+status"$
+ (
+
+%0java.lang.StringB/-
++com.pragma.powerup.domain.model.OrderStatusH

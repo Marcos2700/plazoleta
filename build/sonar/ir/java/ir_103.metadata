@@ -1,0 +1,3 @@
+com.pragma.powerup.infrastructure.configuration.BeanConfiguration#restaurantPersistencePort()Lcom/pragma/powerup/domain/spi/IRestaurantPersistencePort;
+com.pragma.powerup.infrastructure.out.jpa.adapter.RestaurantJpaAdapter#instance-init#
+com.pragma.powerup.infrastructure.out.jpa.adapter.RestaurantJpaAdapter#<init>(Lcom/pragma/powerup/infrastructure/out/jpa/mapper/IRestaurantEntityMapper;Lcom/pragma/powerup/infrastructure/out/jpa/repository/IRestaurantRepository;)V

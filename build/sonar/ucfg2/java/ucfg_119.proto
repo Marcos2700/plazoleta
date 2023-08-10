@@ -1,0 +1,14 @@
+
+¬com.pragma.powerup.infrastructure.security.WebSecurityConfig#webSecurityCustomizer()Lorg/springframework/security/config/annotation/web/configuration/WebSecurityCustomizer;†
+|C:/Users/Usuario/Documents/reto/ms_plazoleta/src/main/java/com/pragma/powerup/infrastructure/security/WebSecurityConfig.java9! 9(6"1*é
+1: :(Cí
+ê
+: :(C\
+%0Vorg.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer"__declareFunction*m
+
+__unknown_file (QO
+M__sonar_lambda_8$com.pragma.powerup.infrastructure.security.WebSecurityConfig"j
+: :(D^
+\
+%0Vorg.springframework.security.config.annotation.web.configuration.WebSecurityCustomizerB@>
+<com.pragma.powerup.infrastructure.security.WebSecurityConfigH

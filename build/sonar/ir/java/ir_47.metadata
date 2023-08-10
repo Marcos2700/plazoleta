@@ -1,0 +1,1 @@
+com.pragma.powerup.domain.usecase.feign.TraceabilityUseCase#saveTrace(Lcom/pragma/powerup/infrastructure/out/feign/dto/TraceabilityDto;)V

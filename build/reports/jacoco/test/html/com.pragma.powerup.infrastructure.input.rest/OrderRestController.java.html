@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>OrderRestController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Plazoleta-microservice</a> &gt; <a href="index.source.html" class="el_package">com.pragma.powerup.infrastructure.input.rest</a> &gt; <span class="el_source">OrderRestController.java</span></div><h1>OrderRestController.java</h1><pre class="source lang-java linenums">package com.pragma.powerup.infrastructure.input.rest;
+
+import com.pragma.powerup.application.dto.request.OrderRequestDto;
+import com.pragma.powerup.application.dto.response.OrderInfoResponseDto;
+import com.pragma.powerup.application.handler.IOrderHandler;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.ArraySchema;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletRequest;
+
+@RestController
+@RequiredArgsConstructor
+@RequestMapping(&quot;/order&quot;)
+public class OrderRestController {
+
+    private final IOrderHandler orderHandler;
+
+    @Operation(summary = &quot;Client order list of plates&quot;)
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = &quot;201&quot;, description = &quot;Order created&quot;, content = @Content),
+            @ApiResponse(responseCode = &quot;404&quot;, description = &quot;Restaurant does not exist&quot;, content = @Content),
+            @ApiResponse(responseCode = &quot;404&quot;, description = &quot;Plate does not exist&quot;, content = @Content),
+            @ApiResponse(responseCode = &quot;409&quot;, description = &quot;There is a current order for this client&quot;, content = @Content)
+    })
+    @PostMapping(&quot;/client&quot;)
+    public ResponseEntity&lt;Void&gt; makeOrder(@RequestBody OrderRequestDto orderRequestDto){
+<span class="fc" id="L36">        orderHandler.saveOrder(orderRequestDto);</span>
+<span class="fc" id="L37">        return new ResponseEntity&lt;&gt;(HttpStatus.CREATED);</span>
+    }
+
+    @Operation(summary = &quot;List orders for employee&quot;)
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = &quot;200&quot;, description = &quot;List or Orders returned&quot;,
+            content = @Content(mediaType = &quot;application/json&quot;,
+            array = @ArraySchema(schema = @Schema(implementation = OrderInfoResponseDto.class)))),
+            @ApiResponse(responseCode = &quot;404&quot;, description = &quot;No data found&quot;, content = @Content)
+    })
+    @GetMapping(&quot;/employee/list&quot;)
+    public ResponseEntity&lt;Page&lt;OrderInfoResponseDto&gt;&gt; listOrders(@RequestParam(defaultValue = &quot;0&quot;) int page,
+                                                           @RequestParam(defaultValue = &quot;10&quot;) int size,
+                                                           @RequestParam(defaultValue = &quot;&quot;) String status,
+                                                           HttpServletRequest request){
+<span class="fc" id="L52">        Page&lt;OrderInfoResponseDto&gt; orderInfoResponseDtoPage = orderHandler.listOrder(status, page, size, request);</span>
+<span class="fc" id="L53">        return ResponseEntity.ok(orderInfoResponseDtoPage);</span>
+    }
+
+    @Operation(summary = &quot;Assign order to chef&quot;)
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = &quot;200&quot;, description = &quot;List or Orders returned&quot;,
+                    content = @Content(mediaType = &quot;application/json&quot;,
+                            array = @ArraySchema(schema = @Schema(implementation = OrderInfoResponseDto.class)))),
+            @ApiResponse(responseCode = &quot;404&quot;, description = &quot;No data found&quot;, content = @Content),
+            @ApiResponse(responseCode = &quot;404&quot;, description = &quot;Order does not exist&quot;, content = @Content),
+            @ApiResponse(responseCode = &quot;400&quot;, description = &quot;Status cannot be in deliveded&quot;, content = @Content)
+    })
+    @PutMapping(&quot;/employee/assign/{id}&quot;)
+    public ResponseEntity&lt;Page&lt;OrderInfoResponseDto&gt;&gt; updateOrderStatus(@PathVariable Long id,
+                                                                        @RequestParam(defaultValue = &quot;0&quot;) int page,
+                                                                        @RequestParam(defaultValue = &quot;10&quot;) int size,
+                                                                        @RequestParam(defaultValue = &quot;&quot;) String status,
+                                                                        HttpServletRequest request){
+<span class="fc" id="L71">        Page&lt;OrderInfoResponseDto&gt; orderInfoResponseDtoPage = orderHandler.assignOrder(id, status, page, size, request);</span>
+<span class="fc" id="L72">        return ResponseEntity.ok(orderInfoResponseDtoPage);</span>
+    }
+
+    @Operation(summary = &quot;Updating order status to ready&quot;)
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = &quot;200&quot;, description = &quot;Status updated to ready&quot;, content = @Content),
+            @ApiResponse(responseCode = &quot;404&quot;, description = &quot;Order does not exist&quot;, content = @Content)
+    })
+    @PutMapping(&quot;/employee/ready/{idOrder}&quot;)
+    public ResponseEntity&lt;Void&gt; updateOrderToReady(@PathVariable Long idOrder){
+<span class="fc" id="L82">        orderHandler.setReadyStatus(idOrder);</span>
+<span class="fc" id="L83">        return new ResponseEntity&lt;&gt;(HttpStatus.OK);</span>
+    }
+
+    @Operation(summary = &quot;Updating order status to delivered&quot;)
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = &quot;200&quot;, description = &quot;Status updated to delivered&quot;, content = @Content),
+            @ApiResponse(responseCode = &quot;404&quot;, description = &quot;Order does not exist&quot;, content = @Content),
+            @ApiResponse(responseCode = &quot;400&quot;, description = &quot;Status must be in ready before&quot;, content = @Content),
+            @ApiResponse(responseCode = &quot;403&quot;, description = &quot;Pin is wrong&quot;, content = @Content)
+    })
+    @PutMapping(&quot;/employee/delivered/{idOrder}&quot;)
+    public ResponseEntity&lt;Void&gt; updateOrderToDelivered(@PathVariable Long idOrder, @RequestParam String pin){
+<span class="fc" id="L95">        orderHandler.setDeliveredStatus(idOrder, pin);</span>
+<span class="fc" id="L96">        return new ResponseEntity&lt;&gt;(HttpStatus.OK);</span>
+    }
+
+    @Operation(summary = &quot;Client cancel order&quot;)
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = &quot;200&quot;, description = &quot;Status updated to delivered&quot;, content = @Content),
+            @ApiResponse(responseCode = &quot;404&quot;, description = &quot;Order does not exist&quot;, content = @Content),
+            @ApiResponse(responseCode = &quot;409&quot;, description = &quot;The order is in progress, so can't be canceled&quot;, content = @Content),
+            @ApiResponse(responseCode = &quot;403&quot;, description = &quot;No order to client association&quot;, content = @Content)
+    })
+    @DeleteMapping(&quot;/client/cancel/{idOrder}&quot;)
+    public ResponseEntity&lt;Void&gt; cancelOrder(@PathVariable Long idOrder, HttpServletRequest request){
+<span class="fc" id="L108">        orderHandler.cancelOrder(idOrder, request);</span>
+<span class="fc" id="L109">        return new ResponseEntity&lt;&gt;(HttpStatus.OK);</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

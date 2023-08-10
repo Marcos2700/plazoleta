@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>IOrderResponseMapper.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Plazoleta-microservice</a> &gt; <a href="index.source.html" class="el_package">com.pragma.powerup.application.mapper</a> &gt; <span class="el_source">IOrderResponseMapper.java</span></div><h1>IOrderResponseMapper.java</h1><pre class="source lang-java linenums">package com.pragma.powerup.application.mapper;
+
+import com.pragma.powerup.application.dto.OrderPlateDto;
+import com.pragma.powerup.application.dto.response.OrderInfoResponseDto;
+import com.pragma.powerup.domain.model.Order;
+import com.pragma.powerup.domain.model.OrderPlate;
+import org.mapstruct.Mapper;
+import org.mapstruct.ReportingPolicy;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+
+import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
+
+@Mapper(componentModel = &quot;spring&quot;,
+        unmappedSourcePolicy = ReportingPolicy.IGNORE,
+        unmappedTargetPolicy = ReportingPolicy.IGNORE)
+public interface IOrderResponseMapper {
+
+    default Page&lt;OrderInfoResponseDto&gt; toReponsePage(Page&lt;Order&gt; orderPage, List&lt;OrderPlate&gt; orderPlateList){
+<span class="nc" id="L22">        List&lt;OrderInfoResponseDto&gt; orderInfoResponseDtoList = orderPage.getContent().stream()</span>
+<span class="nc" id="L23">                .map(order -&gt; {</span>
+<span class="nc" id="L24">                    OrderInfoResponseDto orderInfoResponseDto = new OrderInfoResponseDto();</span>
+<span class="nc" id="L25">                    orderInfoResponseDto.setId(order.getId());</span>
+<span class="nc" id="L26">                    orderInfoResponseDto.setDate(order.getDate());</span>
+<span class="nc" id="L27">                    orderInfoResponseDto.setStatus(order.getStatus());</span>
+<span class="nc" id="L28">                    orderInfoResponseDto.setIdClient(order.getIdClient());</span>
+<span class="nc" id="L29">                    orderInfoResponseDto.setIdChef(order.getIdChef());</span>
+<span class="nc" id="L30">                    orderInfoResponseDto.setIdRestaurant(order.getIdRestaurant());</span>
+<span class="nc" id="L31">                    orderInfoResponseDto.setPlates(orderPlateList.stream()</span>
+<span class="nc" id="L32">                            .filter(orderPlate -&gt; Objects.equals(orderPlate.getIdOrder(), order.getId()))</span>
+<span class="nc" id="L33">                            .map(orderPlate -&gt; {</span>
+<span class="nc" id="L34">                                OrderPlateDto orderPlateDto = new OrderPlateDto();</span>
+<span class="nc" id="L35">                                orderPlateDto.setIdOrder(orderPlate.getIdOrder());</span>
+<span class="nc" id="L36">                                orderPlateDto.setIdPlate(orderPlate.getIdPlate());</span>
+<span class="nc" id="L37">                                orderPlateDto.setQuantity(orderPlate.getQuantity());</span>
+<span class="nc" id="L38">                                return orderPlateDto;</span>
+<span class="nc" id="L39">                            }).collect(Collectors.toList()));</span>
+<span class="nc" id="L40">                    return orderInfoResponseDto;</span>
+<span class="nc" id="L41">                }).collect(Collectors.toList());</span>
+
+<span class="nc" id="L43">        return new PageImpl&lt;&gt;(orderInfoResponseDtoList, orderPage.getPageable(), orderPage.getSize());</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

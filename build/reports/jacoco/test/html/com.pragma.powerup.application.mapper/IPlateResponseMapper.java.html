@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>IPlateResponseMapper.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Plazoleta-microservice</a> &gt; <a href="index.source.html" class="el_package">com.pragma.powerup.application.mapper</a> &gt; <span class="el_source">IPlateResponseMapper.java</span></div><h1>IPlateResponseMapper.java</h1><pre class="source lang-java linenums">package com.pragma.powerup.application.mapper;
+
+import com.pragma.powerup.application.dto.CategoryDto;
+import com.pragma.powerup.application.dto.response.PlateInfoResponseDto;
+import com.pragma.powerup.application.dto.response.PlateResponseDto;
+import com.pragma.powerup.domain.model.Category;
+import com.pragma.powerup.domain.model.Plate;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+import org.mapstruct.ReportingPolicy;
+import org.mapstruct.factory.Mappers;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+
+import java.util.List;
+import java.util.stream.Collectors;
+
+@Mapper(componentModel = &quot;spring&quot;,
+        unmappedSourcePolicy = ReportingPolicy.IGNORE,
+        unmappedTargetPolicy = ReportingPolicy.IGNORE,
+        uses = {ICategoryDtoMapper.class})
+public interface IPlateResponseMapper {
+
+<span class="fc" id="L24">    ICategoryDtoMapper INSTANCE = Mappers.getMapper(ICategoryDtoMapper.class);</span>
+
+    @Mapping(target = &quot;category.categoryName&quot;, source = &quot;categoryDto.categoryName&quot;)
+    @Mapping(target = &quot;category.categoryDescription&quot;, source = &quot;categoryDto.categoryDescription&quot;)
+    PlateResponseDto toResponse(Plate plate, CategoryDto categoryDto);
+
+    default List&lt;PlateResponseDto&gt; toResponseList(List&lt;Plate&gt; plateList, List&lt;Category&gt; categoryList){
+<span class="nc" id="L31">        return plateList.stream()</span>
+<span class="nc" id="L32">                .map(plate -&gt; {</span>
+<span class="nc" id="L33">                    PlateResponseDto plateResponse = new PlateResponseDto();</span>
+<span class="nc" id="L34">                    plateResponse.setName(plate.getName());</span>
+<span class="nc" id="L35">                    plateResponse.setDescription(plate.getDescription());</span>
+<span class="nc" id="L36">                    plateResponse.setPrice(plate.getPrice());</span>
+<span class="nc" id="L37">                    plateResponse.setUrlImage(plate.getUrlImage());</span>
+<span class="nc" id="L38">                    plateResponse.setActive(plate.getActive());</span>
+<span class="nc" id="L39">                    plateResponse.setIdRestaurant(plate.getIdRestaurant());</span>
+<span class="nc" id="L40">                    plateResponse.setCategory(INSTANCE.toCategoryDto(categoryList.stream().filter(category -&gt; category.getId().equals(plate.getIdCategory())).findFirst().orElse(null)));</span>
+<span class="nc" id="L41">                    return plateResponse;</span>
+<span class="nc" id="L42">                }).collect(Collectors.toList());</span>
+    }
+
+    default Page&lt;PlateInfoResponseDto&gt; toPlateResponsePage(Page&lt;Plate&gt; platePage){
+<span class="nc" id="L46">        List&lt;PlateInfoResponseDto&gt; plateList = platePage.getContent()</span>
+<span class="nc" id="L47">                .stream()</span>
+<span class="nc" id="L48">                .map(plate -&gt; {</span>
+<span class="nc" id="L49">                    PlateInfoResponseDto plateInfoResponseDto = new PlateInfoResponseDto();</span>
+<span class="nc" id="L50">                    plateInfoResponseDto.setName(plate.getName());</span>
+<span class="nc" id="L51">                    plateInfoResponseDto.setDescription(plate.getDescription());</span>
+<span class="nc" id="L52">                    plateInfoResponseDto.setPrice(plate.getPrice());</span>
+<span class="nc" id="L53">                    plateInfoResponseDto.setUrlImage(plate.getUrlImage());</span>
+<span class="nc" id="L54">                    plateInfoResponseDto.setActivate(plate.getActive());</span>
+<span class="nc" id="L55">                    return plateInfoResponseDto;</span>
+<span class="nc" id="L56">                }).collect(Collectors.toList());</span>
+
+<span class="nc" id="L58">        return new PageImpl&lt;&gt;(plateList, platePage.getPageable(), platePage.getSize());</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

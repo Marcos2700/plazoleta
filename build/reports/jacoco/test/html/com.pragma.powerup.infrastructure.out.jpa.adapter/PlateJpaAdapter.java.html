@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>PlateJpaAdapter.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Plazoleta-microservice</a> &gt; <a href="index.source.html" class="el_package">com.pragma.powerup.infrastructure.out.jpa.adapter</a> &gt; <span class="el_source">PlateJpaAdapter.java</span></div><h1>PlateJpaAdapter.java</h1><pre class="source lang-java linenums">package com.pragma.powerup.infrastructure.out.jpa.adapter;
+
+import com.pragma.powerup.domain.model.Plate;
+import com.pragma.powerup.domain.spi.IPlatePersistencePort;
+import com.pragma.powerup.infrastructure.exception.NoDataFoundException;
+import com.pragma.powerup.infrastructure.exception.NoPlateToRestaurantAssociationException;
+import com.pragma.powerup.infrastructure.exception.PlateAlreadyExistException;
+import com.pragma.powerup.infrastructure.out.jpa.entity.PlateEntity;
+import com.pragma.powerup.infrastructure.out.jpa.mapper.IPlateEntityMapper;
+import com.pragma.powerup.infrastructure.out.jpa.repository.IPlateRepository;
+import com.pragma.powerup.infrastructure.out.jpa.repository.IRestaurantRepository;
+import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
+import java.util.List;
+import java.util.Optional;
+
+@RequiredArgsConstructor
+public class PlateJpaAdapter implements IPlatePersistencePort {
+
+    private final IPlateRepository plateRepository;
+    private final IPlateEntityMapper plateEntityMapper;
+    private final IRestaurantRepository restaurantRepository;
+
+    @Override
+    public void savePlate(Plate plate) {
+<span class="fc bfc" id="L28" title="All 2 branches covered.">        if (plateRepository.findByName(plate.getName()).isPresent()) {</span>
+<span class="fc" id="L29">            throw new PlateAlreadyExistException();</span>
+        }
+<span class="fc bfc" id="L31" title="All 2 branches covered.">        if(restaurantRepository.findById(plate.getIdRestaurant()).isEmpty()){</span>
+<span class="fc" id="L32">            throw new NoPlateToRestaurantAssociationException();</span>
+        }
+<span class="fc" id="L34">        plateRepository.save(plateEntityMapper.toPlateEntity(plate));</span>
+<span class="fc" id="L35">    }</span>
+
+    @Override
+    public List&lt;Plate&gt; getAllPlate() {
+<span class="fc" id="L39">        List&lt;PlateEntity&gt; plateEntityList = plateRepository.findAll();</span>
+<span class="pc bpc" id="L40" title="1 of 2 branches missed.">        if(plateEntityList.isEmpty()){</span>
+<span class="nc" id="L41">            throw new NoDataFoundException();</span>
+        }
+<span class="fc" id="L43">        return plateEntityMapper.toPlateList(plateEntityList);</span>
+    }
+
+    @Override
+    public void updatePlate(Plate plate) {
+<span class="fc" id="L48">        plateRepository.save(plateEntityMapper.toPlateEntity(plate));</span>
+<span class="fc" id="L49">    }</span>
+
+    @Override
+    public Plate getPlate(Long id) {
+<span class="nc" id="L53">        Optional&lt;PlateEntity&gt; plateEntity = plateRepository.findById(id);</span>
+<span class="nc bnc" id="L54" title="All 2 branches missed.">        if (plateEntity.isEmpty()){</span>
+<span class="nc" id="L55">            throw new NoDataFoundException();</span>
+        }
+<span class="nc" id="L57">        return plateEntityMapper.toPlate(plateEntity.get());</span>
+    }
+
+    @Override
+    public Page&lt;Plate&gt; listPlate(Long idRestaurant, Long idCategory, Pageable pageable) {
+        Page&lt;PlateEntity&gt; plateEntityPage;
+<span class="pc bpc" id="L63" title="1 of 2 branches missed.">        if(idCategory == 0L){</span>
+<span class="nc" id="L64">            plateEntityPage = plateRepository.findByIdRestaurant(idRestaurant, pageable);</span>
+        }
+        else {
+<span class="fc" id="L67">            plateEntityPage = plateRepository.findByIdRestaurantAndIdCategory(idRestaurant, idCategory, pageable);</span>
+        }
+
+<span class="fc bfc" id="L70" title="All 2 branches covered.">        if(plateEntityPage.isEmpty()){</span>
+<span class="fc" id="L71">            throw new NoDataFoundException();</span>
+        }
+
+<span class="fc" id="L74">        return plateEntityMapper.toPlatepage(plateEntityPage);</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

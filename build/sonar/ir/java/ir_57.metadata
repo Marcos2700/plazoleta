@@ -1,0 +1,2 @@
+com.pragma.powerup.application.handler.impl.PlateHandlerImpl#listPlate(Ljava/lang/Long;Ljava/lang/Long;II)Lorg/springframework/data/domain/Page;
+org.springframework.data.domain.PageRequest#of(II)Lorg/springframework/data/domain/PageRequest;

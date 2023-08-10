@@ -1,0 +1,1 @@
+com.pragma.powerup.domain.usecase.RestaurantUseCase#listRestaurant(Lorg/springframework/data/domain/Pageable;)Lorg/springframework/data/domain/Page;

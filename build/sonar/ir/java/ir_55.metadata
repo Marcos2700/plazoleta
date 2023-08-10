@@ -1,0 +1,1 @@
+com.pragma.powerup.application.handler.impl.PlateHandlerImpl#getPlate(Ljava/lang/Long;)Lcom/pragma/powerup/application/dto/response/PlateResponseDto;

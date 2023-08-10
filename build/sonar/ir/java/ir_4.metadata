@@ -1,0 +1,9 @@
+com.pragma.powerup.infrastructure.documentation.OpenApiConfiguration#customOpenApi(Ljava/lang/String;Ljava/lang/String;)Lio/swagger/v3/oas/models/OpenAPI;
+io.swagger.v3.oas.models.OpenAPI#<init>()V
+io.swagger.v3.oas.models.info.Info#<init>()V
+io.swagger.v3.oas.models.Components#<init>()V
+io.swagger.v3.oas.models.Components#instance-init#
+io.swagger.v3.oas.models.info.Info#instance-init#
+io.swagger.v3.oas.models.info.License#instance-init#
+io.swagger.v3.oas.models.info.License#<init>()V
+io.swagger.v3.oas.models.OpenAPI#instance-init#

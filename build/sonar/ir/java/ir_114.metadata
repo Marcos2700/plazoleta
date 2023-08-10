@@ -1,0 +1,5 @@
+com.pragma.powerup.infrastructure.configuration.BeanConfiguration#pinOrderServicePort()Lcom/pragma/powerup/domain/api/IPinOrderServicePort;
+com.pragma.powerup.domain.usecase.PinOrderUseCase#instance-init#
+com.pragma.powerup.domain.usecase.PinOrderUseCase#<init>(Lcom/pragma/powerup/domain/spi/IPinOrderPersistencePort;)V
+==
+pinOrderPersistencePort com.pragma.powerup.infrastructure.configuration.BeanConfiguration#pinOrderPersistencePort()Lcom/pragma/powerup/domain/spi/IPinOrderPersistencePort;

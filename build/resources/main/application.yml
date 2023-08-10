@@ -1,0 +1,14 @@
+server:
+  port: 8082
+
+spring:
+  datasource:
+    url: jdbc:mysql://plazoleta-app-database.c3s6dkgxzorl.us-east-2.rds.amazonaws.com:3306/users
+    username: ms_plazoleta
+    password: msplazoleta
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+appDescription: "Pragma Powerup"
+appVersion: "1.0.0"

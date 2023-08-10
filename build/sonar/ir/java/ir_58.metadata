@@ -1,0 +1,9 @@
+com.pragma.powerup.application.handler.impl.PlateHandlerImpl#thereArePlateOwnerAssociation(Ljava/lang/String;Ljava/lang/Long;)V
+com.pragma.powerup.infrastructure.security.TokenUtils#instance-init#
+com.pragma.powerup.domain.model.Restaurant#instance-init#
+com.pragma.powerup.infrastructure.security.TokenUtils#<init>()V
+com.pragma.powerup.domain.model.Restaurant#<init>()V
+java.lang.String#equals(Ljava/lang/Object;)Z
+java.util.Optional#orElse(Ljava/lang/Object;)Ljava/lang/Object;
+com.pragma.powerup.infrastructure.exception.NoOwnerPlateAssociationException#<init>()V
+com.pragma.powerup.infrastructure.exception.NoOwnerPlateAssociationException#instance-init#

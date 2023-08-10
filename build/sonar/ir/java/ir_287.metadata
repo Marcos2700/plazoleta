@@ -1,0 +1,2 @@
+com.pragma.powerup.application.mapper.IPlateResponseMapper#toResponseList(Ljava/util/List;Ljava/util/List;)Ljava/util/List;
+java.util.stream.Collectors#toList()Ljava/util/stream/Collector;

@@ -1,0 +1,96 @@
+
+œcom.pragma.powerup.application.mapper.IPlateResponseMapper#toPlateResponsePage(Lorg/springframework/data/domain/Page;)Lorg/springframework/data/domain/Page;„
+zC:/Users/Usuario/Documents/reto/ms_plazoleta/src/main/java/com/pragma/powerup/application/mapper/IPlateResponseMapper.java-' -(:"1*ç
+1./ .(8ÆÃ
+./ .(E
+%0java.util.List"Borg.springframework.data.domain.Slice#getContent()Ljava/util/List;*O
+
+__unknown_file (3
+1
+	platePage$org.springframework.data.domain.Page2getContent()¢Ÿ
+./ /(
+%1java.util.stream.Stream"6java.util.Collection#stream()Ljava/util/stream/Stream;*2
+
+__unknown_file (
+
+%0java.util.List2stream()±
+®
+0 8(!
+%2java.util.function.Function"__declareFunction*l
+
+__unknown_file (PN
+L__sonar_lambda_12$com.pragma.powerup.application.mapper.IPlateResponseMapper¤¡
+./ 8(
+%15java.util.stream.Stream"Sjava.util.stream.Stream#map(Ljava/util/function/Function;)Ljava/util/stream/Stream;*;
+
+__unknown_file (
+
+%1java.util.stream.Stream*?
+
+__unknown_file (#
+!
+%2java.util.function.Function2"map(Ljava/util/function/Function;)¯
+¬
+8 8(.!
+%16java.util.stream.Collector"@java.util.stream.Collectors#toList()Ljava/util/stream/Collector;*;
+
+__unknown_file ("
+java.util.stream.Collectors›˜
+./ 8(/
+%17java.util.List"Ojava.util.stream.Stream#collect(Ljava/util/stream/Collector;)Ljava/lang/Object;*<
+
+__unknown_file ( 
+
+%15java.util.stream.Stream*?
+
+__unknown_file (#
+!
+%16java.util.stream.Collector2%collect(Ljava/util/stream/Collector;)d
+b
+. 8(0
+	plateListjava.util.List"__id*3
+
+__unknown_file (
+
+%17java.util.Listýú
+:) :(@/
+%18(org.springframework.data.domain.Pageable"]org.springframework.data.domain.Slice#getPageable()Lorg/springframework/data/domain/Pageable;*O
+
+__unknown_file (3
+1
+	platePage$org.springframework.data.domain.Page2getPageable()§¤
+:B :(U
+
+%19int"0org.springframework.data.domain.Slice#getSize()I*O
+
+__unknown_file (3
+1
+	platePage$org.springframework.data.domain.Page2	getSize()ge
+: :(/
+%20(org.springframework.data.domain.PageImpl"(org.springframework.data.domain.PageImpl†
+ƒ
+: :(V
+%21"morg.springframework.data.domain.PageImpl#<init>(Ljava/util/List;Lorg/springframework/data/domain/Pageable;J)V*M
+
+__unknown_file (1
+/
+%20(org.springframework.data.domain.PageImpl*9
+
+__unknown_file (
+
+	plateListjava.util.List*M
+
+__unknown_file (1
+/
+%18(org.springframework.data.domain.Pageable*(
+
+__unknown_file (
+
+
+%19int"=
+: :(W1
+/
+%20(org.springframework.data.domain.PageImpl:=
+-; -(P1
+	platePage$org.springframework.data.domain.PageB><
+:com.pragma.powerup.application.mapper.IPlateResponseMapperH

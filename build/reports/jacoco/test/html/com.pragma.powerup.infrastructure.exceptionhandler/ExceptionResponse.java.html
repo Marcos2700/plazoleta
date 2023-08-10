@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ExceptionResponse.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Plazoleta-microservice</a> &gt; <a href="index.source.html" class="el_package">com.pragma.powerup.infrastructure.exceptionhandler</a> &gt; <span class="el_source">ExceptionResponse.java</span></div><h1>ExceptionResponse.java</h1><pre class="source lang-java linenums">package com.pragma.powerup.infrastructure.exceptionhandler;
+
+<span class="nc" id="L3">public enum ExceptionResponse {</span>
+<span class="nc" id="L4">    NO_DATA_FOUND(&quot;No data found for the requested petition&quot;),</span>
+<span class="nc" id="L5">    RESTAURANT_ALREADY_EXIST(&quot;There is a restaurant with that id&quot;),</span>
+<span class="nc" id="L6">    PHONE_NUMBER_NO_NUMERIC(&quot;Phone number must be numeric, only is accepted an initial + sign&quot;),</span>
+<span class="nc" id="L7">    NIT_NO_NUMERIC(&quot;NIT must be only numeric&quot;),</span>
+<span class="nc" id="L8">    NUMERIC_RESTAURANT_NAME(&quot;Restaurant name can`t be only numeric&quot;),</span>
+<span class="nc" id="L9">    IS_NOT_A_OWNER(&quot;Restaurant owner must have owner role&quot;),</span>
+<span class="nc" id="L10">    PLATE_ALREADY_EXIST(&quot;There is a plate with that name&quot;),</span>
+<span class="nc" id="L11">    NO_PLATE_TO_RESTAURANT_ASSOCIATION(&quot;There is not a restaurant associated with that plate&quot;),</span>
+<span class="nc" id="L12">    NO_OWNER_PLATE_ASSOCIATION(&quot;Restaurant's plate is not associated with owner&quot;),</span>
+<span class="nc" id="L13">    RESTAURANT_NOT_EXIST(&quot;Restaurant does not exits&quot;),</span>
+<span class="nc" id="L14">    PLATE_NOT_EXIST(&quot;Plate does not exist&quot;),</span>
+<span class="nc" id="L15">    ORDER_IN_PROCESS(&quot;There is a order in process for this client&quot;),</span>
+<span class="nc" id="L16">    ORDER_NOT_EXIST(&quot;Order not exist&quot;),</span>
+<span class="nc" id="L17">    WRONG_PIN(&quot;Pin is not associated to a ready order&quot;),</span>
+<span class="nc" id="L18">    NO_READY_STATUS_BEFORE(&quot;Status must be in ready before setting to delivered&quot;),</span>
+<span class="nc" id="L19">    ORDER_STATUS(&quot;Not allowed to update this order to that status&quot;),</span>
+<span class="nc" id="L20">    NO_ORDER_CLIENT_ASSOCIATION(&quot;The client is not associated to that order&quot;),</span>
+<span class="nc" id="L21">    ORDER_NOT_CANCELABLE(&quot;The order is in progress&quot;);</span>
+
+
+    private final String message;
+
+<span class="nc" id="L26">    ExceptionResponse(String message) {</span>
+<span class="nc" id="L27">        this.message = message;</span>
+<span class="nc" id="L28">    }</span>
+
+    public String getMessage() {
+<span class="nc" id="L31">        return this.message;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

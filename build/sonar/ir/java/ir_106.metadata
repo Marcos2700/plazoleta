@@ -1,0 +1,5 @@
+com.pragma.powerup.infrastructure.configuration.BeanConfiguration#plateServicePort()Lcom/pragma/powerup/domain/api/IPlateServicePort;
+com.pragma.powerup.domain.usecase.PlateUseCase#<init>(Lcom/pragma/powerup/domain/spi/IPlatePersistencePort;)V
+com.pragma.powerup.domain.usecase.PlateUseCase#instance-init#
+==
+platePersistencePort com.pragma.powerup.infrastructure.configuration.BeanConfiguration#platePersistencePort()Lcom/pragma/powerup/domain/spi/IPlatePersistencePort;

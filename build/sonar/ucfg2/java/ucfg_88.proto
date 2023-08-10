@@ -1,0 +1,47 @@
+
+ãcom.pragma.powerup.domain.usecase.feign.UserFeignUseCase#getUser(Ljava/lang/Long;)Lcom/pragma/powerup/infrastructure/out/feign/dto/UserDto;Ç
+xC:/Users/Usuario/Documents/reto/ms_plazoleta/src/main/java/com/pragma/powerup/domain/usecase/feign/UserFeignUseCase.java ("startingBlock*˛
+startingBlock (#á
+Ñ
+ (
+%2"
+__annotate*2
+
+__unknown_file (
+java.lang.Override*2
+
+__unknown_file (
+
+idjava.lang.LongT
+R
+  ("
+idjava.lang.Long"__annotation*"
+
+__unknown_file (
+
+%2*
+1*¡
+1 ('–
+Õ
+ ('C
+%0=com.pragma.powerup.domain.spi.feign.IUserFeignPersistencePort"__id*v
+
+__unknown_file (Z*X:
+8com.pragma.powerup.domain.usecase.feign.UserFeignUseCase"
+userFeignPersistencePortëé
+ (3=
+%17com.pragma.powerup.infrastructure.out.feign.dto.UserDto"êcom.pragma.powerup.domain.spi.feign.IUserFeignPersistencePort#getUser(Ljava/lang/Long;)Lcom/pragma/powerup/infrastructure/out/feign/dto/UserDto;*a
+
+__unknown_file (E
+C
+%0=com.pragma.powerup.domain.spi.feign.IUserFeignPersistencePort*2
+
+__unknown_file (
+
+idjava.lang.Long2getUser(Ljava/lang/Long;)"K
+ (4?
+=
+%17com.pragma.powerup.infrastructure.out.feign.dto.UserDto: 
+ ("
+idjava.lang.LongB<:
+8com.pragma.powerup.domain.usecase.feign.UserFeignUseCaseH

@@ -1,0 +1,91 @@
+
+com.pragma.powerup.infrastructure.out.jpa.mapper.IOrderEntityMapper#toOrderPage(Lorg/springframework/data/domain/Page;)Lorg/springframework/data/domain/Page;Ž
+ƒC:/Users/Usuario/Documents/reto/ms_plazoleta/src/main/java/com/pragma/powerup/infrastructure/out/jpa/mapper/IOrderEntityMapper.java (#"1*‹
+1  (*ÇÄ
+  (7
+%0java.util.List"Borg.springframework.data.domain.Slice#getContent()Ljava/util/List;*P
+
+__unknown_file (4
+2
+
+entityPage$org.springframework.data.domain.Page2getContent()¢Ÿ
+  (@
+%1java.util.stream.Stream"6java.util.Collection#stream()Ljava/util/stream/Stream;*2
+
+__unknown_file (
+
+%0java.util.List2stream()†ƒ
+  (#
+%2java.util.stream.Stream"Sjava.util.stream.Stream#map(Ljava/util/function/Function;)Ljava/util/stream/Stream;*;
+
+__unknown_file (
+
+%1java.util.stream.Stream*"
+
+__unknown_file (
+""2"map(Ljava/util/function/Function;)®
+«
+ (, 
+%3java.util.stream.Collector"@java.util.stream.Collectors#toList()Ljava/util/stream/Collector;*;
+
+__unknown_file ("
+java.util.stream.Collectors˜•
+  (-
+%4java.util.List"Ojava.util.stream.Stream#collect(Ljava/util/stream/Collector;)Ljava/lang/Object;*;
+
+__unknown_file (
+
+%2java.util.stream.Stream*>
+
+__unknown_file ("
+ 
+%3java.util.stream.Collector2%collect(Ljava/util/stream/Collector;)c
+a
+ (.
+	orderListjava.util.List"__id*2
+
+__unknown_file (
+
+%4java.util.Listýú
+) (A.
+%5(org.springframework.data.domain.Pageable"]org.springframework.data.domain.Slice#getPageable()Lorg/springframework/data/domain/Pageable;*P
+
+__unknown_file (4
+2
+
+entityPage$org.springframework.data.domain.Page2getPageable()§¤
+C (W	
+%6int"0org.springframework.data.domain.Slice#getSize()I*P
+
+__unknown_file (4
+2
+
+entityPage$org.springframework.data.domain.Page2	getSize()fd
+ (.
+%7(org.springframework.data.domain.PageImpl"(org.springframework.data.domain.PageImpl‚
+ÿ
+ (X
+%8"morg.springframework.data.domain.PageImpl#<init>(Ljava/util/List;Lorg/springframework/data/domain/Pageable;J)V*L
+
+__unknown_file (0
+.
+%7(org.springframework.data.domain.PageImpl*9
+
+__unknown_file (
+
+	orderListjava.util.List*L
+
+__unknown_file (0
+.
+%5(org.springframework.data.domain.Pageable*'
+
+__unknown_file (
+	
+%6int"<
+ (Y0
+.
+%7(org.springframework.data.domain.PageImpl:>
+$ (@2
+
+entityPage$org.springframework.data.domain.PageBGE
+Ccom.pragma.powerup.infrastructure.out.jpa.mapper.IOrderEntityMapperH

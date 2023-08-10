@@ -1,0 +1,1 @@
+com.pragma.powerup.infrastructure.out.jpa.adapter.OrderPlateJpaAdapter#findAllByOrderId(Ljava/lang/Long;)Ljava/util/List;

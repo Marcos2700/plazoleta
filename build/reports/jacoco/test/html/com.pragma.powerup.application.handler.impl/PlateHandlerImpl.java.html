@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>PlateHandlerImpl.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Plazoleta-microservice</a> &gt; <a href="index.source.html" class="el_package">com.pragma.powerup.application.handler.impl</a> &gt; <span class="el_source">PlateHandlerImpl.java</span></div><h1>PlateHandlerImpl.java</h1><pre class="source lang-java linenums">package com.pragma.powerup.application.handler.impl;
+
+
+import com.pragma.powerup.application.dto.request.PlateRequestDto;
+import com.pragma.powerup.application.dto.response.PlateInfoResponseDto;
+import com.pragma.powerup.application.dto.response.PlateResponseDto;
+import com.pragma.powerup.application.handler.IPlateHandler;
+import com.pragma.powerup.application.mapper.ICategoryDtoMapper;
+import com.pragma.powerup.application.mapper.IPlateRequestMapper;
+import com.pragma.powerup.application.mapper.IPlateResponseMapper;
+import com.pragma.powerup.domain.api.ICategoryServicePort;
+import com.pragma.powerup.domain.api.IPlateServicePort;
+import com.pragma.powerup.domain.api.IRestaurantServicePort;
+import com.pragma.powerup.domain.api.feign.IUserFeignServicePort;
+import com.pragma.powerup.domain.model.Plate;
+import com.pragma.powerup.domain.model.Restaurant;
+import com.pragma.powerup.infrastructure.exception.NoOwnerPlateAssociationException;
+import com.pragma.powerup.infrastructure.security.TokenUtils;
+import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.transaction.Transactional;
+import java.util.List;
+
+@Service
+@RequiredArgsConstructor
+@Transactional
+public class PlateHandlerImpl implements IPlateHandler {
+
+    private final IPlateServicePort plateServicePort;
+    private final ICategoryServicePort categoryServicePort;
+    private final IPlateRequestMapper plateRequestMapper;
+    private final IPlateResponseMapper plateResponseMapper;
+    private final ICategoryDtoMapper categoryDtoMapper;
+    private final IRestaurantServicePort restaurantServicePort;
+    private final IUserFeignServicePort userFeignClient;
+
+    @Override
+    public void savePlate(PlateRequestDto plateRequestDto) {
+<span class="fc" id="L44">        plateRequestDto.setActive(true);</span>
+<span class="fc" id="L45">        Plate plate = plateRequestMapper.toPlate(plateRequestDto);</span>
+<span class="fc" id="L46">        plateServicePort.savePlate(plate);</span>
+<span class="fc" id="L47">    }</span>
+
+    @Override
+    public List&lt;PlateResponseDto&gt; getAllPlates() {
+<span class="fc" id="L51">        return plateResponseMapper.toResponseList(plateServicePort.getAllPlates(), categoryServicePort.getAllCategory());</span>
+    }
+
+    @Override
+    public void updatePlate(PlateRequestDto plateRequestDto, HttpServletRequest request) {
+<span class="nc" id="L56">        String token = request.getHeader(&quot;Authorization&quot;).replace(&quot;Bearer &quot;,&quot;&quot;);</span>
+
+<span class="nc" id="L58">        Plate plate = plateServicePort.getPlate(plateRequestDto.getId());</span>
+
+<span class="nc" id="L60">        thereArePlateOwnerAssociation(token, plate.getIdRestaurant());</span>
+
+<span class="nc" id="L62">        plate.setDescription(plateRequestDto.getDescription());</span>
+<span class="nc" id="L63">        plate.setPrice(plateRequestDto.getPrice());</span>
+
+<span class="nc" id="L65">        plateServicePort.updatePlate(plate);</span>
+<span class="nc" id="L66">    }</span>
+
+    @Override
+    public PlateResponseDto getPlate(Long id) {
+<span class="nc" id="L70">        Plate plate = plateServicePort.getPlate(id);</span>
+<span class="nc" id="L71">        return plateResponseMapper.toResponse(plate, categoryDtoMapper.toCategoryDto(categoryServicePort.getCategory(plate.getId())));</span>
+    }
+
+    @Override
+    public void turnOffOnPlate(Long id, HttpServletRequest request) {
+<span class="nc" id="L76">        String token = request.getHeader(&quot;Authorization&quot;).replace(&quot;Bearer &quot;,&quot;&quot;);</span>
+
+<span class="nc" id="L78">        Plate plate = plateServicePort.getPlate(id);</span>
+
+<span class="nc" id="L80">        thereArePlateOwnerAssociation(token, plate.getIdRestaurant());</span>
+
+<span class="nc bnc" id="L82" title="All 2 branches missed.">        plate.setActive(!Boolean.TRUE.equals(plate.getActive()));</span>
+
+<span class="nc" id="L84">        plateServicePort.updatePlate(plate);</span>
+<span class="nc" id="L85">    }</span>
+
+    @Override
+    public Page&lt;PlateInfoResponseDto&gt; listPlate(Long idRestaurant, Long idCategory, int page, int size) {
+<span class="fc" id="L89">        Pageable pageable = PageRequest.of(page, size);</span>
+<span class="fc" id="L90">        return plateResponseMapper.toPlateResponsePage(plateServicePort.listPlate(idRestaurant, idCategory, pageable));</span>
+    }
+
+
+    private void thereArePlateOwnerAssociation(String token, Long id){
+<span class="nc" id="L95">        TokenUtils tokenUtils = new TokenUtils();</span>
+<span class="nc" id="L96">        String email = tokenUtils.getEmail(token);</span>
+
+<span class="nc" id="L98">        Restaurant restaurant = restaurantServicePort.getAllRestaurant().stream().filter(restaurantById -&gt; restaurantById.getId().equals(id)).findFirst().orElse(new Restaurant());</span>
+
+<span class="nc" id="L100">        Long idRestaurantOwner = restaurant.getIdOwner();</span>
+
+<span class="nc bnc" id="L102" title="All 2 branches missed.">        if(!email.equals(userFeignClient.getUser(idRestaurantOwner).getEmail())){</span>
+<span class="nc" id="L103">            throw new NoOwnerPlateAssociationException();</span>
+        }
+<span class="nc" id="L105">    }</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

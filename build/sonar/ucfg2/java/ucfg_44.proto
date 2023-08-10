@@ -1,0 +1,47 @@
+
+ycom.pragma.powerup.domain.usecase.CategoryUseCase#getCategory(Ljava/lang/Long;)Lcom/pragma/powerup/domain/model/Category;{
+qC:/Users/Usuario/Documents/reto/ms_plazoleta/src/main/java/com/pragma/powerup/domain/usecase/CategoryUseCase.java ("startingBlock*þ
+startingBlock ((‡
+„
+ (
+%2"
+__annotate*2
+
+__unknown_file (
+java.lang.Override*2
+
+__unknown_file (
+
+idjava.lang.LongT
+R
+% ('
+idjava.lang.Long"__annotation*"
+
+__unknown_file (
+
+%2*
+1*þ
+1 (&Á
+¾
+ (&<
+%06com.pragma.powerup.domain.spi.ICategoryPersistencePort"__id*n
+
+__unknown_file (R*P3
+1com.pragma.powerup.domain.usecase.CategoryUseCase"
+categoryPersistencePortìé
+ (6.
+%1(com.pragma.powerup.domain.model.Category"~com.pragma.powerup.domain.spi.ICategoryPersistencePort#getCategory(Ljava/lang/Long;)Lcom/pragma/powerup/domain/model/Category;*Z
+
+__unknown_file (>
+<
+%06com.pragma.powerup.domain.spi.ICategoryPersistencePort*2
+
+__unknown_file (
+
+idjava.lang.Long2getCategory(Ljava/lang/Long;)"<
+ (70
+.
+%1(com.pragma.powerup.domain.model.Category: 
+  ('
+idjava.lang.LongB53
+1com.pragma.powerup.domain.usecase.CategoryUseCaseH
