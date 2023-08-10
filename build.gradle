@@ -22,10 +22,9 @@ repositories {
 
 sonar {
 	properties {
-		property "sonar.projectKey", "reto_ms_plazoleta"
-		property "sonar.organization", "marcos-escobar"
+		property "sonar.projectKey", "Marcos2700_plazoleta"
+		property "sonar.organization", "marcos2700-1"
 		property "sonar.host.url", "https://sonarcloud.io"
-		property "SONAR_TOKEN", "551e411aa27c9c98507b0c033984d840d01bf0bf"
 	}
 }
 
